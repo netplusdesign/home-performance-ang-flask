@@ -1,0 +1,11 @@
+.project
+
+*.komodoproject
+
+.DS_Store
+
+/node_modules
+
+/bower_components
+
+/dist

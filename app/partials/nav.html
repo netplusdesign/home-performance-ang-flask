@@ -1,0 +1,48 @@
+<div class="form-inline">
+	<select class="form-control input-sm" id="year" ng-model="yearFilter.year" ng-change="changeYear()" ng_options="year for year in data.years track by year"></select>
+	<select class="form-control input-sm" id="view" ng-model="viewSelection.view" ng-change="changeView()">
+		<optgroup label="Yearly">
+			<option value="yearly/summary">Summary</option>
+		</optgroup>
+		<optgroup label="Monthly">
+			<option value="monthly/summary">Summary</option>
+			<option value="monthly/generation">Generation</option>
+			<option value="monthly/usage">Usage by circuit</option>
+			<option value="monthly/hdd">Heating Degree Days</option>
+			<option value="monthly/water">Water Usage</option>
+			<option value="monthly/basetemp">Base Temp Analysis</option>
+		</optgroup>
+		<optgroup label="Daily">
+			<option value="daily/net">Net Usage</option>
+			<option value="daily/solar">Generation</option>
+			<option value="daily/used">Usage</option>
+			<optgroup label="Daily Usage by Circuit">
+				<option value="daily/usage/ashp">ASHP</option>
+				<option value="daily/usage/water_heater">Water Heater</option>
+				<option value="daily/usage/stove">Range</option>
+				<option value="daily/usage/dryer">Dryer</option>
+				<option value="daily/usage/dishwasher">Dish Washer</option>
+				<option value="daily/usage/water_pump">Water Pump</option>
+				<option value="daily/usage/washer">Washer</option>
+				<option value="daily/usage/refrigerator">Refrigerator</option>
+				<option value="daily/usage/living_room">Living room</option>
+				<option value="daily/usage/aux_heat_bedrooms">Electric base heat bedrooms</option>
+				<option value="daily/usage/aux_heat_living">Electric base heat living room</option>
+				<option value="daily/usage/study">Study</option>
+				<option value="daily/usage/barn">Barn</option>
+				<option value="daily/usage/basement_west">Basement receptials (West)</option>
+				<option value="daily/usage/basement_east">Basement receptials (East)</option>
+				<option value="daily/usage/ventilation">Ventilation</option>
+				<option value="daily/usage/ventilation_preheat">Ventilation pre-heat</option>
+				<option value="daily/usage/kitchen_recept_rt">Kitchen receptical</option>
+				<option value="daily/usage/all_other">All other</option>
+			</optgroup>
+			<optgroup label="Daily Temperature">
+				<option value="daily/hdd">Heating Degree Days</option>
+				<option value="daily/outdoor_deg_min">Outdoor (Low)</option>
+				<option value="daily/outdoor_deg_max">Outdoor (High)</option>
+			</optgroup>
+		</optgroup>
+	</select>
+	<p class="text-right"><small id="asof">As of: {{data.asofDate}}</small></p>
+</div>
