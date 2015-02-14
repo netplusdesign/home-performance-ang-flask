@@ -4,7 +4,7 @@ Converted [home-performance-ang](https://github.com/netplusdesign/home-performan
 
 See [home-performance-flask](https://github.com/netplusdesign/home-performance-flask)
 
-See working prototype at __TBD__.
+See working prototype at: http://netplusdesign.com/app2/  (if you get an error it's because the server fell asleep. Hit refresh, all should be fine.)
 
 ## Requires
 
@@ -25,9 +25,6 @@ Edit grunt file (devDest) path, then run:
 
 * grunt dev
 
-Database setup scripts can be found in the __TBD__ repo.
-
 ## What's next
 
-* Get this working on a server somewhere.
 * Refactor!
