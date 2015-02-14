@@ -25,8 +25,16 @@ module.exports = function(grunt) {
 		},
 		copy: {
 			dist: {
-				src: ['app/js/<%= pkg.name %>.min.js', 'app/partials/**', 'app/css/*'],
-				dest: 'dist/'
+				files: [
+				{
+					src: ['app/js/<%= pkg.name %>.min.js', 'app/partials/**', 'app/css/*'],
+					dest: 'dist/'
+				},
+				{
+					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+					dest: 'dist/app/css/bootstrap.min.css' 
+				}
+				]
 			},
 			test: {
 				files : [
