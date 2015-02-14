@@ -22,7 +22,8 @@ angular.module( 'myApp.services', [] ).
 		data.circuit = 'summary'; // default view for usage screen
 		data.ashp_calculation_base = 50; // default for calculating ashp usage projected values
 		
-		var apiUrl = 'http://127.0.0.1:5000/api/';
+		//var apiUrl = 'http://127.0.0.1:5000/api/';
+		var apiUrl = 'http://lburks.pythonanywhere.com/api/';
 
 		var current = {},
 		limits = { range : {} }, // for hourly chart
@@ -247,7 +248,8 @@ angular.module( 'myApp.services', [] ).
 			setParamYear : setParamYear,	// called from navCtrl when user selects a year
 			setMetadata : setMetadata,		// used by navCtrl, phase this out?
 			setDailyMetadata : setDailyMetadata,	// used by calendar and hourly chart
-			getDaysYTD : getDaysYTD			// utility method
+			getDaysYTD : getDaysYTD,			// utility method
+			apiUrl : apiUrl
 		};
 
 	}])
@@ -285,10 +287,10 @@ angular.module( 'myApp.services', [] ).
 		
 		getMonthlyMetadataDetails = function ( config ) {
 			// replace hardcoded url
-			return $http.get( 'http://127.0.0.1:5000/api/houses/0/views/default/?interval=months' ).then( function ( result ) {
+			return $http.get( metadataService.apiUrl + 'houses/0/views/default/?interval=months' ).then( function ( result ) {
 
 				metadataService.setMetadata ( result.data );
-				//console.log(metadataService.data.chartDate);
+
 				if (config.params.start == 'Invalid date') {
 					config.params.start = metadataService.setStart ( metadataService.data.chartDate, config.params.interval );
 				}
@@ -327,7 +329,7 @@ angular.module( 'myApp.services', [] ).
 
 		getDailyMetadata = function () {
 			// replace hardcoded url
-			return $http.get( 'http://127.0.0.1:5000/api/houses/0/views/default/?interval=days' ).
+			return $http.get( metadataService.apiUrl + 'houses/0/views/default/?interval=days' ).
 			
 			then( function ( result ) {
 
@@ -393,7 +395,7 @@ angular.module( 'myApp.services', [] ).
 			params.params.start = params.params.date;
 			params.params.duration = '1day';
 			// replace hardcoded url
-			return $http.get( 'http://127.0.0.1:5000/api/houses/0/views/chart/', params ).then( function ( result ) {
+			return $http.get( metadataService.apiUrl + 'houses/0/views/chart/', params ).then( function ( result ) {
 			
 				return result.data; 
 			});
