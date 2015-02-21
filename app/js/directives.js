@@ -109,7 +109,7 @@ angular.module('myApp.directives', []).
 								if (( count >= startDay ) && ( dayCount <= dim )) {
 									// add object with date, color, and hover value
 									obj = scope.calendar.days[ dayCount - 1 ][ scope.view ];
-									title = obj.value + ' ' + obj.measure;
+									title = Math.round(obj.value*1000)/1000 + ' ' + obj.measure;
 									classy = 'calday';
 									
 									if ( dayCount == scope.chartDate.date() ) {
