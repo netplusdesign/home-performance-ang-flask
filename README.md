@@ -25,6 +25,11 @@ Edit grunt file (devDest) path, then run:
 
 * grunt dev
 
+## Test
+
+* npm test
+* npm run protractor
+
 ## What's next
 
 * Refactor!
