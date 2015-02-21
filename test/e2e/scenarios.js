@@ -82,7 +82,7 @@ describe('my app', function() {
 	
 			it('should display last available year = 2013', function() {
 				// change to 2013 if using 2013 test dev db
-				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2013/);
+				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2014/);
 			});
 		});
 	
