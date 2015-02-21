@@ -693,7 +693,7 @@ angular.module( 'myApp.services', [] ).
 							click: function() {
 								if (this.date) {
 									dt = moment( this.date, ['MMM, YYYY', 'MMM d, YYYY', 'MMM d, YYYY h a'] );
-									tm = (data.period === 'hours') ? '&time=' + dt.format('HH') : ''; 
+									tm = (data.interval === 'hours') ? '&time=' + dt.format('HH') : ''; 
 									$window.location = '#/daily/usage/ashp?date=' + dt.format('YYYY-MM-DD') + tm;
 								}
 							}
@@ -725,9 +725,9 @@ angular.module( 'myApp.services', [] ).
 			for( i = 0; i < data.points.length; i++ ) {
 				 
 				d = moment( data.points[i].date, ['YYYY-MM-DD', 'YYYY-MM-DD hh:mm:ss'] );
-				if ( data.period === 'hours' ) { dt = d.format( 'MMM D, YYYY h a' ); }
-				if ( data.period === 'days' ) { dt = d.format( 'MMM D, YYYY' ); }
-				if ( data.period === 'months' ) { dt = d.format( 'MMM, YYYY' ); }
+				if ( data.interval === 'hour' ) { dt = d.format( 'MMM D, YYYY h a' ); }
+				if ( data.interval === 'day' ) { dt = d.format( 'MMM D, YYYY' ); }
+				if ( data.interval === 'month' ) { dt = d.format( 'MMM, YYYY' ); }
 				
 				options.series[0].data.push({ 
 					date  : dt,
