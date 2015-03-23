@@ -2,9 +2,14 @@
 
 Converted [home-performance-ang](https://github.com/netplusdesign/home-performance-ang) to use a new REST API built with [Flask](http://flask.pocoo.org). 
 
-See [home-performance-flask](https://github.com/netplusdesign/home-performance-flask)
+See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
-See working prototype at: http://netplusdesign.com/app2/  (if you get an error it's because the server fell asleep. Hit refresh, all should be fine.)
+There are 2 branches.
+
+* `master` - is a standalone angular frontend that can live on any server. Used mainly for testing.
+* `integrate-with-flask` - is modified to work within the Flask framework and can operate alongside the api on the same server.
+
+See working prototype of `integrated-with-flask` at: http://netplusdesign.com/
 
 ## Requires
 
