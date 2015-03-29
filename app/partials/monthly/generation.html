@@ -20,7 +20,7 @@
 			<th class="text-right" ng-class="{'text-danger': data.totals.estimated<0, 'text-success': data.totals.estimated>=0}">{{data.totals.diff | number:1}}</th>
 		</tr>
 		<tr ng-repeat="month in data.months">
-			<td class="text-left"><a ng-href="#/daily/generation?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+			<td class="text-left"><a ng-href="#/daily/solar?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
 			<td>{{month.actual | number:0}}</td>
 			<td>{{month.estimated | number:0}}</td>
 			<td ng-class="{'text-danger': month.diff<0, 'text-success': month.diff>=0}">{{month.diff | number:1}}</td>
