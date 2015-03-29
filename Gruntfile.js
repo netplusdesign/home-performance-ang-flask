@@ -6,7 +6,6 @@ module.exports = function(grunt) {
   
 	grunt.initConfig({
 		devDest: '../../Sites/home-performance/v3/',
-		gitDest: '../github/home-performance-ang-flask/',
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
@@ -119,28 +118,6 @@ module.exports = function(grunt) {
 					dest: '<%= devDest %>app/css/bootstrap.min.css' 
 				}
 				]
-			},
-			git: {
-				src: [
-					'README.md', 
-					'LICENSE', 
-					'package.json', 
-					'bower.json', 
-					'Gruntfile.js', 
-					'test/**',
-					'dist/**',
-					'config/**',
-					'scripts/**', 
-					'app/js/app.js',
-					'app/js/controllers.js',
-					'app/js/services.js',
-					'app/js/filters.js',
-					'app/js/directives.js',
-					'app/partials/**', 
-					'app/css/*',
-					'app/index.html'
-				],
-				dest: '<%= gitDest %>'
 			}
 		},
 		preprocess: {
@@ -171,17 +148,6 @@ module.exports = function(grunt) {
 				options: {
 					context: {
 						DEV: true
-					}
-				}
-			},
-			git : {
-				files: {
-					//'<%= gitDest %>app/index.html' : 'app/index.html',
-					'<%= gitDest %>dist/app/index.html' : 'app/index.html',
-				},
-				options: {
-					context: {
-						GIT: true
 					}
 				}
 			}
@@ -219,16 +185,6 @@ module.exports = function(grunt) {
 		'copy:dev',
 		'preprocess:dev',
 		'clean:min'
-	]);
-
-	grunt.registerTask('git', 
-	[   'clean:dist',
-		'uglify', 
-		'copy:dist',
-		'preprocess:dist',
-		'clean:min',
-		'copy:git',
-		'preprocess:git'
 	]);
 
 };
