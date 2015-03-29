@@ -3,8 +3,8 @@
 <dl class="dl-horizontal">
 	<dt>Wh/SF&sup1;/HDD&sup2;</dt><dd>{{data.wh_sf_hdd | number:3}}</dd>
 	<dt>BTU&sup3;/SF/HDD</dt><dd>{{data.btu_sf_hdd | number:3}}</dd>
-	<dt>Coldest temp.</dt><dd>{{data.coldest_hour.temperature}}&deg;, Date:&nbsp;<a ng-href="#/daily/templow?date={{data.coldest_hour.date | date:'yyyy-MM-dd'}}&time={{data.coldest_hour.date | date:'HH'}}">{{data.coldest_hour.date | date:"M/d/yyyy&nbsp;h&nbsp;a"}}</a></dd>
-	<dt>Coldest day</dt><dd>{{data.coldest_day.temperature}} HDD, Date:&nbsp;<a ng-href="#/daily/templow?date={{data.coldest_day.date | date:'yyyy-MM-dd'}}">{{data.coldest_day.date | date:"M/d/yyyy"}}</a></dd>
+	<dt>Coldest temp.</dt><dd>{{data.coldest_hour.temperature}}&deg;, Date:&nbsp;<a ng-href="#/daily/hdd?date={{data.coldest_hour.date | date:'yyyy-MM-dd'}}&time={{data.coldest_hour.date | date:'HH'}}">{{data.coldest_hour.date | date:"M/d/yyyy&nbsp;h&nbsp;a"}}</a></dd>
+	<dt>Coldest day</dt><dd>{{data.coldest_day.temperature}} HDD, Date:&nbsp;<a ng-href="#/daily/hdd?date={{data.coldest_day.date | date:'yyyy-MM-dd'}}">{{data.coldest_day.date | date:"M/d/yyyy"}}</a></dd>
 </dl>
 <div class="table-responsive">
 	<table id="hdd" class="table table-condensed text-right">
