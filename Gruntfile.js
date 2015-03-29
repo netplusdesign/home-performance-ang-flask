@@ -18,12 +18,12 @@ module.exports = function(grunt) {
 			}
 		},
 		clean: { 
-			dist: ['dist/'],
 			dev: ['<%= devDest %>'],
+			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			min: ['app/js/<%= pkg.name %>.min.js']
 		},
 		copy: {
-			dist: {
+			prod: {
 				files: [
 				{
 					src: ['app/js/<%= pkg.name %>.min.js', 'app/partials/**', 'app/css/*'],
@@ -121,7 +121,7 @@ module.exports = function(grunt) {
 			}
 		},
 		preprocess: {
-			dist : {
+			prod : {
 				files: {
 					'dist/app/index.html' : 'app/index.html'
 				},
@@ -164,11 +164,11 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['uglify']);
 
 	// Defined tasks
-	grunt.registerTask('dist', 
-	[   'clean:dist',
+	grunt.registerTask('prod', 
+	[   'clean:prod',
 		'uglify', 
-		'copy:dist',
-		'preprocess:dist',
+		'copy:prod',
+		'preprocess:prod',
 		'clean:min'
 	]);
 
