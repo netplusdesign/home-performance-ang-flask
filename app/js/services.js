@@ -22,8 +22,9 @@ angular.module( 'myApp.services', [] ).
 		data.circuit = 'summary'; // default view for usage screen
 		data.ashp_calculation_base = 50; // default for calculating ashp usage projected values
 		
-		//var apiUrl = 'http://127.0.0.1:5000/api/';
-		var apiUrl = 'http://lburks.pythonanywhere.com/api/';
+		var apiUrl = 'http://127.0.0.1:5000/api/';
+		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
+		//var apiUrl = 'http://netplusdesign.com/api/';
 
 		var current = {},
 		limits = { range : {} }, // for hourly chart
