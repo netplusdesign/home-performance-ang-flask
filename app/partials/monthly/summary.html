@@ -19,7 +19,7 @@
 			<th class="text-right">{{data.totals.hdd | number:0}}</th>
 		</tr>
 		<tr ng-repeat="month in data.months">
-			<td class="text-left"><a ng-href="#/daily/netusage?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+			<td class="text-left"><a ng-href="#/daily/net?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
 			<td>{{month.used | number:0}}</td>
 			<td>{{month.solar | number:0}}</td>
 			<td>{{month.net | number:0}}</td>
