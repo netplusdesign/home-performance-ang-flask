@@ -18,104 +18,106 @@ module.exports = function(grunt) {
 			}
 		},
 		clean: { 
-			dev: ['<%= devDest %>'],
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
+			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
 			min: ['app/js/<%= pkg.name %>.min.js']
 		},
 		copy: {
 			prod: {
 				files: [
 				{
-					src: ['app/js/<%= pkg.name %>.min.js', 'app/partials/**', 'app/css/*'],
-					dest: 'dist/'
+					expand: true,
+					cwd: 'app/',
+					src: ['js/<%= pkg.name %>.min.js', 'partials/**', 'css/*'],
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: 'dist/app/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css' 
 				}
 				]
 			},
 			test: {
 				files : [
 				{
-					src: ['app/js/<%= pkg.name %>.min.js', 'app/js/standalone-framework.js', 'app/js/highcharts.js', 'app/partials/**', 'app/css/*', 'app/daily.html'],
-					dest: '<%= devDest %>'
+					expand: true,
+					cwd: 'app/',
+					src: ['js/<%= pkg.name %>.min.js', 'js/standalone-framework.js', 'js/highcharts.js', 'partials/**', 'css/*', 'daily.html'],
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= devDest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= devDest %>app/lib/angular/angular.js' 
+					dest: '<%= dest %>static/lib/angular/angular.js' 
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= devDest %>app/lib/angular/angular-route.js' 
+					dest: '<%= dest %>static/lib/angular/angular-route.js' 
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= devDest %>app/lib/angular/angular-resource.js' 
+					dest: '<%= dest %>static/lib/angular/angular-resource.js' 
 				},
 				{
 					src: 'bower_components/highcharts/index.js',
-					dest: '<%= devDest %>app/js/highcharts.js' 
+					dest: '<%= dest %>static/js/highcharts.js' 
 				},
 				{
 					src: 'bower_components/highcharts-standalone-framework/index.js',
-					dest: '<%= devDest %>app/js/standalone-framework.js' 
-				},
-				{
-					src: 'bower_components/moment/moment.js',
-					dest: '<%= devDest %>app/js/moment.js' 
+					dest: '<%= dest %>static/js/standalone-framework.js' 
 				}, 
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= devDest %>app/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css' 
 				}
 				]
 			},
 			dev: {
 				files : [
 				{
-					src: ['app/js/*', 'app/partials/**', 'app/css/*', 'app/daily.html'],
-					dest: '<%= devDest %>' 
+					expand: true,
+					cwd: 'app/',
+					src:  ['js/*', 'partials/**', 'css/*', 'daily.html'],
+					dest: '<%= dest %>static/' 
 				},
 				{
 					src: 'test/**',
-					dest: '<%= devDest %>app/' 
+					dest: '<%= dest %>static/' 
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= devDest %>app/lib/angular/angular.js' 
+					dest: '<%= dest %>static/lib/angular/angular.js' 
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= devDest %>app/lib/angular/angular-route.js' 
+					dest: '<%= dest %>static/lib/angular/angular-route.js' 
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= devDest %>app/lib/angular/angular-resource.js' 
+					dest: '<%= dest %>static/lib/angular/angular-resource.js' 
 				},
 				{
 					src: 'bower_components/highcharts/index.js',
-					dest: '<%= devDest %>app/js/highcharts.js' 
+					dest: '<%= dest %>static/js/highcharts.js' 
 				},
 				{
 					src: 'bower_components/highcharts-standalone-framework/index.js',
-					dest: '<%= devDest %>app/js/standalone-framework.js' 
+					dest: '<%= dest %>static/js/standalone-framework.js' 
 				},
 				{
 					src: 'bower_components/moment/moment.js',
-					dest: '<%= devDest %>app/js/moment.js' 
+					dest: '<%= dest %>static/js/moment.js' 
 				},
 				{
 					src: 'bower_components/chroma-js/chroma.js',
-					dest: '<%= devDest %>app/js/chroma.js' 
+					dest: '<%= dest %>static/js/chroma.js' 
 				}, 
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= devDest %>app/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css' 
 				}
 				]
 			}
@@ -123,7 +125,7 @@ module.exports = function(grunt) {
 		preprocess: {
 			prod : {
 				files: {
-					'dist/app/index.html' : 'app/index.html'
+					'<%= dest %>templates/index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
@@ -133,7 +135,7 @@ module.exports = function(grunt) {
 			},
 			test : {
 				files: {
-					'<%= devDest %>app/index.html' : 'app/index.html'
+					'<%= dest %>templates/index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
@@ -143,7 +145,7 @@ module.exports = function(grunt) {
 			},
 			dev : {
 				files: {
-					'<%= devDest %>app/index.html' : 'app/index.html'
+					'<%= dest %>templates/index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
