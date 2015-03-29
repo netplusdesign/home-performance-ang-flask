@@ -5,7 +5,7 @@
 module.exports = function(grunt) {
   
 	grunt.initConfig({
-		devDest: '../../Sites/home-performance/v3/',
+		dest: '../home-performance-site/chartingperformance/',
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
