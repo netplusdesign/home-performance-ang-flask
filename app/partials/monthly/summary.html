@@ -18,7 +18,7 @@
 			<th class="text-right">{{data.totals.adu | number:1}}</th>
 			<th class="text-right">{{data.totals.hdd | number:0}}</th>
 		</tr>
-		<tr ng-repeat="month in data.months">
+		<tr ng-repeat="month in data.items">
 			<td class="text-left"><a ng-href="#/daily/net?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
 			<td>{{month.used | number:0}}</td>
 			<td>{{month.solar | number:0}}</td>

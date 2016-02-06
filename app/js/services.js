@@ -13,7 +13,7 @@
 
 angular.module( 'myApp.services', [] ).
 	factory( 'metadataService', [ function() {
-		
+
 		var data = {};
 		data.houseId = false;
 		data.chartDate = false; // stored as string
@@ -21,48 +21,48 @@ angular.module( 'myApp.services', [] ).
 		data.years = false;
 		data.circuit = 'summary'; // default view for usage screen
 		data.ashp_calculation_base = 50; // default for calculating ashp usage projected values
-		
+
 		var apiUrl = 'http://127.0.0.1:5000/api/';
 		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
 		//var apiUrl = 'http://netplusdesign.com/api/';
 
 		var current = {},
 		limits = { range : {} }, // for hourly chart
-	
+
 		setHouse = function ( house ) {
-			
-			if ( house && ( typeof house !== 'undefined' ) ) { 
+
+			if ( house && ( typeof house !== 'undefined' ) ) {
 				// check if switching houses
 				if (( data.houseId > -1 ) && ( house != data.houseId )) {
-					
+
 					data.asofDate = false; // will force metadata reload
 				}
-				data.houseId = house; 
-			} 
+				data.houseId = house;
+			}
 			else if ( !data.houseId ) {
-				
+
 				data.houseId = '0'; // default if house param is not passed in URL
 			}
 			return data.houseId;
 		},
 		setDate = function ( dt ) {
 
-			if (dt && ( typeof dt !== 'undefined' )) { 
-			
+			if (dt && ( typeof dt !== 'undefined' )) {
+
 				data.chartDate = moment( dt, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ); // defaults date of month to 01 if missing
-			
+
 				current.year = moment( data.chartDate ).format( 'YYYY' );
-			} 
+			}
 			return data.chartDate;
 		},
 		setCircuit = function ( path, circuit ) {
-			
+
 			if ( typeof circuit !== 'undefined' ) {
-			
+
 				data.circuit = circuit;
-				
+
 				if ( path == 'daily' ) {
-					
+
 					current.view = current.view + '/' + circuit;
 				}
 			}
@@ -72,7 +72,7 @@ angular.module( 'myApp.services', [] ).
 			// do more validation here in future
 			// and maybe store value if return
 			if ( typeof period === 'undefined' ) {
-			
+
 				period = 'months';
 			}
 			return period;
@@ -81,13 +81,13 @@ angular.module( 'myApp.services', [] ).
 			// do more validation here in future
 			// and maybe store value if return
 			if ( typeof base === 'undefined' ) {
-			
+
 				base = 65;
 			}
-			return base;		
+			return base;
 		},
 		setInterval = function ( str ) {
-			
+
 			if (str == 'hourly') {
 				str = 'hours';
 			}
@@ -103,7 +103,7 @@ angular.module( 'myApp.services', [] ).
 			return str;
 		},
 		setDuration = function ( str ) {
-			
+
 			if (str == 'hourly') {
 				str = '1day';
 			}
@@ -119,9 +119,9 @@ angular.module( 'myApp.services', [] ).
 			return str;
 		},
 		setStart = function ( dt, interval ) {
-			
+
 			var start = moment( dt, 'YYYY-MM-DD' ); // .format( 'YYYY-MM-DD' );
-			
+
 			if (interval == 'days') {
 				//set start to first of month
 				start = start.startOf('month').format( 'YYYY-MM-DD' );
@@ -140,60 +140,60 @@ angular.module( 'myApp.services', [] ).
 			return start;
 		},
 		validate = function ( routeParams ) {
-			
+
 			var options = { params : {} };
 			options.view = routeParams.view;
 			// used for navigation
 			current.view = routeParams.path + '/' + routeParams.view;
-			
+
 			if (routeParams.path == 'daily') {
 				options.url = apiUrl + 'houses/' + setHouse( routeParams.house ) + '/views/heatmap/';
 			}
 			else {
 				options.url = apiUrl + 'houses/' + setHouse( routeParams.house ) + '/views/' + routeParams.view + '/';
 			}
-			
-			options.params.interval = setInterval( routeParams.path );			
-			
+
+			options.params.interval = setInterval( routeParams.path );
+
 			// view dependent params
-			if ( options.view == 'usage' ) { 
-			
+			if ( options.view == 'usage' ) {
+
 				options.params.circuit = setCircuit( routeParams.path, routeParams.circuit );
 				if (routeParams.circuit == 'ashp') {
-					options.params.base = data.ashp_calculation_base; 
+					options.params.base = data.ashp_calculation_base;
 				}
 			}
-			if ( options.view == 'basetemp' ) { 
-			
-				options.params.interval = setPeriod( routeParams.interval ); 
-			
-				options.params.base = setBase( routeParams.base ); 
+			if ( options.view == 'basetemp' ) {
+
+				options.params.interval = setPeriod( routeParams.interval );
+
+				options.params.base = setBase( routeParams.base );
 			}
-			
+
 			options.params.duration = setDuration( routeParams.path );
-			options.params.date = setDate( routeParams.date ); 
+			options.params.date = setDate( routeParams.date );
 			options.params.start = setStart( options.params.date, options.params.interval );
 			options.method = 'GET';
 			return options;
 		},
-		
+
 		// 2 methods used by navCtrl
 		setParamYear = function ( yr ) {
-			
+
 			data.chartDate = moment( data.chartDate ).year( parseInt(yr) ).format('YYYY-MM-DD');  // update date
-			
+
 			current.year = yr;
 		},
 		setMetadata = function ( d ) {
 			// gets called after validate
 			data.asofDate = moment(d.asof).format('YYYY-MM-DD');
-			
+
 			data.years = d.years;
-			
+
 			data.houseName = d.house.name;
-			
+
 			if ( !data.chartDate ) {
-				
+
 				data.chartDate = data.asofDate;
 			}
 			current.year = moment( data.chartDate ).format('YYYY'); // set default year selector
@@ -213,35 +213,35 @@ angular.module( 'myApp.services', [] ).
 		// need days year to date to calculate avarage per day values
 		// if chart year > asof year then return false (can't show data that does not exist)
 		// if chart year (2013) == asof year (2013) then use asof date (else assume it is a prior year)
-		// else if leap year use chart year and divide by 366 
+		// else if leap year use chart year and divide by 366
 		// else use chart year and divide by 365
 		getDaysYTD = function () {
-		
+
 			var daysInYear,
 			asof = moment(data.asofDate),
 			chart = moment(data.chartDate);
-			
-			if (( chart.year() > asof.year() ) || ( chart.year() < data.years[0] )) { 
-				
+
+			if (( chart.year() > asof.year() ) || ( chart.year() < data.years[0] )) {
+
 				return false;
 			}
 			if ( asof.year() == chart.year() ) {
-				
+
 				daysInYear = asof.dayOfYear();
 			}
 			else if ( chart.isLeapYear() ) { // date in a past year
-				
+
 				daysInYear = 366;
 			}
 			else {
-				
+
 				daysInYear = 365;
 			}
 			return daysInYear;
 		};
-		
+
 		return {
-			data : data,					// 
+			data : data,					//
 			current : current,				// used by navCtrl to set state of nav options
 			limits : limits,				// used by dataProvider and chartService - daily
 			setStart : setStart,				// temp workaround
@@ -255,20 +255,20 @@ angular.module( 'myApp.services', [] ).
 
 	}])
 	.factory( 'dataProvider', [ '$http', 'metadataService', function ( $http, metadataService ) {
-		
+
 		var getYearlyDetails = function ( config ) {
-			
+
 			return $http( config ).then( function ( result ) {
 
 				return result.data;
-			}); 
+			});
 		},
 		getYearlyMetadata = function ( config ) {
-			
+
 			return getMonthlyMetadataDetails ( config ).
 
 			then( function () {
-			
+
 				return getYearlyDetails ( config );
 			});
 		},
@@ -277,15 +277,15 @@ angular.module( 'myApp.services', [] ).
 			var config = metadataService.validate ( routeParams );
 			// if no metadata, then get it first
 			if ( metadataService.data.asofDate ) {
-			
+
 				return getYearlyDetails( config );
 			}
 			else {
-			
+
 				return getYearlyMetadata ( config );
 			}
 		},
-		
+
 		getMonthlyMetadataDetails = function ( config ) {
 			// replace hardcoded url
 			return $http.get( metadataService.apiUrl + 'houses/0/views/default/?interval=months' ).then( function ( result ) {
@@ -296,34 +296,34 @@ angular.module( 'myApp.services', [] ).
 					config.params.start = metadataService.setStart ( metadataService.data.chartDate, config.params.interval );
 				}
 				config.params.date = metadataService.data.chartDate;
-			}); 
+			});
 		},
 		getMonthlyDetails = function ( config ) {
 
 			return $http( config ).then( function ( result ) {
-			
-				return result.data; 
+
+				return result.data;
 			});
 		},
 		getMonthlyMetadata = function ( config ) {
-			
+
 			return getMonthlyMetadataDetails ( config ).
 
 			then( function () {
-			
+
 				return getMonthlyDetails ( config );
 			});
 		},
 		getMonthlyData = function ( routeParams ) {
-				
+
 			var config = metadataService.validate ( routeParams );
 			// if no metadata, then get it first
 			if ( metadataService.data.asofDate ) {
-			
+
 				return getMonthlyDetails( config );
 			}
 			else {
-			
+
 				return getMonthlyMetadata ( config );
 			}
 		},
@@ -331,64 +331,64 @@ angular.module( 'myApp.services', [] ).
 		getDailyMetadata = function () {
 			// replace hardcoded url
 			return $http.get( metadataService.apiUrl + 'houses/0/views/default/?interval=days' ).
-			
+
 			then( function ( result ) {
 
 				metadataService.setDailyMetadata ( result.data );
-							
+
 			});
 		},
 		getDailyDetails = function ( config ) {
-			
+
 			if ( typeof metadataService.limits.kwh_max === 'undefined') {
-				
+
 				return getDailyMetadata ().
-				
+
 				then( function() {
-					
+
 					return $http( config ).
-					
+
 					then( function ( result ) {
-					
-						return result.data;	
+
+						return result.data;
 					});
 				});
 			}
 			else {
-				
+
 				return $http( config ).
-				
+
 				then( function ( result ) {
-				
-					return result.data;	
+
+					return result.data;
 				});
 			}
 		},
 		getDailyData = function ( routeParams ) {
 
-			var config = metadataService.validate ( routeParams ); 
+			var config = metadataService.validate ( routeParams );
 			// if no asofDate or name, then get it first -- needed for navCtrl
 			if ( !metadataService.data.asofDate ) {
-				
+
 				return getMonthlyMetadataDetails ( config ).
-				
+
 				then( function () {
-					
+
 					return getDailyMetadata ( config );
 				}).
-				
+
 				then( function () {
-					
+
 					return getDailyDetails( config );
 				});
 			}
 			else {
-				
+
 				return getDailyDetails( config );
 			}
 
 		},
-		
+
 		getHourlyData = function ( routeParams ) {
 			// replace local params
 			var params = metadataService.validate ( routeParams );
@@ -397,29 +397,29 @@ angular.module( 'myApp.services', [] ).
 			params.params.duration = '1day';
 			// replace hardcoded url
 			return $http.get( metadataService.apiUrl + 'houses/0/views/chart/', params ).then( function ( result ) {
-			
-				return result.data; 
+
+				return result.data;
 			});
 		};
-		
+
 		return {
 			getYearlyData : getYearlyData,
 			getMonthlyData : getMonthlyData,
 			getDailyData : getDailyData,
 			getHourlyData : getHourlyData
-		};	
-		
+		};
+
 	}])
 	.factory('chartService', [ '$window', 'metadataService', function ( $window, metadataService ) {
-		
+
 		Highcharts.setOptions({
 			colors: ['#336699', '#669933', '#CC9933', '#CC3333', '#663366', '#999999', '#336699', '#669966']
 		});
-		
+
 		var charts = [],
-		
+
 		chartTemplate = {
-			
+
 			chart : {
 				renderTo : 'view1'
 			},
@@ -432,8 +432,8 @@ angular.module( 'myApp.services', [] ).
 			},
 			title : {
 				text : 'Monthly',
-				style : { 
-					fontSize: '13px' 
+				style : {
+					fontSize: '13px'
 				}
 			},
 			xAxis : {
@@ -443,7 +443,7 @@ angular.module( 'myApp.services', [] ).
 					style: {
 						color: '#000000',
 						fontWeight: 'normal',
-						fontSize: '10px'	
+						fontSize: '10px'
 					}
 				}
 			},
@@ -453,12 +453,12 @@ angular.module( 'myApp.services', [] ).
 					style: {
 						color: '#000000',
 						fontWeight: 'normal',
-						fontSize: '10px'	
+						fontSize: '10px'
 					},
 					rotation: -90
 				}
 			}],
-			plotOptions: {  
+			plotOptions: {
 				column: {
 					dataLabels: {
 						enabled: false,
@@ -477,39 +477,39 @@ angular.module( 'myApp.services', [] ).
 			}
 			//series : []
 		},
-		
+
 		putSeriesData = function ( options, data ) {
-			
+
 			var i, j;
-			
-			if ((!data.months) && (data.years.length > 0)) {
+
+			if ((!data.items) && (data.years.length > 0)) {
 
 				for ( i = 0; i < data.years.length; i++ ) {
-	
+
 					options.xAxis.categories.push( moment( data.years[ i ].date ).format( 'YYYY' ) );
-	
+
 					for ( j = 0; j < options.series.length; j++ ) {
-						
-						options.series[ j ].data.push( Math.round( data.years[ i ][ options.series[ j ].name.toLowerCase() ] ) );	
+
+						options.series[ j ].data.push( Math.round( data.years[ i ][ options.series[ j ].name.toLowerCase() ] ) );
 					}
 				}
-				
-			} else {		
-				for ( i = 0; i < data.months.length; i++ ) {
-	
-					options.xAxis.categories.push( moment( data.months[ i ].date ).format( 'MMM' ) );
-	
+
+			} else {
+				for ( i = 0; i < data.items.length; i++ ) {
+
+					options.xAxis.categories.push( moment( data.items[ i ].date ).format( 'MMM' ) );
+
 					for ( j = 0; j < options.series.length; j++ ) {
-						
-						options.series[ j ].data.push( Math.round( data.months[ i ][ options.series[ j ].name.toLowerCase() ] ) );	
+
+						options.series[ j ].data.push( Math.round( data.items[ i ][ options.series[ j ].name.toLowerCase() ] ) );
 					}
 				}
 			}
 			return options;
 		},
-		
+
 		showDangerIfUsingMoreThanProducing = function ( category, colors, used, solar ) {
-			
+
 			if (( category == 'Solar' ) && ( Math.abs( used ) > Math.abs( solar ) )) {
 				return colors.danger;
 			}
@@ -517,39 +517,39 @@ angular.module( 'myApp.services', [] ).
 				return colors[ category ];
 			}
 		},
-		showUsageVsGen = function ( data ) {	
-			
+		showUsageVsGen = function ( data ) {
+
 			var i, colors = { 'Used' : '#336699', 'Solar' : '#669933', 'danger' : '#DF0101' },
-			options = angular.copy ( chartTemplate ); 
+			options = angular.copy ( chartTemplate );
 			options.title.text = 'Usage vs. Generation';
 			options.legend.enabled = false;
 			options.plotOptions.column.dataLabels.enabled = true;
 			options.series = [ { type: 'column', data : [] } ];
 			options.xAxis.categories = [ 'Used', 'Solar' ];
-		
+
 			for ( i = 0; i < options.xAxis.categories.length; i++ ) {
-				
+
 				options.series[0].data.push({
-					y : Math.round( Math.abs ( data.totals[ options.xAxis.categories[ i ].toLowerCase() ] ) ), 
+					y : Math.round( Math.abs ( data.totals[ options.xAxis.categories[ i ].toLowerCase() ] ) ),
 					color : showDangerIfUsingMoreThanProducing( options.xAxis.categories[ i ], colors, data.totals.used, data.totals.solar )
 				}); // if usage > solar then danger, danger! (change color of solar to red)
 			}
-			
+
 			return new Highcharts.Chart ( options );
 		},
 
 		showSummaryYTD = function ( data ) {
-			
-			var options = angular.copy( chartTemplate ); 
+
+			var options = angular.copy( chartTemplate );
 			options.chart.renderTo = 'view2';
 			options.yAxis.push( angular.copy( options.yAxis[0] ) );
 			options.yAxis[1].title.text = 'HDD';
 			options.yAxis[1].title.rotation = 90;
 			options.yAxis[1].opposite = true;
 			options.yAxis[1].min = 0;
-			options.series = [ 
-				{ name : 'Used', type: 'column', data : [] }, 
-				{ name : 'Solar', type: 'column', data : [] }, 
+			options.series = [
+				{ name : 'Used', type: 'column', data : [] },
+				{ name : 'Solar', type: 'column', data : [] },
 				{ name : 'Net', type: 'column', data : [] },
 				{ name : 'HDD', type: 'line', data : [], yAxis : 1 }
 			];
@@ -558,26 +558,26 @@ angular.module( 'myApp.services', [] ).
 		},
 
 		showGenerationYTD = function ( data ) {
-			
-			var options = angular.copy ( chartTemplate ); 
-			options.series = [ 
-				{ name : 'Actual', type: 'column', data : [] }, 
-				{ name : 'Estimated', type: 'column', data : [] }, 
+
+			var options = angular.copy ( chartTemplate );
+			options.series = [
+				{ name : 'Actual', type: 'column', data : [] },
+				{ name : 'Estimated', type: 'column', data : [] },
 				{ name : 'Net', type: 'column', data : [] }
 			];
 
-			return new Highcharts.Chart ( putSeriesData( options, data ) );	
+			return new Highcharts.Chart ( putSeriesData( options, data ) );
 		},
 
 		showUsageCircuits = function ( data ) {
 
-			var i, options = angular.copy ( chartTemplate ); 
+			var i, options = angular.copy ( chartTemplate );
 			options.title.text = 'Usage by circuit';
 			options.tooltip = {
 				pointFormat: '{series.name}: <b>{point.y} kWh</b>',
 				percentageDecimals: 1
 			};
-			options.plotOptions = { 
+			options.plotOptions = {
 				pie: {
 					allowPointSelect: true,
 					cursor: 'pointer',
@@ -607,11 +607,11 @@ angular.module( 'myApp.services', [] ).
 		},
 
 		showUsageYTD = function ( data ) {
-			
-			var options = angular.copy ( chartTemplate ); 
+
+			var options = angular.copy ( chartTemplate );
 			options.title.text = data.circuit.name;
-			options.series = [ 
-				{ name : 'Actual', type: 'column', data : [] } 
+			options.series = [
+				{ name : 'Actual', type: 'column', data : [] }
 			];
 
 			switch ( data.circuit.circuit_id ) {
@@ -629,20 +629,20 @@ angular.module( 'myApp.services', [] ).
 
 		showHddYTD = function ( data ) {
 
-			var options = angular.copy ( chartTemplate ); 
+			var options = angular.copy ( chartTemplate );
 			options.yAxis[0].title.text = 'HDD';
-			options.series = [ 
-				{ name : 'Actual', type: 'column', data : [] }, 
-				{ name : 'Estimated', type: 'column', data : [] }, 
+			options.series = [
+				{ name : 'Actual', type: 'column', data : [] },
+				{ name : 'Estimated', type: 'column', data : [] },
 				{ name : 'Net', type: 'column', data : [] }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
 		},
-		
+
 		showWaterYTD = function ( data ) {
 
-			var options = angular.copy ( chartTemplate ); 
+			var options = angular.copy ( chartTemplate );
 			options.title.text = 'Monthly Breakdown';
 			options.yAxis.push( angular.copy( options.yAxis[0] ) );
 			options.yAxis[0].title.text = 'Gallons';
@@ -652,24 +652,24 @@ angular.module( 'myApp.services', [] ).
 			options.yAxis[1].title.rotation = 90;
 			options.yAxis[1].opposite = true;
 			options.yAxis[1].min = 0;
-			options.series = [ 
-				{ name : 'Cold', type: 'column', data : [] }, 
-				{ name : 'Hot', type: 'column', color : '#CC3333', data : [] }, 
+			options.series = [
+				{ name : 'Cold', type: 'column', data : [] },
+				{ name : 'Hot', type: 'column', color : '#CC3333', data : [] },
 				{ name : 'Water_heater', type : 'line', color : '#CC3333', data : [], yAxis : 1 }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
 		},
-		
+
 		showWaterMainYTD = function ( data ) {
 
-			var options = angular.copy ( chartTemplate ); 
+			var options = angular.copy ( chartTemplate );
 			options.chart.renderTo = 'view2';
 			options.title.text = 'Monthly Total Usage';
 			options.yAxis[0].title.text = 'Gallons';
 			options.yAxis[0].labels = { format : '{value:,.0f}' };
 			options.yAxis[0].max = 4000;
-			options.series = [ 
+			options.series = [
 				{ name : 'Main', type: 'area', data : [] }
 			];
 
@@ -679,14 +679,14 @@ angular.module( 'myApp.services', [] ).
 		showBaseTemp = function ( data ) {
 
 			var i, d, dt, tm,
-			options = angular.copy ( chartTemplate ); 
+			options = angular.copy ( chartTemplate );
 			options.chart.renderTo = 'view1';
 			options.chart.height = 400;
 			options.zoomType = 'x';
 			options.title.text = 'Correlating HDD with Heating energy';
 			delete options.xAxis.categories;
 			options.xAxis.title.text = 'HDD';
-			options.plotOptions = { 
+			options.plotOptions = {
 				series: {
 					turboThreshold : 0,
 					point: {
@@ -694,7 +694,7 @@ angular.module( 'myApp.services', [] ).
 							click: function() {
 								if (this.date) {
 									dt = moment( this.date, ['MMM, YYYY', 'MMM d, YYYY', 'MMM d, YYYY h a'] );
-									tm = (data.interval === 'hours') ? '&time=' + dt.format('HH') : ''; 
+									tm = (data.interval === 'hours') ? '&time=' + dt.format('HH') : '';
 									$window.location = '#/daily/usage/ashp?date=' + dt.format('YYYY-MM-DD') + tm;
 								}
 							}
@@ -703,7 +703,7 @@ angular.module( 'myApp.services', [] ).
 				},
 				scatter: {
 					marker: {
-						radius: 5 
+						radius: 5
 					},
 					states: {
 						hover: {
@@ -718,41 +718,41 @@ angular.module( 'myApp.services', [] ).
 					}
 				}
 			};
-			options.series = [ 
+			options.series = [
 				{ name : 'Data point', type : 'scatter', color : 'rgba(223, 83, 83, .5)', data : [] },
 				{ name : 'Regression Line', type : 'line', color : '#336699', data : [] }
 			];
-			
+
 			for( i = 0; i < data.points.length; i++ ) {
-				 
+
 				d = moment( data.points[i].date, ['YYYY-MM-DD', 'YYYY-MM-DD hh:mm:ss'] );
 				if ( data.interval === 'hour' ) { dt = d.format( 'MMM D, YYYY h a' ); }
 				if ( data.interval === 'day' ) { dt = d.format( 'MMM D, YYYY' ); }
 				if ( data.interval === 'month' ) { dt = d.format( 'MMM, YYYY' ); }
-				
-				options.series[0].data.push({ 
+
+				options.series[0].data.push({
 					date  : dt,
 					ashp  : data.points[ i ].ashp,
-					solar : data.points[ i ].solar, 
-					x : parseFloat( data.points[ i ].hdd ), 
-					y : parseFloat( data.points[ i ].ashp ) 
+					solar : data.points[ i ].solar,
+					x : parseFloat( data.points[ i ].hdd ),
+					y : parseFloat( data.points[ i ].ashp )
 				});
 			}
-			
+
 			var start_x = Math.min.apply( Math, data.lr.xr );
 			var start_y = data.lr.slope * start_x + data.lr.intercept;
 			var end_x = Math.max.apply( Math, data.lr.xr );
 			var end_y = data.lr.slope * end_x + data.lr.intercept;
-			
+
 			options.series[1].data.push( [ start_x, start_y ], [ end_x, end_y ] );
 
 			return new Highcharts.Chart ( options );
 		},
 
 		showDaily = function ( data ) {
-			
+
 			var i, j, chart,
-			options = angular.copy ( chartTemplate ); 
+			options = angular.copy ( chartTemplate );
 			options.chart.renderTo = 'view1';
 			options.chart.height = 400;
 			options.plotOptions.series.marker = { enabled : false };
@@ -768,16 +768,16 @@ angular.module( 'myApp.services', [] ).
 			options.yAxis[1].title.text = 'Temperature F';
 			options.yAxis[1].min = metadataService.limits.deg_min;
 			options.yAxis[1].max = metadataService.limits.deg_max;
-			
+
 			options.yAxis[2].title.text = 'HDD';
 			options.yAxis[2].min = metadataService.limits.hdd_min;
 			options.yAxis[2].max = metadataService.limits.hdd_max;
 			options.yAxis[2].title.rotation = 90;
 			options.yAxis[2].opposite = true;
 
-			options.series = [ 
-				{ id : 'net', name : 'Net Usage', type: 'line', color : '#CC9933', data : [], yAxis : 0, zIndex : 3, lineWidth : 5 }, 
-				{ id : 'solar', name : 'Generation', type: 'area', color : '#669933', data : [], yAxis : 0, lineWidth : 0 }, 
+			options.series = [
+				{ id : 'net', name : 'Net Usage', type: 'line', color : '#CC9933', data : [], yAxis : 0, zIndex : 3, lineWidth : 5 },
+				{ id : 'solar', name : 'Generation', type: 'area', color : '#669933', data : [], yAxis : 0, lineWidth : 0 },
 				{ id : 'used', name : 'Usage', type : 'area', color : '#336699', data : [], yAxis : 0, lineWidth : 0 },
 				{ id : 'first_floor_temp', name : 'First floor temp', type : 'line', data : [], yAxis : 1 },
 				{ id : 'second_floor_temp', name : 'Second floor temp', type : 'line', data : [], yAxis : 1 },
@@ -803,39 +803,39 @@ angular.module( 'myApp.services', [] ).
 				{ id : 'ventilation_preheat', name : 'Ventilation pre-heat', type : 'line', data : [], yAxis : 0 },
 				{ id : 'kitchen_recept_rt', name : 'Kitchen receptical', type : 'line', data : [], yAxis : 0 },
 				{ id : 'all_other', name : 'All other', type : 'line', data : [], yAxis : 0 }
-			];			
+			];
 			// set additional options
-			
+
 			// parse data
 			for ( i = 0; i < data.hours.length; i++ ) {
 
 				options.xAxis.categories.push( moment( data.hours[ i ].date ).format( 'H' ) );
 
 				for ( j = 0; j < options.series.length; j++ ) {
-					options.series[ j ].data.push( parseFloat( data.hours[ i ][ options.series[ j ].id ] ) );	
+					options.series[ j ].data.push( parseFloat( data.hours[ i ][ options.series[ j ].id ] ) );
 				}
 			}
-			
+
 			chart = new Highcharts.Chart ( options );
-			
+
 			// add/remove plotline as needed
-			if (typeof data.time !== 'undefined') 
-			{ 
+			if (typeof data.time !== 'undefined')
+			{
 				chart.xAxis[0].addPlotLine({ color : '#FF0000', width : 2, value : data.time, id : 'p1' });
 			}
 			// turn off temps and circuits
 			for ( i = 3; i < options.series.length; i++ ) { chart.series[ i ].hide();}
 			chart.series[ 7 ].show();
-			
+
 			return chart;
 		},
-		
+
 		setData = function ( view, data ) {
-			
+
 			while ( charts.length > 0 ) {
 				charts.pop().destroy();
 			}
-			
+
 			switch( view ) {
 				case "summary":
 					charts.push( showUsageVsGen ( data ) );
@@ -862,64 +862,64 @@ angular.module( 'myApp.services', [] ).
 					break;
 				case "daily":
 					charts.push( showDaily ( data ) );
-			}			
+			}
 		};
-		
+
 		return {
 			setData : setData
 		};
 
 	}])
 	.factory('dataService', [ 'metadataService', function(metadataService) {
-		
+
 		var insertADU = function (data, props, avg_props) {
-			
+
 			var i, j, d,
-			adu, 
-			daysInMonth, 
+			adu,
+			daysInMonth,
 			daysInYear,
 			totalDays = 0;
-			
-			if ((!data.months) && (data.years.length > 0)) {
-				// years
-				for ( j = 0; j < data.years.length; j++ ) {
 
-					d = moment( data.years[j].date );
-					if ( d != metadataService.data.asofDate) { 
+			if (data.interval === 'year') {
+				// years
+				for ( j = 0; j < data.items.length; j++ ) {
+
+					d = moment( data.items[j].date );
+					if ( d != metadataService.data.asofDate) {
 						// assumes all prior years have a full year of data -- bad assumption
 						daysInYear = 365;
-						if ( moment( data.years[j].date ).isLeapYear() ) { daysInYear++; }
-						
+						if ( moment( data.items[j].date ).isLeapYear() ) { daysInYear++; }
+
 					} else {
 
 						daysInYear = metadataService.getDaysYTD();
 					}
-				
+
 					for ( i = 0; i < props.length; i++ ) {
 
-						adu = data.years[j][ props[i] ] / daysInYear;
-						data.years[j][ avg_props[i] ] = adu;
+						adu = data.items[j][ props[i] ] / daysInYear;
+						data.items[j][ avg_props[i] ] = adu;
 					}
-					
+
 					totalDays = totalDays + daysInYear;
 				}
 			} else {
 				// months
-				for ( j = 0; j < data.months.length; j++ ) {
-				
+				for ( j = 0; j < data.items.length; j++ ) {
+
 					for ( i = 0; i < props.length; i++ ) {
-				
-						daysInMonth = moment( data.months[j].date ).daysInMonth(); 
-						adu = data.months[j][ props[i] ] / daysInMonth;
-						data.months[j][ avg_props[i] ] = adu;
+
+						daysInMonth = moment( data.items[j].date ).daysInMonth();
+						adu = data.items[j][ props[i] ] / daysInMonth;
+						data.items[j][ avg_props[i] ] = adu;
 					}
-					
+
 					totalDays = totalDays + daysInMonth;
 				}
 			}
 			// total
-			for ( i = 0; i < props.length; i++ ) { 
-			
+			for ( i = 0; i < props.length; i++ ) {
+
 				adu = data.totals[ props[i] ] / totalDays;
 				data.totals[ avg_props[i] ] = adu;
 			}
@@ -930,27 +930,27 @@ angular.module( 'myApp.services', [] ).
 		insertADG = function (data) {
 			// gen per day
 			var daysInYear = metadataService.getDaysYTD(),
-			adg = data.totals.actual / daysInYear; 
+			adg = data.totals.actual / daysInYear;
 			data.avg_daily_gen = adg.toFixed(1);
 
 			return data;
 		},
 
-		insertDiff = function ( data, col1, col2 ) {				
+		insertDiff = function ( data, col1, col2 ) {
 			// diff for total line
-			var i, 
+			var i,
 			net = data.totals[col1] - data.totals[col2],
 			diff = (net / data.totals[col2]) * 100.0;
 			data.totals.net = net.toFixed(0);
 			data.totals.diff = diff.toFixed(1);
-			
+
 			// diff for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				
-				net = data.months[i][col1] - data.months[i][col2];
-				diff = (net / data.months[i][col2]) * 100.0;
-				data.months[i].net = net.toFixed(0);
-				data.months[i].diff = diff.toFixed(1);
+			for ( i = 0; i < data.items.length; i++ ) {
+
+				net = data.items[i][col1] - data.items[i][col2];
+				diff = (net / data.items[i][col2]) * 100.0;
+				data.items[i].net = net.toFixed(0);
+				data.items[i].diff = diff.toFixed(1);
 			}
 			return data;
 		},
@@ -958,33 +958,33 @@ angular.module( 'myApp.services', [] ).
 		getProjectedHeatEnergy = function ( hdd )
 		{
 			// returns kWh
-			// return hdd * 0.4120 + 1.356; // HDD 65F base 
+			// return hdd * 0.4120 + 1.356; // HDD 65F base
 			return hdd * 0.2261 + 0.7565; // HDD 50F base
 			// return hdd * 1.2714 + 25.279; // HDD 33F base
 		},
 		insertProjected = function ( data ) {
 			// for total line
-			var i, 
+			var i,
 			projected = getProjectedHeatEnergy( data.totals.hdd );
 			data.totals.projected = projected;
-			
+
 			// for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				
-				projected = getProjectedHeatEnergy( data.months[i].hdd );
-				data.months[i].projected = projected;
+			for ( i = 0; i < data.items.length; i++ ) {
+
+				projected = getProjectedHeatEnergy( data.items[i].hdd );
+				data.items[i].projected = projected;
 			}
 			return data;
 		},
 
 		maxValueInArray = function ( arr, name, neg ) {
-			
+
 			var i, value, max = 0;
 
 			for ( i = 0; i < arr.length; i++ ) {
-				
+
 				value = parseFloat( arr[i][name] );
-				
+
 				if (neg) {
 					if (value < max) { max = value; }
 				}
@@ -1001,7 +1001,7 @@ angular.module( 'myApp.services', [] ).
 			max = maxValueInArray( data[arr], name, neg );
 			// calc perc for each item in 'arr'
 			for ( i = 0; i < data[arr].length; i++ ) {
-				
+
 				value = parseFloat( data[arr][i][name] );
 				perc = (value / max) * 100.0;
 				data[arr][i].perc = perc;
@@ -1014,7 +1014,7 @@ angular.module( 'myApp.services', [] ).
 			data.wh_sf_hdd = (parseFloat(data.totals.ashp_heating_season) * 1000 ) / parseFloat(data.iga) / parseFloat(data.totals.hdd_heating_season);
 			// convert kWh to BTU
 			data.btu_sf_hdd = (parseFloat(data.totals.ashp_heating_season) * 3412.14163) / parseFloat(data.iga) / parseFloat(data.totals.hdd_heating_season);
-			
+
 			return data;
 		},
 
@@ -1023,32 +1023,32 @@ angular.module( 'myApp.services', [] ).
 			var i;
 			data.totals.water_heater_efficiency = data.totals.water_heater * 1000 / data.totals.hot;
 			data.totals.water_pump_efficiency =   data.totals.water_pump * 1000 / data.totals.main;
-			
+
 			// for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				data.months[i].water_heater_efficiency = data.months[i].water_heater * 1000 / data.months[i].hot;
-				data.months[i].water_pump_efficiency =   data.months[i].water_pump * 1000 / data.months[i].main;
+			for ( i = 0; i < data.items.length; i++ ) {
+				data.items[i].water_heater_efficiency = data.items[i].water_heater * 1000 / data.items[i].hot;
+				data.items[i].water_pump_efficiency =   data.items[i].water_pump * 1000 / data.items[i].main;
 			}
 			return data;
 		},
-		
+
 		insertLinearRegression = function (data) {
-			
+
 			var i, xr = [], yr = [];
-			
-			for( i = 0; i < data.points.length; i++ ) { 
+
+			for( i = 0; i < data.points.length; i++ ) {
 				// hdd, ashp - used for linear regression
 				xr[i] = parseFloat(data.points[i].hdd);
 				yr[i] = parseFloat(data.points[i].ashp);
 			}
-			
+
 			data.lr = linearRegression(yr,xr);
 
 			return data;
 		},
 		linearRegression = function (y,x) {
-			
-			var i, 
+
+			var i,
 			lr = {},
 			n = y.length,
 			sum_x = 0,
@@ -1056,15 +1056,15 @@ angular.module( 'myApp.services', [] ).
 			sum_xy = 0,
 			sum_xx = 0,
 			sum_yy = 0;
-			
-			for ( i = 0; i < y.length; i++ ) {     
+
+			for ( i = 0; i < y.length; i++ ) {
 				sum_x += x[i];
 				sum_y += y[i];
 				sum_xy += (x[i]*y[i]);
 				sum_xx += (x[i]*x[i]);
 				sum_yy += (y[i]*y[i]);
-			} 
-			
+			}
+
 			lr.slope = (n * sum_xy - sum_x * sum_y) / (n*sum_xx - sum_x * sum_x);
 			lr.intercept = (sum_y - lr.slope * sum_x)/n;
 			lr.r2 = Math.pow((n*sum_xy - sum_x*sum_y)/Math.sqrt((n*sum_xx-sum_x*sum_x)*(n*sum_yy-sum_y*sum_y)),2);
@@ -1082,14 +1082,14 @@ angular.module( 'myApp.services', [] ).
 			}
 			return data;
 		},
-		
+
 		insertColor = function ( data, colors ) {
 			var name, j, max, min, range, value, perc, color, colorScale;
-			
+
 			data.views = {};
-			
+
 			for ( name in colors ) {
-			
+
 				max = maxValueInArray ( data.days, name );
 				min = maxValueInArray ( data.days, name, true );
 				range = max - min;
@@ -1098,7 +1098,7 @@ angular.module( 'myApp.services', [] ).
 				for ( j = 0; j < data.days.length; j++ ) {
 
 					value = parseFloat( data.days[ j ][ name ] );
-					perc = ((( value + range ) / range ) - (( min + range ) / range )); 
+					perc = ((( value + range ) / range ) - (( min + range ) / range ));
 					color = colorScale( perc ).hex();
 					// expand value into an object
 					data.days[ j ][ name ] = {};
@@ -1106,52 +1106,52 @@ angular.module( 'myApp.services', [] ).
 					data.days[ j ][ name ].perc = perc;
 					data.days[ j ][ name ].color = color;
 				}
-				
-				data.views[ name ] = { 
-					maxValue : max, 
-					minValue : min, 
-					startColor : colors[ name ].start.hex(), 
-					endColor : colors[ name ].end.hex() 
+
+				data.views[ name ] = {
+					maxValue : max,
+					minValue : min,
+					startColor : colors[ name ].start.hex(),
+					endColor : colors[ name ].end.hex()
 				};
 			}
 			return data;
 		},
-		
+
 		sortChildObjectsByProp = function ( prop, arr ) {
 			// used for heatmap legend
 			// thanks to http://stackoverflow.com/questions/5073799/how-to-sort-a-javascript-array-of-objects-by-nested-object-property
 			prop = prop.split ( '.' );
-			
+
 			var len = prop.length;
 
 			arr.sort ( function ( a, b ) {
-				
+
 				var i = 0;
-				
+
 				while( i < len ) {
-					
+
 					a = a[ prop[ i ] ];
-					
+
 					b = b[ prop[ i ] ];
-					
+
 					i++;
 				}
 				if ( a < b ) {
-					
+
 					return -1;
-				} 
+				}
 				else if ( a > b ) {
-					
+
 					return 1;
-				} 
+				}
 				else {
-					
+
 					return 0;
 				}
 			});
 			return arr;
 		};
-		
+
 		return {
 			insertADU : insertADU,
 			insertADG : insertADG,
@@ -1165,6 +1165,5 @@ angular.module( 'myApp.services', [] ).
 			insertColor : insertColor,
 			sortChildObjectsByProp : sortChildObjectsByProp
 		};
-		
+
 	}]);
-	
