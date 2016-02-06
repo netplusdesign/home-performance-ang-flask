@@ -3,8 +3,8 @@
 /* jasmine specs for controllers go here */
 
 describe('YearlyCtrl', function() {
-	
-	var scope, createController, 
+
+	var scope, createController,
 	mockData,
 	mockDataProviderService = {
 		getYearlyData : function () {
@@ -21,13 +21,13 @@ describe('YearlyCtrl', function() {
 		insertEfficiency : function () { },
 		insertLinearRegression : function () { }
 	},
-	mockChartService = { 
-		setData : function () { } 
+	mockChartService = {
+		setData : function () { }
 	},
 	routeParams;
 
 	beforeEach( module( 'myApp.controllers' ) );
-	
+
 	beforeEach( inject( function( $rootScope, $controller, $q ) {
 
 		q = $q;
@@ -42,7 +42,7 @@ describe('YearlyCtrl', function() {
 			});
 		};
     }));
-	
+
 	// it('', function() {});
 	it('should insert avg. daily usage when view == summary', function() {
 		routeParams = { view : 'summary' };
@@ -55,7 +55,7 @@ describe('YearlyCtrl', function() {
 		expect(mockDataService.insertADU).toHaveBeenCalled();
 	});
 	it('should show error when view == summary and returned month object == null', function() {
-		mockData = {"totals":{"used":null,"solar":null,"net":null,"hdd":null}}; 
+		mockData = {"totals":{"used":null,"solar":null,"net":null,"hdd":null}};
 		var controller = createController();
 		scope.$apply();
 		expect(scope.warning).toBe(true);
@@ -63,8 +63,8 @@ describe('YearlyCtrl', function() {
 });
 
 describe('MonthlyCtrl', function() {
-	
-	var scope, createController, 
+
+	var scope, createController,
 	mockData,
 	mockDataProviderService = {
 		getMonthlyData : function () {
@@ -85,13 +85,13 @@ describe('MonthlyCtrl', function() {
 		insertEfficiency : function () { },
 		insertLinearRegression : function () { }
 	},
-	mockChartService = { 
-		setData : function () { } 
+	mockChartService = {
+		setData : function () { }
 	},
 	routeParams;
 
 	beforeEach( module( 'myApp.controllers' ) );
-	
+
 	beforeEach( inject( function( $rootScope, $controller, $q ) {
 
 		q = $q;
@@ -107,7 +107,7 @@ describe('MonthlyCtrl', function() {
 			});
 		};
     }));
-	
+
 	it('should insert avg. daily usage when view == summary', function() {
 		routeParams = { view : 'summary' };
 		mockData = {"totals":{"used":"7206.154","solar":"-8574.577","net":"-1368.423","hdd":"6810.250","adu":"19.7"},"items":[{"date":"2013-01-01","used":"880.949","solar":"-478.374","net":"402.575","hdd":"1188.596","adu":"28.4"},{"date":"2013-02-01","used":"811.571","solar":"-449.081","net":"362.490","hdd":"1066.626","adu":"29.0"},{"date":"2013-03-01","used":"806.205","solar":"-618.374","net":"187.831","hdd":"982.966","adu":"26.0"},{"date":"2013-04-01","used":"527.707","solar":"-919.527","net":"-391.820","hdd":"571.167","adu":"17.6"},{"date":"2013-05-01","used":"529.269","solar":"-903.916","net":"-374.647","hdd":"232.213","adu":"17.1"},{"date":"2013-06-01","used":"411.362","solar":"-802.487","net":"-391.125","hdd":"103.059","adu":"13.7"},{"date":"2013-07-01","used":"383.589","solar":"-929.168","net":"-545.579","hdd":"18.478","adu":"12.4"},{"date":"2013-08-01","used":"446.655","solar":"-960.804","net":"-514.149","hdd":"58.028","adu":"14.4"},{"date":"2013-09-01","used":"452.088","solar":"-936.330","net":"-484.242","hdd":"218.072","adu":"15.1"},{"date":"2013-10-01","used":"482.340","solar":"-674.075","net":"-191.735","hdd":"404.790","adu":"15.6"},{"date":"2013-11-01","used":"558.689","solar":"-639.284","net":"-80.595","hdd":"837.642","adu":"18.6"},{"date":"2013-12-01","used":"915.730","solar":"-263.157","net":"652.573","hdd":"1128.613","adu":"29.5"}]};
@@ -145,7 +145,7 @@ describe('MonthlyCtrl', function() {
 		expect(scope.options.base).toBeUndefined();
 		expect(mockDataProviderService.getMonthlyData).toHaveBeenCalled();
 		scope.$apply();
-		expect(mockDataService.insertPercent).toHaveBeenCalled();		
+		expect(mockDataService.insertPercent).toHaveBeenCalled();
 	});
 	it('should insert diff betwn actual and budget when view == usage && circuit == all', function() {
 		routeParams = { view : 'usage' };
@@ -156,7 +156,7 @@ describe('MonthlyCtrl', function() {
 		expect(scope.options.base).toBeUndefined();
 		expect(mockDataProviderService.getMonthlyData).toHaveBeenCalled();
 		scope.$apply();
-		expect(mockDataService.insertDiff).toHaveBeenCalled();				
+		expect(mockDataService.insertDiff).toHaveBeenCalled();
 	});
 	it('should insert projected values based on hdd and diff btwn projected and actual when view == usage && circuit == ashp', function() {
 		routeParams = { view : 'usage' };
@@ -169,7 +169,7 @@ describe('MonthlyCtrl', function() {
 		expect(mockDataProviderService.getMonthlyData).toHaveBeenCalled();
 		scope.$apply();
 		expect(mockDataService.insertProjected).toHaveBeenCalled();
-		expect(mockDataService.insertDiff).toHaveBeenCalled();					
+		expect(mockDataService.insertDiff).toHaveBeenCalled();
 	});
 	it('should insert heat efficiency and diff btwn actual and estimated when view == hdd', function() {
 		routeParams = { view : 'hdd' };
@@ -182,9 +182,9 @@ describe('MonthlyCtrl', function() {
 		expect(mockDataProviderService.getMonthlyData).toHaveBeenCalled();
 		scope.$apply();
 		expect(mockDataService.insertHeatEfficiency).toHaveBeenCalled();
-		expect(mockDataService.insertDiff).toHaveBeenCalled();				
+		expect(mockDataService.insertDiff).toHaveBeenCalled();
 	});
-	it('should insert efficiency and avg. daily usage when view == water', function() { 
+	it('should insert efficiency and avg. daily usage when view == water', function() {
 		routeParams = { view : 'water' };
 		mockData = {"totals":{"cold":"16253.4","hot":"7868.9","main":"24122.3","water_heater":"2078.042","water_pump":"63.780"},"items":[{"date":"2013-01-01","cold":"1355.6","hot":"949.4","main":"2305.0","water_heater":"255.815","water_pump":"5.916"},{"date":"2013-02-01","cold":"1298.8","hot":"904.9","main":"2203.7","water_heater":"247.124","water_pump":"5.595"},{"date":"2013-03-01","cold":"1311.0","hot":"911.9","main":"2222.9","water_heater":"259.970","water_pump":"5.978"},{"date":"2013-04-01","cold":"1055.5","hot":"565.3","main":"1620.8","water_heater":"156.124","water_pump":"4.302"},{"date":"2013-05-01","cold":"1589.2","hot":"682.1","main":"2271.3","water_heater":"170.651","water_pump":"5.940"},{"date":"2013-06-01","cold":"1371.3","hot":"489.3","main":"1860.6","water_heater":"123.939","water_pump":"4.829"},{"date":"2013-07-01","cold":"1511.6","hot":"434.9","main":"1946.5","water_heater":"106.686","water_pump":"5.263"},{"date":"2013-08-01","cold":"1768.7","hot":"511.6","main":"2280.3","water_heater":"127.786","water_pump":"5.940"},{"date":"2013-09-01","cold":"1328.8","hot":"472.5","main":"1801.3","water_heater":"120.055","water_pump":"5.313"},{"date":"2013-10-01","cold":"1267.4","hot":"558.0","main":"1825.4","water_heater":"138.081","water_pump":"4.774"},{"date":"2013-11-01","cold":"1180.0","hot":"610.0","main":"1790.0","water_heater":"160.230","water_pump":"4.721"},{"date":"2013-12-01","cold":"1215.5","hot":"779.0","main":"1994.5","water_heater":"211.581","water_pump":"5.209"}]};
 		spyOn(mockDataProviderService, 'getMonthlyData').andCallThrough();
@@ -221,12 +221,12 @@ describe('MonthlyCtrl', function() {
 		scope.$apply();
 		expect(mockDataService.insertLinearRegression).toHaveBeenCalled();
 	});
-	
+
 });
 
 describe('DailyCtrl', function() {
 
-	var scope, createController, 
+	var scope, createController,
 	mockDailyData, mockHourlyData,
 	mockDataProviderService = {
 		getDailyData : function () {
@@ -245,13 +245,13 @@ describe('DailyCtrl', function() {
 		insertMeasure : function () { },
 		insertColor : function () { }
 	},
-	mockChartService = { 
-		setData : function () { } 
+	mockChartService = {
+		setData : function () { }
 	},
 	route, routeParams;
 
 	beforeEach( module( 'myApp.controllers' ) );
-	
+
 	beforeEach( inject( function( $rootScope, $controller, $q ) {
 
 		q = $q;
@@ -285,8 +285,5 @@ describe('DailyCtrl', function() {
 	xit('should not reload controller when switch between daily views', function() {
 		// how to test this?
 	});
-	
+
 });
-
-
-
