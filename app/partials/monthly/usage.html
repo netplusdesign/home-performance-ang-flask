@@ -42,7 +42,7 @@
 				<th ng-if="data.circuit.circuit_id == 'ashp'" title="HDD base 50&deg;F = {{data.totals.hdd | number:0}}" class="text-right">{{data.totals.projected | number:0}}</th>
 				<th ng-if="data.circuit.circuit_id == 'all' || data.circuit.circuit_id == 'ashp'" ng-class="{'text-danger': data.totals.diff<0, 'text-success': data.totals.diff>=0}" class="text-right">{{data.totals.diff | number:1}}</th>
 			</tr>
-			<tr ng-repeat="month in data.months">
+			<tr ng-repeat="month in data.items">
 				<td class="text-left"><a ng-href="#/daily/usage/{{ data.circuit.circuit_id }}?house={{house}}&date={{ month.date | date:'yyyy-MM' }}" >{{month.date | date:"MMM"}}</a></td>
 				<td>{{month.actual | number:0}}</td>
 				<!-- conditional, if summary -->

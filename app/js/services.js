@@ -481,8 +481,8 @@ angular.module( 'myApp.services', [] ).
 		putSeriesData = function ( options, data ) {
 			
 			var i, j;
-			
-			if ((!data.months) && (data.years.length > 0)) {
+
+			if ((!data.items) && (data.years.length > 0)) {
 
 				for ( i = 0; i < data.years.length; i++ ) {
 	
@@ -493,15 +493,15 @@ angular.module( 'myApp.services', [] ).
 						options.series[ j ].data.push( Math.round( data.years[ i ][ options.series[ j ].name.toLowerCase() ] ) );	
 					}
 				}
-				
-			} else {		
-				for ( i = 0; i < data.months.length; i++ ) {
-	
-					options.xAxis.categories.push( moment( data.months[ i ].date ).format( 'MMM' ) );
-	
+
+			} else {
+				for ( i = 0; i < data.items.length; i++ ) {
+
+					options.xAxis.categories.push( moment( data.items[ i ].date ).format( 'MMM' ) );
+
 					for ( j = 0; j < options.series.length; j++ ) {
-						
-						options.series[ j ].data.push( Math.round( data.months[ i ][ options.series[ j ].name.toLowerCase() ] ) );	
+
+						options.series[ j ].data.push( Math.round( data.items[ i ][ options.series[ j ].name.toLowerCase() ] ) );
 					}
 				}
 			}
@@ -879,17 +879,17 @@ angular.module( 'myApp.services', [] ).
 			daysInMonth, 
 			daysInYear,
 			totalDays = 0;
-			
-			if ((!data.months) && (data.years.length > 0)) {
-				// years
-				for ( j = 0; j < data.years.length; j++ ) {
 
-					d = moment( data.years[j].date );
-					if ( d != metadataService.data.asofDate) { 
+			if (data.interval === 'year') {
+				// years
+				for ( j = 0; j < data.items.length; j++ ) {
+
+					d = moment( data.items[j].date );
+					if ( d != metadataService.data.asofDate) {
 						// assumes all prior years have a full year of data -- bad assumption
 						daysInYear = 365;
-						if ( moment( data.years[j].date ).isLeapYear() ) { daysInYear++; }
-						
+						if ( moment( data.items[j].date ).isLeapYear() ) { daysInYear++; }
+
 					} else {
 
 						daysInYear = metadataService.getDaysYTD();
@@ -897,21 +897,21 @@ angular.module( 'myApp.services', [] ).
 				
 					for ( i = 0; i < props.length; i++ ) {
 
-						adu = data.years[j][ props[i] ] / daysInYear;
-						data.years[j][ avg_props[i] ] = adu;
+						adu = data.items[j][ props[i] ] / daysInYear;
+						data.items[j][ avg_props[i] ] = adu;
 					}
 					
 					totalDays = totalDays + daysInYear;
 				}
 			} else {
 				// months
-				for ( j = 0; j < data.months.length; j++ ) {
-				
+				for ( j = 0; j < data.items.length; j++ ) {
+
 					for ( i = 0; i < props.length; i++ ) {
-				
-						daysInMonth = moment( data.months[j].date ).daysInMonth(); 
-						adu = data.months[j][ props[i] ] / daysInMonth;
-						data.months[j][ avg_props[i] ] = adu;
+
+						daysInMonth = moment( data.items[j].date ).daysInMonth();
+						adu = data.items[j][ props[i] ] / daysInMonth;
+						data.items[j][ avg_props[i] ] = adu;
 					}
 					
 					totalDays = totalDays + daysInMonth;
@@ -945,12 +945,12 @@ angular.module( 'myApp.services', [] ).
 			data.totals.diff = diff.toFixed(1);
 			
 			// diff for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				
-				net = data.months[i][col1] - data.months[i][col2];
-				diff = (net / data.months[i][col2]) * 100.0;
-				data.months[i].net = net.toFixed(0);
-				data.months[i].diff = diff.toFixed(1);
+			for ( i = 0; i < data.items.length; i++ ) {
+
+				net = data.items[i][col1] - data.items[i][col2];
+				diff = (net / data.items[i][col2]) * 100.0;
+				data.items[i].net = net.toFixed(0);
+				data.items[i].diff = diff.toFixed(1);
 			}
 			return data;
 		},
@@ -969,10 +969,10 @@ angular.module( 'myApp.services', [] ).
 			data.totals.projected = projected;
 			
 			// for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				
-				projected = getProjectedHeatEnergy( data.months[i].hdd );
-				data.months[i].projected = projected;
+			for ( i = 0; i < data.items.length; i++ ) {
+
+				projected = getProjectedHeatEnergy( data.items[i].hdd );
+				data.items[i].projected = projected;
 			}
 			return data;
 		},
@@ -1025,9 +1025,9 @@ angular.module( 'myApp.services', [] ).
 			data.totals.water_pump_efficiency =   data.totals.water_pump * 1000 / data.totals.main;
 			
 			// for each month
-			for ( i = 0; i < data.months.length; i++ ) {
-				data.months[i].water_heater_efficiency = data.months[i].water_heater * 1000 / data.months[i].hot;
-				data.months[i].water_pump_efficiency =   data.months[i].water_pump * 1000 / data.months[i].main;
+			for ( i = 0; i < data.items.length; i++ ) {
+				data.items[i].water_heater_efficiency = data.items[i].water_heater * 1000 / data.items[i].hot;
+				data.items[i].water_pump_efficiency =   data.items[i].water_pump * 1000 / data.items[i].main;
 			}
 			return data;
 		},

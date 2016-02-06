@@ -27,8 +27,8 @@ var myApp = angular.module('myApp.controllers', []).
 		) {
 		
 		var showSummary = function ( data ) {
-			
-			if ( typeof data.years === 'undefined' ) { 
+
+			if ( typeof data.items === 'undefined' ) {
 
 				$scope.warning = true;
 			}
@@ -85,8 +85,8 @@ var myApp = angular.module('myApp.controllers', []).
 		) {
 		
 		var showSummary = function ( data ) {
-			
-			if ( typeof data.months[0] === 'undefined' ) { 
+
+			if ( typeof data.items[0] === 'undefined' ) {
 
 				$scope.warning = true;
 			}
@@ -98,8 +98,8 @@ var myApp = angular.module('myApp.controllers', []).
 		
 		showGeneration = function ( data ) {
 
-			if ( typeof data.months === 'undefined' ) { 
-				
+			if ( typeof data.items === 'undefined' ) {
+
 				$scope.warning = true;
 			}
 			else {
@@ -130,9 +130,9 @@ var myApp = angular.module('myApp.controllers', []).
 					break;
 					
 				case 'all' :
-				
-					if ( typeof data.months === 'undefined' ) { 
-						
+
+					if ( typeof data.items === 'undefined' ) {
+
 						$scope.warning = true;
 					}
 					else {
@@ -145,9 +145,9 @@ var myApp = angular.module('myApp.controllers', []).
 					break;
 					
 				case 'ashp' :
-				
-					if ( typeof data.months === 'undefined' ) { 
-						
+
+					if ( typeof data.items === 'undefined' ) {
+
 						$scope.warning = true;
 					}
 					else {
@@ -161,10 +161,10 @@ var myApp = angular.module('myApp.controllers', []).
 					
 					break;
 
-				default : 
-				
-					if ( typeof data.months === 'undefined' ) { 
-						
+				default :
+
+					if ( typeof data.items === 'undefined' ) {
+
 						$scope.warning = true;
 					}
 					else {
@@ -179,8 +179,8 @@ var myApp = angular.module('myApp.controllers', []).
 		
 		showHdd = function ( data ) {
 			// fix max_solar_hour time by parsing text into a date
-			if ( typeof data.months === 'undefined' ) { 
-				
+			if ( typeof data.items === 'undefined' ) {
+
 				$scope.warning = true;
 			}
 			else {
@@ -194,9 +194,9 @@ var myApp = angular.module('myApp.controllers', []).
 		},
 		
 		showWater = function ( data ) {
-			
-			if ( typeof data.months === 'undefined' ) { 
-				
+
+			if ( typeof data.items === 'undefined' ) {
+
 				$scope.warning = true;
 			}
 			else {
