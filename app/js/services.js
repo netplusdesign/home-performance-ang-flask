@@ -51,7 +51,7 @@ angular.module( 'myApp.services', [] ).
 
 				data.chartDate = moment( dt, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ); // defaults date of month to 01 if missing
 
-				current.year = moment( data.chartDate ).format( 'YYYY' );
+				current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format( 'YYYY' );
 			}
 			return data.chartDate;
 		},
@@ -186,7 +186,7 @@ angular.module( 'myApp.services', [] ).
 		},
 		setMetadata = function ( d ) {
 			// gets called after validate
-			data.asofDate = moment(d.asof).format('YYYY-MM-DD');
+			data.asofDate = moment(d.asof, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
 			data.years = d.years;
 
@@ -196,7 +196,7 @@ angular.module( 'myApp.services', [] ).
 
 				data.chartDate = data.asofDate;
 			}
-			current.year = moment( data.chartDate ).format('YYYY'); // set default year selector
+			current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format('YYYY'); // set default year selector
 		},
 		setDailyMetadata = function ( d ) {
 			// gets called after validate

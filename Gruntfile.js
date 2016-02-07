@@ -3,7 +3,7 @@
  */
 
 module.exports = function(grunt) {
-  
+
 	grunt.initConfig({
 		dest: '../home-performance-site/chartingperformance/',
 		pkg: grunt.file.readJSON('package.json'),
@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 				}
 			}
 		},
-		clean: { 
+		clean: {
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
 			min: ['app/js/<%= pkg.name %>.min.js']
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css'
 				}
 				]
 			},
@@ -51,27 +51,23 @@ module.exports = function(grunt) {
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= dest %>static/lib/angular/angular.js' 
+					dest: '<%= dest %>static/lib/angular/angular.js'
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= dest %>static/lib/angular/angular-route.js' 
+					dest: '<%= dest %>static/lib/angular/angular-route.js'
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= dest %>static/lib/angular/angular-resource.js' 
+					dest: '<%= dest %>static/lib/angular/angular-resource.js'
 				},
 				{
-					src: 'bower_components/highcharts/index.js',
-					dest: '<%= dest %>static/js/highcharts.js' 
+					src: 'bower_components/highcharts/highcharts.src.js',
+					dest: '<%= dest %>static/js/highcharts.js'
 				},
-				{
-					src: 'bower_components/highcharts-standalone-framework/index.js',
-					dest: '<%= dest %>static/js/standalone-framework.js' 
-				}, 
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css'
 				}
 				]
 			},
@@ -81,43 +77,39 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src:  ['js/*', 'partials/**', 'css/*', 'daily.html'],
-					dest: '<%= dest %>static/' 
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= dest %>static/' 
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= dest %>static/lib/angular/angular.js' 
+					dest: '<%= dest %>static/lib/angular/angular.js'
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= dest %>static/lib/angular/angular-route.js' 
+					dest: '<%= dest %>static/lib/angular/angular-route.js'
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= dest %>static/lib/angular/angular-resource.js' 
+					dest: '<%= dest %>static/lib/angular/angular-resource.js'
 				},
 				{
-					src: 'bower_components/highcharts/index.js',
-					dest: '<%= dest %>static/js/highcharts.js' 
-				},
-				{
-					src: 'bower_components/highcharts-standalone-framework/index.js',
-					dest: '<%= dest %>static/js/standalone-framework.js' 
+					src: 'bower_components/highcharts/highcharts.src.js',
+					dest: '<%= dest %>static/js/highcharts.js'
 				},
 				{
 					src: 'bower_components/moment/moment.js',
-					dest: '<%= dest %>static/js/moment.js' 
+					dest: '<%= dest %>static/js/moment.js'
 				},
 				{
 					src: 'bower_components/chroma-js/chroma.js',
-					dest: '<%= dest %>static/js/chroma.js' 
-				}, 
+					dest: '<%= dest %>static/js/chroma.js'
+				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css' 
+					dest: '<%= dest %>static/css/bootstrap.min.css'
 				}
 				]
 			}
@@ -166,24 +158,24 @@ module.exports = function(grunt) {
 	grunt.registerTask('default', ['uglify']);
 
 	// Defined tasks
-	grunt.registerTask('prod', 
+	grunt.registerTask('prod',
 	[   'clean:prod',
-		'uglify', 
+		'uglify',
 		'copy:prod',
 		'preprocess:prod',
 		'clean:min'
 	]);
 
-	grunt.registerTask('test', 
+	grunt.registerTask('test',
 	[   'clean:dev',
-		'uglify',    
+		'uglify',
 		'copy:test',
 		'preprocess:test',
 		'clean:min'
 	]);
 
-	grunt.registerTask('dev', 
-	[   'clean:dev', 
+	grunt.registerTask('dev',
+	[   'clean:dev',
 		'copy:dev',
 		'preprocess:dev',
 		'clean:min'
