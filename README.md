@@ -1,6 +1,6 @@
 # charting-performance-ang-flask
 
-Converted [home-performance-ang](https://github.com/netplusdesign/home-performance-ang) to use a new REST API built with [Flask](http://flask.pocoo.org). 
+Converted [home-performance-ang](https://github.com/netplusdesign/home-performance-ang) to use a new REST API built with [Flask](http://flask.pocoo.org).
 
 See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
@@ -25,17 +25,17 @@ First get Node, Grunt and Bower.
 
 Then clone this repo and run:
 
-* npm install
-* bower install
+* `npm install`
+* `bower install`
 
 Edit grunt file (devDest) path, then run:
 
-* grunt dev
+* `grunt dev`
 
 ## Test
 
-* npm test
-* npm run protractor
+* `npm test`
+* `npm run protractor` or `protractor test/protractor.conf.js` if you followed the directions at [Protractor](https://angular.github.io/protractor/#/)
 
 ## What's next
 

@@ -13,14 +13,14 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/js/<%= pkg.name %>.min.js': ['app/js/app.js', 'app/js/controllers.js', 'app/js/services.js', 'app/js/filters.js', 'app/js/directives.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
+					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
 				}
 			}
 		},
 		clean: {
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
-			min: ['app/js/<%= pkg.name %>.min.js']
+			min: ['app/<%= pkg.name %>.min.js']
 		},
 		copy: {
 			prod: {
@@ -28,12 +28,12 @@ module.exports = function(grunt) {
 				{
 					expand: true,
 					cwd: 'app/',
-					src: ['js/<%= pkg.name %>.min.js', 'partials/**', 'css/*'],
+					src: ['<%= pkg.name %>.min.js', '**/*.html', '**/*.css'],
 					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 				{
 					expand: true,
 					cwd: 'app/',
-					src: ['js/<%= pkg.name %>.min.js', 'js/standalone-framework.js', 'js/highcharts.js', 'partials/**', 'css/*', 'daily.html'],
+					src: ['**/**'],
 					dest: '<%= dest %>static/'
 				},
 				{
@@ -63,11 +63,11 @@ module.exports = function(grunt) {
 				},
 				{
 					src: 'bower_components/highcharts/highcharts.src.js',
-					dest: '<%= dest %>static/js/highcharts.js'
+					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -76,7 +76,7 @@ module.exports = function(grunt) {
 				{
 					expand: true,
 					cwd: 'app/',
-					src:  ['js/*', 'partials/**', 'css/*', 'daily.html'],
+					src:  ['**/**'],
 					dest: '<%= dest %>static/'
 				},
 				{
@@ -97,19 +97,19 @@ module.exports = function(grunt) {
 				},
 				{
 					src: 'bower_components/highcharts/highcharts.src.js',
-					dest: '<%= dest %>static/js/highcharts.js'
+					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
 					src: 'bower_components/moment/moment.js',
-					dest: '<%= dest %>static/js/moment.js'
+					dest: '<%= dest %>static/shared/moment.js'
 				},
 				{
 					src: 'bower_components/chroma-js/chroma.js',
-					dest: '<%= dest %>static/js/chroma.js'
+					dest: '<%= dest %>static/shared/chroma.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/css/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			}
