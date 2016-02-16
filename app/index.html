@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>Home Performance Charting</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="static/css/bootstrap.min.css" rel="stylesheet">
-  <link href="static/css/calendar.css" rel="stylesheet">
+  <link href="static/shared/bootstrap.min.css" rel="stylesheet">
+  <link href="static/daily/calendar.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container-fluid">
@@ -16,7 +16,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-4" ng-controller="NavigationCtrl">
-				<ng-include src="'static/partials/nav.html'"></ng-include>
+				<ng-include src="'static/shared/nav.html'"></ng-include>
 				<div ng-view></div>
 			</div>
 			<div class="col-md-8" id="chart">
@@ -35,27 +35,36 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
 	<script src="//code.highcharts.com/highcharts.js"></script>
-	<script src="static/js/home-performance-ang-flask.min.js"></script>
+	<script src="static/home-performance-ang-flask.min.js"></script>
 	<!-- @endif -->
 	<!-- @ifdef TEST -->
 	<script src="static/lib/angular/angular.js"></script>
 	<script src="static/lib/angular/angular-route.js"></script>
 	<script src="static/lib/angular/angular-resource.js"></script>
-	<script src="static/js/highcharts.js"></script>
-	<script src="static/js/home-performance-ang-flask.min.js"></script>
+	<script src="static/shared/highcharts.js"></script>
+	<script src="static/home-performance-ang-flask.min.js"></script>
 	<!-- @endif -->
 	<!-- @ifdef DEV -->
 	<script src="static/lib/angular/angular.js"></script>
 	<script src="static/lib/angular/angular-route.js"></script>
 	<script src="static/lib/angular/angular-resource.js"></script>
-	<script src="static/js/highcharts.js"></script>
-	<script src="static/js/app.js"></script>
-	<script src="static/js/services.js"></script>
-	<script src="static/js/controllers.js"></script>
-	<script src="static/js/filters.js"></script>
-	<script src="static/js/directives.js"></script>
-	<script src="static/js/moment.js"></script>
-	<script src="static/js/chroma.js"></script>
+	<script src="static/shared/highcharts.js"></script>
+	<script src="static/app.js"></script>
+	<script src="static/services.js"></script>
+  <script src="static/shared/metadata.service.js"></script>
+  <script src="static/shared/dataprovider.service.js"></script>
+  <script src="static/shared/chart.service.js"></script>
+  <script src="static/shared/data.service.js"></script>
+  <script src="static/controllers.js"></script>
+  <script src="static/shared/nav.controller.js"></script>
+  <script src="static/yearly/yearly.controller.js"></script>
+  <script src="static/monthly/monthly.controller.js"></script>
+  <script src="static/daily/daily.controller.js"></script>
+  <script src="static/shared/header.controller.js"></script>
+	<script src="static/filters.js"></script>
+	<script src="static/directives.js"></script>
+	<script src="static/shared/moment.js"></script>
+	<script src="static/shared/chroma.js"></script>
 	<!-- @endif -->
 </body>
 </html>

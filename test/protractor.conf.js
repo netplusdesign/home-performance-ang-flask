@@ -2,7 +2,9 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    'e2e/*.js'
+    '../app/yearly/scenarios.test.js',
+    '../app/monthly/scenarios.test.js',
+    '../app/daily/scenarios.test.js'
   ],
 
   capabilities: {
@@ -11,7 +13,7 @@ exports.config = {
 
   chromeOnly: true,
 
-  baseUrl: 'http://127.0.0.1/~larry/home-performance/v3/app/', 
+  baseUrl: 'http://127.0.0.1:5000',
 
   framework: 'jasmine',
 

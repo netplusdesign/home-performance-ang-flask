@@ -6,8 +6,8 @@ module.exports = function(config){
       'bower_components/angular/angular.js',
       'bower_components/angular-resource/angular-resource.js',
       'bower_components/angular-mocks/angular-mocks.js',
-      'app/js/**/*.js',
-      'test/unit/**/*.js',
+      'app/*.js',
+      'app/**/*.js',
       'bower_components/moment/moment.js',
       'bower_components/chroma-js/chroma.js'
     ],
@@ -15,7 +15,8 @@ module.exports = function(config){
     exclude : [
       'app/lib/angular/angular-loader.js',
       'app/lib/angular/*.min.js',
-      'app/lib/angular/angular-scenario.js'
+      'app/lib/angular/angular-scenario.js',
+      'app/**/scenarios.test.js'
     ],
 
     autoWatch : true,
