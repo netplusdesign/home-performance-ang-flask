@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
+					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
 				}
 			}
 		},
