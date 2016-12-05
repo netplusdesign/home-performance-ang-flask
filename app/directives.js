@@ -8,5 +8,5 @@
 /* jshint globalstrict : true */
 
 angular.module('myApp.directives', [
-	'myApp.directives.calendar'
+
 ]);
