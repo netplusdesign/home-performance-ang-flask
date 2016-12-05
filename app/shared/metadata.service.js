@@ -177,11 +177,12 @@ angular.module( 'myApp.services.metadata', [] ).
 			return options;
 		},
 
-		// 2 methods used by navCtrl
+		// 3 methods used by navCtrl
 		setParamYear = function ( yr ) {
+			if (yr != 'ALL') {
 
-			data.chartDate = moment( data.chartDate ).year( parseInt(yr) ).format('YYYY-MM-DD');  // update date
-
+				data.chartDate = moment( data.chartDate ).year( parseInt(yr) ).format('YYYY-MM-DD');  // update date
+			}
 			current.year = yr;
 		},
 		setMetadata = function ( d ) {
@@ -190,13 +191,21 @@ angular.module( 'myApp.services.metadata', [] ).
 
 			data.years = d.years;
 
+			data.years.unshift('ALL');
+
 			data.houseName = d.house.name;
 
 			if ( !data.chartDate ) {
 
 				data.chartDate = data.asofDate;
 			}
-			current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format('YYYY'); // set default year selector
+
+			if (data.interval == 'years') {
+				current.year = 'ALL';
+			}
+			else {
+				current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format('YYYY'); // set default year selector
+			}
 		},
 		setDailyMetadata = function ( d ) {
 			// gets called after validate
@@ -221,7 +230,7 @@ angular.module( 'myApp.services.metadata', [] ).
 			asof = moment(data.asofDate),
 			chart = moment(data.chartDate);
 
-			if (( chart.year() > asof.year() ) || ( chart.year() < data.years[0] )) {
+			if (( chart.year() > asof.year() ) || ( chart.year() < data.years[1] )) {
 
 				return false;
 			}

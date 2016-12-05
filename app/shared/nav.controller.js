@@ -29,6 +29,24 @@ angular.module('myApp.controllers.nav', []).
 		$scope.changeView = function() {
 
 			var location = '#/' + $scope.viewSelection.view;
+			var interval;
+
+			if ($scope.yearFilter.year == 'ALL') {
+
+				interval = 'years';
+			}
+			else if (metadataService.data.interval == 'years') {
+
+				metadataService.setInterval('months');
+
+				interval = metadataService.data.interval;
+			}
+			else {
+
+				interval = metadataService.data.interval;
+			}
+
+			var location = '#/' + interval + '/' + $scope.viewSelection.view;
 
 			if ( $scope.viewSelection.view == 'monthly/usage' ) {
 				// need to take into account usage screen with drilldown

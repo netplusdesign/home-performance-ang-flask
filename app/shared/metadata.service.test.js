@@ -142,8 +142,8 @@ describe('service', function() {
 			it('data.asofDate should be 2013-12-31', function() {
 				expect( metadataService.data.asofDate ).toEqual('2013-12-31');
 			});
-			it('data.years.length should be 2', function() {
-				expect( metadataService.data.years.length ).toBe(2);
+			it('data.years.length should be 3 including all', function() {
+				expect( metadataService.data.years.length ).toBe(3);
 			});
 			it('data.houseName should be Up Hill House', function() {
 				expect( metadataService.data.houseName ).toEqual('Up Hill House');

@@ -209,6 +209,7 @@ angular.module('myApp.controllers.yearly', []).
 
 		$routeParams.path = 'years';
 
+		metadataService.setParamYear('ALL');
 
 		$scope.options = setOptionsIfBasetemp ( $routeParams );
 
