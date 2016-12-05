@@ -121,19 +121,17 @@ angular.module('myApp.controllers.monthly', []).
 
 		},
 
-		showHdd = function ( data ) {
-			// fix max_solar_hour time by parsing text into a date
+		showTemperature = function ( data ) {
+
 			if ( typeof data.items === 'undefined' ) {
 
 				$scope.warning = true;
 			}
 			else {
 
-				data.coldest_hour.date = moment ( data.coldest_hour.date ).toDate();
+				data.location_name = metadataService.locations[ data.location ];
 
-				$scope.data = dataService.insertHeatEfficiency ( data );
-
-				$scope.data = dataService.insertDiff ( data, 'actual', 'estimated' );
+				$scope.data = data;
 			}
 		},
 
@@ -199,14 +197,14 @@ angular.module('myApp.controllers.monthly', []).
 			}
 			if ( (params.view == 'usage') && (params.circuit == 'ashp') ) {
 
-				$routeParams.base = '50';
+				$routeParams.base = metadataService.basetemp.base;
 			}
 			return $routeParams;
 		};
 
 		$scope.warning = false;
 
-		$routeParams.path = 'monthly';
+		$routeParams.path = 'months';
 
 		$scope.options = setOptionsIfBasetemp ( $routeParams );
 
@@ -224,7 +222,7 @@ angular.module('myApp.controllers.monthly', []).
 
 					case 'usage' : showUsage ( data ); break;
 
-					case 'hdd' : showHdd ( data ); break;
+					case 'temperature' : showTemperature ( data ); break;
 
 					case 'water' : showWater ( data ); break;
 
@@ -233,7 +231,7 @@ angular.module('myApp.controllers.monthly', []).
 				// show warnings if no data returned
 				if ( $scope.warning ) {
 
-					$scope.message = "Oops, you've asked for a house or year that I can't find.";
+					$scope.message = "Oops, you've asked for a house, year or interval that is not supported.";
 				}
 				else {
 					// this is the only place metadataService is used in this controller, can get this from data?

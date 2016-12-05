@@ -8,7 +8,7 @@
 			<th colspan="2" class="text-center">Watt hrs<span ng-if="year == 2012">&sup1;</span>/gal</th>
 		</tr>
 		<tr>
-			<th></th>
+			<th><a ng-href="#/years/water?house={{house}}" >ALL</a> &gt; {{data.items[0].date | date:"yyyy"}}</th>
 			<th class="text-right">Cold</th>
 			<th class="text-right">Hot</th>
 			<th class="text-right">Total</th>
@@ -24,20 +24,20 @@
 			<th class="text-right">NA</th>
 		</tr>
 		<tr>
-			<th><abbr title="Year to date">YTD</abbr></th>
+			<th>Totals</th>
 			<th class="text-right">{{data.totals.cold | number:0}}</th>
 			<th class="text-right">{{data.totals.hot | number:0}}</th>
 			<th class="text-right">{{data.totals.main | number:0}}</th>
-			<th class="text-right">{{data.totals.water_heater_efficiency | number:1}}</th>
-			<th class="text-right">{{data.totals.water_pump_efficiency | number:3}}</th>
+			<th class="text-right"><a ng-href="#/months/usage/water_heater?house={{house}}&date={{month.date | date:'yyyy'}}" >{{data.totals.water_heater_efficiency | number:1}}</a></th>
+			<th class="text-right"><a ng-href="#/months/usage/water_pump?house={{house}}&date={{month.date | date:'yyyy'}}" >{{data.totals.water_pump_efficiency | number:3}}</a></th>
 		</tr>
 		<tr ng-repeat="month in data.items">
-			<td class="text-left"><a ng-href="#/daily/usage/water_pump?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+			<td class="text-left">{{month.date | date:"MMM"}}</td>
 			<td>{{month.cold | number:0}}</td>
 			<td>{{month.hot | number:0}}</td>
 			<td>{{month.main | number:0}}</td>
-			<td>{{month.water_heater_efficiency | number:1}}</td>
-			<td>{{month.water_pump_efficiency | number:3}}</td>
+			<td><a ng-href="#/days/usage/water_heater?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.water_heater_efficiency | number:1}}</a></td>
+			<td><a ng-href="#/days/usage/water_pump?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.water_pump_efficiency | number:3}}</a></td>
 		</tr>
 	</table>
 </div>

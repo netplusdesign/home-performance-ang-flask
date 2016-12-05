@@ -1,29 +1,31 @@
 <p ng-class="{'alert alert-danger': warning}">{{message}}</p>
 
 <dl class="dl-horizontal">
-	<dt>Avg. daily generation</dt><dd>{{data.avg_daily_gen}} <abbr title="Kilowatt hours">kWh</abbr></dd>
-	<dt>Max Wh</dt><dd>{{data.max_solar_hour.solar | number:1}}, Date: <a ng-href="#/daily/solar?date={{data.max_solar_hour.date | date:'yyyy-MM-dd'}}&time={{data.max_solar_hour.date | date:'HH'}}">{{data.max_solar_hour.date | date:"M/d/yyyy h a"}}</a></dd>
-	<dt>Max kWh day</dt><dd>{{data.max_solar_day.solar | number:1}}, Date: <a ng-href="#/daily/solar?date={{data.max_solar_day.date | date:'yyyy-MM-dd'}}">{{data.max_solar_day.date | date:"M/d/yyyy"}}</a></dd>
+	<dt>Max Wh</dt><dd>{{data.max_solar_hour.solar | number:1}}, Date: <a ng-href="#/hours/generation?date={{data.max_solar_hour.date | date:'yyyy-MM-dd'}}&time={{data.max_solar_hour.date | date:'HH'}}">{{data.max_solar_hour.date | date:"M/d/yyyy h a"}}</a></dd>
+	<dt>Max kWh day</dt><dd>{{data.max_solar_day.solar | number:1}}, Date: <a ng-href="#/days/generation?date={{data.max_solar_day.date | date:'yyyy-MM-dd'}}">{{data.max_solar_day.date | date:"M/d/yyyy"}}</a></dd>
 </dl>
 <div class="table-responsive">
 	<table id="generation" class="table table-condensed text-right">
 		<tr>
-			<th></th>
+			<th><a ng-href="#/years/generation?house={{house}}" >ALL</a> &gt; {{data.items[0].date | date:"yyyy"}}</th>
 			<th class="text-right">Actual</th>
 			<th class="text-right">Estimated</th>
 			<th class="text-right">Diff(%)</th>
+			<th class="text-right"><abbr title="Average daily generation">ADG</abbr></th>
 		</tr>
 		<tr>
-			<th class="text-left">YTD</th>
+			<th class="text-left">Totals</th>
 			<th class="text-right">{{data.totals.actual | number:0}}</th>
 			<th class="text-right">{{data.totals.estimated | number:0}}</th>
 			<th class="text-right" ng-class="{'text-danger': data.totals.estimated<0, 'text-success': data.totals.estimated>=0}">{{data.totals.diff | number:1}}</th>
+			<th class="text-right">{{data.totals.adg | number:1}}</th>
 		</tr>
 		<tr ng-repeat="month in data.items">
-			<td class="text-left"><a ng-href="#/daily/solar?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+			<td class="text-left"><a ng-href="#/days/generation?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
 			<td>{{month.actual | number:0}}</td>
 			<td>{{month.estimated | number:0}}</td>
 			<td ng-class="{'text-danger': month.diff<0, 'text-success': month.diff>=0}">{{month.diff | number:1}}</td>
+			<td>{{month.adg | number:1}}</td>
 		</tr>
 	</table>
 </div>
