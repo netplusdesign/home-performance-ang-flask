@@ -14,7 +14,7 @@ angular.module( 'myApp.services.data', [] ).
 
 	factory('dataService', [ 'metadataService', function(metadataService) {
 
-		var insertADU = function (data, props, avg_props) {
+		var insertAverage = function (data, props, avg_props) {
 
 			var i, j, d,
 			adu,
@@ -69,15 +69,6 @@ angular.module( 'myApp.services.data', [] ).
 			return data;
 		},
 
-		insertADG = function (data) {
-			// gen per day
-			var daysInYear = metadataService.getDaysYTD(),
-			adg = data.totals.actual / daysInYear;
-			data.avg_daily_gen = adg.toFixed(1);
-
-			return data;
-		},
-
 		insertDiff = function ( data, col1, col2 ) {
 			// diff for total line
 			var i,
@@ -86,7 +77,7 @@ angular.module( 'myApp.services.data', [] ).
 			data.totals.net = net.toFixed(0);
 			data.totals.diff = diff.toFixed(1);
 
-			// diff for each month
+			// diff for each row
 			for ( i = 0; i < data.items.length; i++ ) {
 
 				net = data.items[i][col1] - data.items[i][col2];
@@ -261,8 +252,7 @@ angular.module( 'myApp.services.data', [] ).
 		};
 
 		return {
-			insertADU : insertADU,
-			insertADG : insertADG,
+			insertAverage : insertAverage,
 			insertDiff : insertDiff,
 			insertProjected : insertProjected,
 			insertPercent : insertPercent,

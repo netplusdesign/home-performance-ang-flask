@@ -35,7 +35,7 @@ angular.module('myApp.controllers.monthly', []).
 			}
 			else {
 
-				$scope.data = dataService.insertADU (data, ['used'], ['adu']);
+				$scope.data = dataService.insertAverage (data, ['used'], ['adu']);
 			}
 		},
 
@@ -49,9 +49,9 @@ angular.module('myApp.controllers.monthly', []).
 
 				data.max_solar_hour.date = moment( data.max_solar_hour.date ).toDate();
 
-				$scope.data = dataService.insertADG(data);
-
 				$scope.data = dataService.insertDiff(data, 'actual', 'estimated');
+
+				$scope.data = dataService.insertAverage (data, ['actual'], ['adg']);
 			}
 		},
 
@@ -82,6 +82,8 @@ angular.module('myApp.controllers.monthly', []).
 
 						$scope.data = dataService.insertDiff ( data, 'budget', 'actual' );
 
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
+
 						$routeParams.view = 'circuit';
 					}
 
@@ -99,6 +101,8 @@ angular.module('myApp.controllers.monthly', []).
 
 						$scope.data = dataService.insertDiff ( data, 'projected', 'actual' );
 
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
+
 						$routeParams.view = 'circuit';
 					}
 
@@ -112,7 +116,7 @@ angular.module('myApp.controllers.monthly', []).
 					}
 					else {
 
-						$scope.data = data;
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
 
 						$routeParams.view = 'circuit';
 					}
@@ -144,7 +148,7 @@ angular.module('myApp.controllers.monthly', []).
 
 				$scope.data = dataService.insertEfficiency ( data );
 
-				$scope.data = dataService.insertADU (data, ['cold', 'hot', 'main'], ['cold_avg', 'hot_avg', 'main_avg']);
+				$scope.data = dataService.insertAverage (data, ['cold', 'hot', 'main'], ['cold_avg', 'hot_avg', 'main_avg']);
 			}
 		},
 

@@ -8,7 +8,7 @@ describe('service', function() {
 
 	beforeEach(module('myApp.services'));
 
-	describe('dataService insertADU for items', function(){
+	describe('dataService insertAverage for items', function(){
 
 		var dataService,
 		mockService = {
@@ -32,12 +32,12 @@ describe('service', function() {
 		}));
 
 		it('should insert adu values for data.totals and data.items[] december', function() {
-			expect( dataService.insertADU( mockDataSumBefore, ['used'], ['adu'] ) ).toEqual( mockDataSumAfter );
+			expect( dataService.insertAverage( mockDataSumBefore, ['used'], ['adu'] ) ).toEqual( mockDataSumAfter );
 		});
 
 	});
 
-	describe('dataService insertADU for items', function(){
+	describe('dataService insertAverage for items', function(){
 
 		var dataService,
 		mockService = {
@@ -64,12 +64,12 @@ describe('service', function() {
 		}));
 
 		it('should insert adu values for data.totals and data.items[] nov-dec', function() {
-			expect( dataService.insertADU( mockDataSumBefore, ['used'], ['adu'] ) ).toEqual( mockDataSumAfter );
+			expect( dataService.insertAverage( mockDataSumBefore, ['used'], ['adu'] ) ).toEqual( mockDataSumAfter );
 		});
 
 	});
 
-	describe('dataService insertADG', function(){
+	describe('dataService insertAverage', function(){
 
 		var dataService, mockDataGenAfter,
 		mockService = {
@@ -92,7 +92,7 @@ describe('service', function() {
 
 		beforeEach(inject(function(_dataService_) {
 			dataService = _dataService_;
-			mockDataGenAfter = dataService.insertADG( mockDataGenBefore );
+			mockDataGenAfter = dataService.insertAverage( mockDataGenBefore, ['actual'], ['adg'] );
 		}));
 
 		describe('average daily gen (adg)', function(){

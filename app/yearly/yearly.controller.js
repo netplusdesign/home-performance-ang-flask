@@ -35,7 +35,7 @@ angular.module('myApp.controllers.yearly', []).
 			}
 			else {
 
-				$scope.data = dataService.insertADU (data, ['used'], ['adu']);
+				$scope.data = dataService.insertAverage (data, ['used'], ['adu']);
 			}
 		},
 
