@@ -4,7 +4,6 @@
 
 /* global angular */
 /* global moment */
-/* global chroma */
 /* global Highcharts */
 /* jshint strict : true */
 /* jshint undef : true */

@@ -4,7 +4,6 @@
 
 /* global angular */
 /* global moment */
-/* global chroma */
 /* global Highcharts */
 /* jshint strict : true */
 /* jshint undef : true */
@@ -226,40 +225,6 @@ angular.module( 'myApp.services.data', [] ).
 			return data;
 		},
 
-		insertColor = function ( data, colors ) {
-			var name, j, max, min, range, value, perc, color, colorScale;
-
-			data.views = {};
-
-			for ( name in colors ) {
-
-				max = maxValueInArray ( data.days, name );
-				min = maxValueInArray ( data.days, name, true );
-				range = max - min;
-				colorScale = chroma.scale([ colors[ name ].start, colors[ name ].end ]);
-
-				for ( j = 0; j < data.days.length; j++ ) {
-
-					value = parseFloat( data.days[ j ][ name ] );
-					perc = ((( value + range ) / range ) - (( min + range ) / range ));
-					color = colorScale( perc ).hex();
-					// expand value into an object
-					data.days[ j ][ name ] = {};
-					data.days[ j ][ name ].value = value;
-					data.days[ j ][ name ].perc = perc;
-					data.days[ j ][ name ].color = color;
-				}
-
-				data.views[ name ] = {
-					maxValue : max,
-					minValue : min,
-					startColor : colors[ name ].start.hex(),
-					endColor : colors[ name ].end.hex()
-				};
-			}
-			return data;
-		},
-
 		sortChildObjectsByProp = function ( prop, arr ) {
 			// used for heatmap legend
 			// thanks to http://stackoverflow.com/questions/5073799/how-to-sort-a-javascript-array-of-objects-by-nested-object-property
@@ -305,7 +270,6 @@ angular.module( 'myApp.services.data', [] ).
 			insertEfficiency : insertEfficiency,
 			insertLinearRegression : insertLinearRegression,
 			insertMeasure : insertMeasure,
-			insertColor : insertColor,
 			sortChildObjectsByProp : sortChildObjectsByProp
 		};
 
