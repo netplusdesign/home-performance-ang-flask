@@ -63,9 +63,40 @@ angular.module('myApp.controllers.nav', []).
 
 			var location = '#/' + interval + '/' + $scope.viewSelection.view;
 
-			if ( $scope.viewSelection.view == 'monthly/usage' ) {
-				// need to take into account usage screen with drilldown
-				location = location + '/' + metadataService.data.circuit;
+			switch ( $scope.viewSelection.view ) {
+
+				case 'summary' :
+				case 'generation' :
+				case 'basetemp' :
+				case 'water' :
+
+					// ...
+					break;
+
+				case 'usage' :
+
+					if (metadataService.data.filter.circuit !== undefined) {
+
+						location = location + '/' + metadataService.data.filter.circuit;
+					}
+					else {
+
+						location = location + '/all'; // default
+					}
+					break;
+
+				case 'temperature' :
+
+					if (metadataService.data.filter.location !== undefined) {
+
+						location = location + '/' + metadataService.data.filter.location;
+					}
+					else {
+
+						location = location + '/outdoor'; // default
+					}
+					break;
+
 			}
 
 			location = location + '?house=' + metadataService.data.houseId + '&date=' + metadataService.data.chartDate;
