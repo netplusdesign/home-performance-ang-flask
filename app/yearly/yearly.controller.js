@@ -67,6 +67,7 @@ angular.module('myApp.controllers.yearly', []).
 					}
 					else {
 
+						if (data.circuits[0].circuit_id == 'used') { data.circuits[0].circuit_id = 'all'; } // shim
 
 						$scope.data = dataService.insertPercent ( data, 'circuits', 'actual' );
 					}
@@ -126,6 +127,7 @@ angular.module('myApp.controllers.yearly', []).
 		},
 
 		showTemperature = function ( data ) {
+
 			if ( typeof data.items === 'undefined' ) {
 
 				$scope.warning = true;

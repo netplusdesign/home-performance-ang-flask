@@ -67,6 +67,8 @@ angular.module('myApp.controllers.monthly', []).
 					}
 					else {
 
+						if (data.circuits[0].circuit_id == 'used') { data.circuits[0].circuit_id = 'all'; } // shim
+
 						$scope.data = dataService.insertPercent ( data, 'circuits', 'actual' );
 					}
 
@@ -198,7 +200,7 @@ angular.module('myApp.controllers.monthly', []).
 
 				$routeParams.base = $scope.options.base;
 			}
-			if ( (params.view == 'usage') && (params.circuit == 'ashp') ) {
+			if ( (params.view == 'usage') && (params.filter == 'ashp') ) {
 
 				$routeParams.base = metadataService.basetemp.base;
 			}

@@ -19,6 +19,8 @@ angular.module('myApp.controllers.nav', []).
 
 		$scope.viewSelection = metadataService.current;
 
+		$scope.filter = metadataService.current;
+
 		$scope.changeYear = function() {
 
 			metadataService.setParamYear($scope.yearFilter.year);
@@ -26,9 +28,22 @@ angular.module('myApp.controllers.nav', []).
 			$scope.changeView();
 		};
 
+		$scope.changeCircuitFilter = function() {
+
+			metadataService.setParamFilter('circuit', $scope.filter.filter.circuit);
+
+			$scope.changeView();
+		};
+
+		$scope.changeLocationFilter = function() {
+
+			metadataService.setParamFilter('location', $scope.filter.filter.location);
+
+			$scope.changeView();
+		};
+
 		$scope.changeView = function() {
 
-			var location = '#/' + $scope.viewSelection.view;
 			var interval;
 
 			if ($scope.yearFilter.year == 'ALL') {
@@ -52,6 +67,7 @@ angular.module('myApp.controllers.nav', []).
 				// need to take into account usage screen with drilldown
 				location = location + '/' + metadataService.data.circuit;
 			}
+
 			location = location + '?house=' + metadataService.data.houseId + '&date=' + metadataService.data.chartDate;
 
 			$window.location = location;

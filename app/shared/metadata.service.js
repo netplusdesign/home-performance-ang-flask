@@ -14,20 +14,23 @@ angular.module( 'myApp.services.metadata', [] ).
 
 	factory( 'metadataService', [ function() {
 
+		// eventually this will come from the database
+		var locations = [ 'outdoor', 'firstfloor', 'secondfloor', 'basement' ];
 		var data = {};
 		data.houseId = false;
 		data.chartDate = false; // stored as string
 		data.asofDate = false;
 		data.years = false;
-		data.circuit = 'summary'; // default view for usage screen
-		data.ashp_calculation_base = 50; // default for calculating ashp usage projected values
+		data.location = 0; // default for temperature view
+		data.filter = {};
 
 		var apiUrl = 'http://127.0.0.1:5000/api/';
 		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
 		//var apiUrl = 'http://netplusdesign.com/api/';
 
-		var current = {},
 		limits = { range : {} }, // for hourly chart
+		var current = {};
+		current.filter = {};
 
 		setHouse = function ( house ) {
 
@@ -51,7 +54,10 @@ angular.module( 'myApp.services.metadata', [] ).
 
 				data.chartDate = moment( dt, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ); // defaults date of month to 01 if missing
 
-				current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format( 'YYYY' );
+				if (data.interval != 'years') {
+
+					current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format( 'YYYY' );
+				}
 			}
 			return data.chartDate;
 		},
@@ -60,13 +66,24 @@ angular.module( 'myApp.services.metadata', [] ).
 			if ( typeof circuit !== 'undefined' ) {
 
 				data.circuit = circuit;
-
-				if ( path == 'daily' ) {
-
-					current.view = current.view + '/' + circuit;
-				}
+				data.filter.circuit = circuit;
+				current.filter.circuit = data.filter.circuit;
 			}
+			current.filter.circuit = circuit;
 			return data.circuit;
+		},
+		setLocation = function ( path, location ) {
+
+			if ( typeof location !== undefined ) {
+				// location = outdoor etc.
+				for (var i = 0; i < locations.length; i++) {
+					if (locations[i] == location) data.location = i;
+				}
+				data.filter.location = location;
+				current.filter.location = data.filter.location;
+			}
+			current.filter.location = locations[ data.location ];
+			return data.location;
 		},
 		setPeriod = function ( period ) {
 			// do more validation here in future
@@ -158,10 +175,16 @@ angular.module( 'myApp.services.metadata', [] ).
 			// view dependent params
 			if ( options.view == 'usage' ) {
 
-				options.params.circuit = setCircuit( routeParams.path, routeParams.circuit );
-				if (routeParams.circuit == 'ashp') {
-					options.params.base = data.ashp_calculation_base;
+				options.params.circuit = setCircuit( routeParams.path, routeParams.filter );
+
+				if (routeParams.filter == 'ashp') {
+
+					options.params.base = setBase( routeParams.base );
 				}
+			}
+			if ( options.view == 'temperature' ) {
+
+				options.params.location = setLocation( routeParams.path, routeParams.filter );
 			}
 			if ( options.view == 'basetemp' ) {
 
@@ -184,6 +207,15 @@ angular.module( 'myApp.services.metadata', [] ).
 				data.chartDate = moment( data.chartDate ).year( parseInt(yr) ).format('YYYY-MM-DD');  // update date
 			}
 			current.year = yr;
+		},
+		setParamFilter = function ( which, filter ) {
+			// filter could be a circuit name or a temperature location name
+			if (which == 'circuit') {
+				data.filter.circuit = filter;
+			}
+			else {
+				data.filter.location = filter;
+			}
 		},
 		setMetadata = function ( d ) {
 			// gets called after validate
@@ -259,6 +291,7 @@ angular.module( 'myApp.services.metadata', [] ).
 			setMetadata : setMetadata,		// used by navCtrl, phase this out?
 			setDailyMetadata : setDailyMetadata,	// used by calendar and hourly chart
 			getDaysYTD : getDaysYTD,			// utility method
+			setParamFilter : setParamFilter,     // called from navCtrl when user selects a filter
 			apiUrl : apiUrl
 		};
 
