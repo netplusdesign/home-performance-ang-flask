@@ -1,0 +1,26 @@
+<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+
+<dl class="dl-horizontal">
+	<dt>Max Wh</dt><dd>{{data.max_solar_hour.solar | number:1}}, Date: <a ng-href="#/hours/generation?date={{data.max_solar_hour.date | date:'yyyy-MM-dd'}}&time={{data.max_solar_hour.date | date:'HH'}}">{{data.max_solar_hour.date | date:"M/d/yyyy h a"}}</a></dd>
+	<dt>Max kWh day</dt><dd>{{data.max_solar_day.solar | number:1}}, Date: <a ng-href="#/days/generation?date={{data.max_solar_day.date | date:'yyyy-MM-dd'}}">{{data.max_solar_day.date | date:"M/d/yyyy"}}</a></dd>
+</dl>
+<div class="table-responsive">
+	<table id="generation" class="table table-condensed text-right">
+		<tr>
+			<th class="text-left">{{data.items[0].date | date:"MMM"}} <a ng-href="#/months/generation?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.items[0].date | date:"yyyy"}}</a></th>
+			<th class="text-right">Actual</th>
+		</tr>
+		<tr>
+			<th>Totals</th>
+			<th class="text-right">{{data.totals.actual | number:3}}</th>
+		</tr>
+		<tr ng-repeat="day in data.items">
+			<td class="text-left"><a ng-href="#/hours/generation?house={{house}}&date={{day.date | date:'yyyy-MM-dd'}}" >{{day.date | date:"d"}}</a></td>
+			<td>{{day.actual | number:3}}</a></td>
+		</tr>
+	</table>
+</div>
+<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+<ol class="small">
+	<li>Base 65&deg;F</li>
+<ol>
