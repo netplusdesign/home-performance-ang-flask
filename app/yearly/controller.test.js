@@ -11,6 +11,11 @@ describe('YearlyCtrl', function() {
 			return q.when( mockData );
 		}
 	}, q,
+	mockMetadataService = {
+		setParamYear : function () { },
+		current : { year : '2013' },
+		data : {}
+	},
 	mockDataService = {
 		insertADU : function () { },
 		insertADG : function () { },
@@ -37,6 +42,7 @@ describe('YearlyCtrl', function() {
 				$scope : scope,
 				$routeParams : routeParams,
 				dataProvider : mockDataProviderService,
+				metadataService : mockMetadataService,
 				dataService  : mockDataService,
 				chartService : mockChartService
 			});
