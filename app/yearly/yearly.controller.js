@@ -215,6 +215,7 @@ angular.module('myApp.controllers.yearly', []).
 
 		$scope.update = function () {
 
+			$scope.loading = true;
 
 			$routeParams = setRouteParams ( $routeParams );
 
@@ -235,6 +236,7 @@ angular.module('myApp.controllers.yearly', []).
 					case 'basetemp' : showBasetemp ( data );
 				}
 
+				$scope.loading = false;
 
 				// show warnings if no data returned
 				if ( $scope.warning ) {
