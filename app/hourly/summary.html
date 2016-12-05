@@ -1,0 +1,31 @@
+<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+
+<div class="table-responsive">
+	<table id="summary" class="table table-condensed text-right">
+		<tr>
+			<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/summary?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
+			<th class="text-right">Used</th>
+			<th class="text-right">Solar</th>
+			<th class="text-right">Net</th>
+			<th class="text-right"><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+		</tr>
+		<tr>
+			<th>Totals</th>
+			<th class="text-right"><a ng-href="#/hours/usage?house={{house}}&date={{data.items[0].date | date:'yyyy-MM-dd'}}" >{{data.totals.used | number:3}}</a></th>
+			<th class="text-right"><a ng-href="#/hours/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM-dd'}}" >{{data.totals.solar | number:3}}</a></th>
+			<th class="text-right">{{data.totals.net | number:3}}</th>
+			<th class="text-right"><a ng-href="#/hours/temperature?house={{house}}&date={{data.items[0].date | date:'yyyy-MM-dd'}}" >{{data.totals.hdd | number:3}}</a></th>
+		</tr>
+		<tr ng-repeat="hour in data.items">
+			<td class="text-left">{{hour.date | date:"H"}}</td>
+			<td>{{hour.used | number:3}}</td>
+			<td>{{hour.solar | number:3}}</td>
+			<td>{{hour.net | number:3}}</td>
+			<td>{{hour.hdd | number:3}}</td>
+		</tr>
+	</table>
+</div>
+<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+<ol class="small">
+	<li>Base 65&deg;F</li>
+<ol>
