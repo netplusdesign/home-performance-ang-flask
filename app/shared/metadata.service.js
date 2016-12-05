@@ -104,16 +104,16 @@ angular.module( 'myApp.services.metadata', [] ).
 		},
 		setDuration = function ( str ) {
 
-			if (str == 'hourly') {
+			if (str == 'hours') {
 				str = '1day';
 			}
-			else if (str == 'daily') {
+			else if (str == 'days') {
 				str = '1month';
 			}
-			else if (str == 'monthly') {
+			else if (str == 'months') {
 				str = '1year';
 			}
-			else if (str == 'yearly') {
+			else if (str == 'years') {
 				str = '';
 			}
 			return str;

@@ -41,7 +41,7 @@ describe('service', function() {
 
 			beforeEach ( inject ( function ( _metadataService_) {
 				metadataService = _metadataService_;
-				var params = { house: '0', date: '2013-12-30', view: 'summary', path: 'monthly' };
+				var params = { house: '0', date: '2013-12-30', view: 'summary', path: 'months' };
 				metadataService.validate( params );
 			}));
 
