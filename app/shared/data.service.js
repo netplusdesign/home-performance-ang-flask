@@ -88,24 +88,23 @@ angular.module( 'myApp.services.data', [] ).
 			return data;
 		},
 
-		getProjectedHeatEnergy = function ( hdd )
+		getProjectedHeatEnergy = function ( hdd, slope, intercept )
 		{
-			// returns kWh
-			// return hdd * 0.4120 + 1.356; // HDD 65F base
-			return hdd * 0.2261 + 0.7565; // HDD 50F base
-			// return hdd * 1.2714 + 25.279; // HDD 33F base
+			// returns kWh = hdd * slope + intercept
+			return hdd * slope + intercept;
 		},
 		insertProjected = function ( data ) {
 			// for total line
-			var i,
-			projected = getProjectedHeatEnergy( data.totals.hdd );
-			data.totals.projected = projected;
+			var i;
+			data.slope = metadataService.basetemp.slope;
+			data.intercept = metadataService.basetemp.intercept;
+			data.base = metadataService.basetemp.base;
+			data.totals.projected = getProjectedHeatEnergy( data.totals.hdd, data.slope, data.intercept );
 
-			// for each month
+			// for each row
 			for ( i = 0; i < data.items.length; i++ ) {
 
-				projected = getProjectedHeatEnergy( data.items[i].hdd );
-				data.items[i].projected = projected;
+				data.items[i].projected = getProjectedHeatEnergy( data.items[i].hdd, data.slope, data.intercept );
 			}
 			return data;
 		},

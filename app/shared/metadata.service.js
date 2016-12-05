@@ -16,6 +16,13 @@ angular.module( 'myApp.services.metadata', [] ).
 
 		// eventually this will come from the database
 		var locations = [ 'outdoor', 'firstfloor', 'secondfloor', 'basement' ];
+
+		var basetemp = {
+			slope: 0.4809,
+			intercept: 1.237,
+			base: 60  // default for calculating ashp usage projected values
+		};
+
 		var data = {};
 		data.houseId = false;
 		data.chartDate = false; // stored as string
@@ -99,7 +106,7 @@ angular.module( 'myApp.services.metadata', [] ).
 			// and maybe store value if return
 			if ( typeof base === 'undefined' ) {
 
-				base = 65;
+				base = basetemp.base;
 			}
 			return base;
 		},
