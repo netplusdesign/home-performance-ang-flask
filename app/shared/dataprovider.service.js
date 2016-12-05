@@ -98,7 +98,7 @@ angular.module( 'myApp.services.dataProvider', [] ).
 		},
 		getDailyDetails = function ( config ) {
 
-			if ( typeof metadataService.limits.kwh_max === 'undefined') {
+			if ( typeof metadataService.limits.kwh_max === undefined ) {
 
 				return getDailyMetadata ().
 

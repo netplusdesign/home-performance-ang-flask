@@ -41,7 +41,7 @@ angular.module( 'myApp.services.metadata', [] ).
 
 		setHouse = function ( house ) {
 
-			if ( house && ( typeof house !== 'undefined' ) ) {
+			if ( house && ( typeof house !== undefined ) ) {
 				// check if switching houses
 				if (( data.houseId > -1 ) && ( house != data.houseId )) {
 
@@ -57,7 +57,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		},
 		setDate = function ( dt ) {
 
-			if (dt && ( typeof dt !== 'undefined' )) {
+			if (dt && ( typeof dt !== undefined )) {
 
 				data.chartDate = moment( dt, 'YYYY-MM-DD' ).format( 'YYYY-MM-DD' ); // defaults date of month to 01 if missing
 
@@ -70,7 +70,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		},
 		setCircuit = function ( path, circuit ) {
 
-			if ( typeof circuit !== 'undefined' ) {
+			if ( typeof circuit !== undefined ) {
 
 				data.circuit = circuit;
 				data.filter.circuit = circuit;
@@ -95,7 +95,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		setPeriod = function ( period ) {
 			// do more validation here in future
 			// and maybe store value if return
-			if ( typeof period === 'undefined' ) {
+			if ( typeof period === undefined ) {
 
 				period = 'months';
 			}
@@ -104,7 +104,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		setBase = function ( base ) {
 			// do more validation here in future
 			// and maybe store value if return
-			if ( typeof base === 'undefined' ) {
+			if ( typeof base === undefined ) {
 
 				base = basetemp.base;
 			}
