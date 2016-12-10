@@ -255,15 +255,17 @@ angular.module( 'myApp.services.metadata', [] ).
 		};
 
 		return {
-			data : data,					//
-			current : current,				// used by navCtrl to set state of nav options
-			setStart : setStart,				// temp workaround
-			validate : validate,			// used by dataProvider
-			setParamYear : setParamYear,	// called from navCtrl when user selects a year
-			setMetadata : setMetadata,		// used by navCtrl, phase this out?
-			getDaysYTD : getDaysYTD,			// utility method
+			locations : locations,
+			basetemp : basetemp,
+			data : data,
+			current : current,                   // used by navCtrl to set state of nav options
+			setStart : setStart,                 // temp workaround
 			setInterval : setInterval,           // temp workaround
+			validate : validate,                 // used by dataProvider
+			setParamYear : setParamYear,         // called from navCtrl when user selects a year
 			setParamFilter : setParamFilter,     // called from navCtrl when user selects a filter
+			setMetadata : setMetadata,           // used by navCtrl, phase this out?
+			getDaysYTD : getDaysYTD,             // utility method
 			apiUrl : apiUrl
 		};
 
