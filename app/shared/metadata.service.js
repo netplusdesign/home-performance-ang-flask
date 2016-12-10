@@ -73,7 +73,6 @@ angular.module( 'myApp.services.metadata', [] ).
 
 				data.circuit = circuit;
 				data.filter.circuit = circuit;
-				current.filter.circuit = data.filter.circuit;
 			}
 			current.filter.circuit = circuit;
 			return data.circuit;
@@ -86,7 +85,6 @@ angular.module( 'myApp.services.metadata', [] ).
 					if (locations[i] == location) data.location = i;
 				}
 				data.filter.location = location;
-				current.filter.location = data.filter.location;
 			}
 			current.filter.location = locations[ data.location ];
 			return data.location;
