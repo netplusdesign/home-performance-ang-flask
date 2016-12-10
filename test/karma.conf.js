@@ -9,7 +9,6 @@ module.exports = function(config){
       'app/*.js',
       'app/**/*.js',
       'bower_components/moment/moment.js',
-      'bower_components/chroma-js/chroma.js'
     ],
 
     exclude : [

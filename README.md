@@ -18,7 +18,6 @@ Working version of `gh-pages` branch at: http://netplusdesign.github.io/home-per
 * AngularJS
 * Momentjs
 * Highcharts
-* Chroma
 * Bootstrap
 
 First get Node, Grunt and Bower.

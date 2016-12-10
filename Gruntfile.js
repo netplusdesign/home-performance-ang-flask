@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
+					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js']
 				}
 			}
 		},
@@ -110,8 +110,6 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>static/shared/highcharts-more.js'
 				},
 				{
-					src: 'bower_components/chroma-js/chroma.js',
-					dest: '<%= dest %>static/shared/chroma.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
