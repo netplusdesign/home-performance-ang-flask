@@ -52,7 +52,7 @@ describe('service', function() {
 				expect( metadataService.data.chartDate ).toEqual('2013-12-30');
 			});
 			it('current.view should be summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('current.year should be 2013', function() {
 				expect( metadataService.current.year ).toEqual('2013');
@@ -84,7 +84,7 @@ describe('service', function() {
 				expect( metadataService.current.year ).toEqual('2013');
 			});
 			it('current.view should be summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('data.asofDate should still be false', function() {
 				expect( metadataService.data.asofDate ).toBe( false );
@@ -109,7 +109,7 @@ describe('service', function() {
 				expect( metadataService.data.chartDate ).toEqual('2012-12-30');
 			});
 			it('current.view should remain summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('data.asofDate should still be false', function() {
 				expect( metadataService.data.asofDate ).toBe( false );

@@ -3,8 +3,6 @@
 /* Services */
 
 /* global angular */
-/* global moment */
-/* global Highcharts */
 /* jshint strict : true */
 /* jshint undef : true */
 /* jshint unused : true */

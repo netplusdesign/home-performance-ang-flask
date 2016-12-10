@@ -33,9 +33,11 @@ Edit grunt file (devDest) path, then run:
 
 ## Test
 
+### Unit tests
+
 * `npm test`
-* `npm run protractor` or `protractor test/protractor.conf.js` if you followed the directions at [Protractor](https://angular.github.io/protractor/#/)
 
-## What's next
+### End to end
 
-* Refactor!
+* `webdriver-manager start`
+* `npm run protractor` or `protractor test/protractor.conf.js`

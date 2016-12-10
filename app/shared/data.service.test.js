@@ -98,7 +98,7 @@ describe('service', function() {
 		describe('average daily gen (adg)', function(){
 
 			it('should be -23.5', function() {
-				expect( mockDataGenAfter.avg_daily_gen ).toEqual( "-23.5" );
+				expect( mockDataGenAfter.totals.adg.toFixed(1) ).toEqual( "-23.5" );
 			});
 
 		});
@@ -144,7 +144,7 @@ describe('service', function() {
 	describe('dataService insertProjected', function(){
 
 		var dataService, mockDataGenAfter,
-		mockDataGenBefore = {"totals":{"actual":"1195.782","hdd":"3366.5438261"},"items":[{"date":"2013-01-01","actual":"282.305","hdd":"730.2413741"},{"date":"2013-02-01","actual":"270.432","hdd":"646.6441654"},{"date":"2013-03-01","actual":"194.029","hdd":"522.7246223"},{"date":"2013-04-01","actual":"7.483","hdd":"208.6868742"},{"date":"2013-05-01","actual":"0.008","hdd":"43.1578333"},{"date":"2013-06-01","actual":"0.001","hdd":"2.0217499"},{"date":"2013-07-01","actual":"0.003","hdd":"0.0697916"},{"date":"2013-08-01","actual":"0.000","hdd":"0.0476250"},{"date":"2013-09-01","actual":"3.681","hdd":"27.4052081"},{"date":"2013-10-01","actual":"18.870","hdd":"96.8208333"},{"date":"2013-11-01","actual":"88.672","hdd":"419.7415819"},{"date":"2013-12-01","actual":"330.298","hdd":"668.9821670"}],"year":"2013","circuit":{"name":"ashp","title":"ASHP"}};
+		mockDataGenBefore = {"totals":{"actual":"1195.782","hdd":"5509.049375000004"},"items":[{"date":"2013-01-01","actual":"282.305","hdd":"1033.586833333334"},{"date":"2013-02-01","actual":"270.432","hdd":"926.6256250000012"},{"date":"2013-03-01","actual":"194.029","hdd":"827.9608750000004"},{"date":"2013-04-01","actual":"7.483","hdd":"434.0808750000002"},{"date":"2013-05-01","actual":"0.008","hdd":"147.7311666666669"},{"date":"2013-06-01","actual":"0.001","hdd":"44.93416666666667"},{"date":"2013-07-01","actual":"0.003","hdd":"5.591874999999999"},{"date":"2013-08-01","actual":"0.000","hdd":"22.34720833333334"},{"date":"2013-09-01","actual":"3.681","hdd":"129.8027916666667"},{"date":"2013-10-01","actual":"18.870","hdd":"272.5404583333334"},{"date":"2013-11-01","actual":"88.672","hdd":"690.2347500000003"},{"date":"2013-12-01","actual":"330.298","hdd":"973.6127499999993"}],"year":"2013","circuit":{"name":"ashp","title":"ASHP"}};
 
 		beforeEach(inject(function(_dataService_) {
 			dataService = _dataService_;
@@ -153,14 +153,14 @@ describe('service', function() {
 
 		describe('projected values', function(){
 
-			it('projected should be -761.9', function() {
-				expect( mockDataGenAfter.totals.projected.toFixed(1) ).toEqual( "761.9" );
+			it('Total projected should be 2650.5', function() {
+				expect( mockDataGenAfter.totals.projected.toFixed(1) ).toEqual( "2650.5" );
 			});
-			it('Jan projected should be 165.9', function() {
-				expect( mockDataGenAfter.items[0].projected.toFixed(1) ).toEqual( "165.9" );
+			it('Jan projected should be 498.3', function() {
+				expect( mockDataGenAfter.items[0].projected.toFixed(1) ).toEqual( "498.3" );
 			});
-			it('Apr projected should be 47.9', function() {
-				expect( mockDataGenAfter.items[3].projected.toFixed(1) ).toEqual( "47.9" );
+			it('Apr projected should be 210.0', function() {
+				expect( mockDataGenAfter.items[3].projected.toFixed(1) ).toEqual( "210.0" );
 			});
 		});
 	});
