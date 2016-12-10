@@ -104,12 +104,12 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
-					src: 'bower_components/moment/moment.js',
-					dest: '<%= dest %>static/shared/moment.js'
 					src: 'bower_components/highcharts/highcharts-more.src.js',
 					dest: '<%= dest %>static/shared/highcharts-more.js'
 				},
 				{
+					src: 'bower_components/moment/moment.js',
+					dest: '<%= dest %>static/shared/moment.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',

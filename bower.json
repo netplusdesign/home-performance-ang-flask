@@ -1,22 +1,14 @@
 {
   "name": "home-performance-ang-flask",
-  "version": "1.1.0",
   "authors": [
     "Larry Burks"
   ],
-  "description": "Port of home-performance-charting-ang (AngularJS) to use new API.",
-  "main": [
-    "./app/index.html",
-    "./app/data/**",
-    "./app/js/app.js",
-    "./app/js/controllers.js",
-    "./app/js/services.js",
-    "./app/js/filters.js",
-    "./app/js/directives.js",
-    "./app/js/partials/***"
-  ],
+  "description": "AngularJS frontend to display home performance data.",
+  "repository": {
+    "type": "https",
+    "url": "https://github.com/netplusdesign/home-performance-ang-flask.git"
+  },
   "license": "MIT",
-  "homepage": "app/index.html",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -25,13 +17,11 @@
     "tests"
   ],
   "dependencies": {
-    "moment": "~2.11.2",
-    "bootstrap": "~3.3.6",
-  },
-  "resolutions": {
     "angular-route": "1.5.9",
+    "moment": "2.17.1",
     "angular": "1.5.9",
     "angular-resource": "1.5.9",
+    "bootstrap": "3.3.7",
     "highcharts": "5.0.5"
   },
   "devDependencies": {
