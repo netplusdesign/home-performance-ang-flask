@@ -13,5 +13,6 @@ angular.module('myApp.controllers', [
 	'myApp.controllers.header',
 	'myApp.controllers.yearly',
 	'myApp.controllers.monthly',
-	'myApp.controllers.daily'
+	'myApp.controllers.daily',
+	'myApp.controllers.hourly'
 ]);
