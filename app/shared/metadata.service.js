@@ -109,18 +109,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		},
 		setInterval = function ( str ) {
 
-			if (str == 'hourly') {
-				str = 'hours';
-			}
-			else if (str == 'daily') {
-				str = 'days';
-			}
-			else if (str == 'monthly') {
-				str = 'months';
-			}
-			else {
-				str = 'years';
-			}
+			data.interval = str;
 			return str;
 		},
 		setDuration = function ( str ) {
@@ -164,9 +153,10 @@ angular.module( 'myApp.services.metadata', [] ).
 
 			var options = { params : {} };
 			options.view = routeParams.view;
-			// used for navigation
-			current.view = routeParams.path + '/' + routeParams.view;
 
+			current.view = routeParams.view;
+
+			options.url = apiUrl + 'houses/' + setHouse( routeParams.house ) + '/views/' + routeParams.view + '/';
 
 			options.params.interval = setInterval( routeParams.path );
 
@@ -273,6 +263,7 @@ angular.module( 'myApp.services.metadata', [] ).
 			setParamYear : setParamYear,	// called from navCtrl when user selects a year
 			setMetadata : setMetadata,		// used by navCtrl, phase this out?
 			getDaysYTD : getDaysYTD,			// utility method
+			setInterval : setInterval,           // temp workaround
 			setParamFilter : setParamFilter,     // called from navCtrl when user selects a filter
 			apiUrl : apiUrl
 		};
