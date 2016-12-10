@@ -12,7 +12,7 @@
 
 angular.module( 'myApp.services.chart', [] ).
 
-	factory('chartService', [ '$window', 'metadataService', function ( $window, metadataService ) {
+	factory('chartService', [ '$window', function ( $window ) {
 
 		Highcharts.setOptions({
 			colors: ['#336699', '#669933', '#CC9933', '#CC3333', '#663366', '#999999', '#336699', '#669966']
