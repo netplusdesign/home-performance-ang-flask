@@ -1,6 +1,8 @@
-# charting-performance-ang-flask
+# home-performance-ang-flask
 
-Converted [home-performance-ang](https://github.com/netplusdesign/home-performance-ang) to use a new REST API built with [Flask](http://flask.pocoo.org).
+v 2.0 provides a yearly comparison and consistent drill-down from years to months, days and hours.
+
+home-performance-ang-flask is an AngularJS frontend to view home energy, temperature and water data.
 
 See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
