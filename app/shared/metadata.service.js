@@ -35,11 +35,10 @@ angular.module( 'myApp.services.metadata', [] ).
 		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
 		//var apiUrl = 'http://netplusdesign.com/api/';
 
-		limits = { range : {} }, // for hourly chart
 		var current = {};
 		current.filter = {};
 
-		setHouse = function ( house ) {
+		var setHouse = function ( house ) {
 
 			if ( house && ( typeof house !== undefined ) ) {
 				// check if switching houses
@@ -170,12 +169,6 @@ angular.module( 'myApp.services.metadata', [] ).
 			// used for navigation
 			current.view = routeParams.path + '/' + routeParams.view;
 
-			if (routeParams.path == 'daily') {
-				options.url = apiUrl + 'houses/' + setHouse( routeParams.house ) + '/views/heatmap/';
-			}
-			else {
-				options.url = apiUrl + 'houses/' + setHouse( routeParams.house ) + '/views/' + routeParams.view + '/';
-			}
 
 			options.params.interval = setInterval( routeParams.path );
 
@@ -206,7 +199,6 @@ angular.module( 'myApp.services.metadata', [] ).
 			options.method = 'GET';
 			return options;
 		},
-
 		// 3 methods used by navCtrl
 		setParamYear = function ( yr ) {
 			if (yr != 'ALL') {
@@ -235,7 +227,6 @@ angular.module( 'myApp.services.metadata', [] ).
 			data.houseName = d.house.name;
 
 			if ( !data.chartDate ) {
-
 				data.chartDate = data.asofDate;
 			}
 
@@ -245,18 +236,6 @@ angular.module( 'myApp.services.metadata', [] ).
 			else {
 				current.year = moment( data.chartDate, 'YYYY-MM-DD' ).format('YYYY'); // set default year selector
 			}
-		},
-		setDailyMetadata = function ( d ) {
-			// gets called after validate
-			// used for chart to set min and max of y axes
-			limits.kwh_max = d.limits.used_max;
-			limits.kwh_min = d.limits.solar_min;
-			limits.deg_max = d.limits.outdoor_deg_max;
-			limits.deg_min = d.limits.outdoor_deg_min;
-			limits.hdd_max = d.limits.hdd_max;
-			limits.hdd_min = 0;
-			// used for calendar month limits
-			limits.range = { startDate : d.limits.start_date, endDate : d.limits.end_date };
 		},
 		// need days year to date to calculate avarage per day values
 		// if chart year > asof year then return false (can't show data that does not exist)
@@ -291,12 +270,10 @@ angular.module( 'myApp.services.metadata', [] ).
 		return {
 			data : data,					//
 			current : current,				// used by navCtrl to set state of nav options
-			limits : limits,				// used by dataProvider and chartService - daily
 			setStart : setStart,				// temp workaround
 			validate : validate,			// used by dataProvider
 			setParamYear : setParamYear,	// called from navCtrl when user selects a year
 			setMetadata : setMetadata,		// used by navCtrl, phase this out?
-			setDailyMetadata : setDailyMetadata,	// used by calendar and hourly chart
 			getDaysYTD : getDaysYTD,			// utility method
 			setParamFilter : setParamFilter,     // called from navCtrl when user selects a filter
 			apiUrl : apiUrl

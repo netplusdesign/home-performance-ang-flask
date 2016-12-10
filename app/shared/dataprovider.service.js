@@ -86,41 +86,14 @@ angular.module( 'myApp.services.dataProvider', [] ).
 			}
 		},
 
-		getDailyMetadata = function () {
-			// replace hardcoded url
-			return $http.get( metadataService.apiUrl + 'houses/0/views/default/?interval=days' ).
+		getDailyDetails = function ( config ) {
+
+			return $http( config ).
 
 			then( function ( result ) {
 
-				metadataService.setDailyMetadata ( result.data );
-
+				return result.data;
 			});
-		},
-		getDailyDetails = function ( config ) {
-
-			if ( typeof metadataService.limits.kwh_max === undefined ) {
-
-				return getDailyMetadata ().
-
-				then( function() {
-
-					return $http( config ).
-
-					then( function ( result ) {
-
-						return result.data;
-					});
-				});
-			}
-			else {
-
-				return $http( config ).
-
-				then( function ( result ) {
-
-					return result.data;
-				});
-			}
 		},
 		getDailyData = function ( routeParams ) {
 
@@ -132,11 +105,6 @@ angular.module( 'myApp.services.dataProvider', [] ).
 
 				then( function () {
 
-					return getDailyMetadata ( config );
-				}).
-
-				then( function () {
-
 					return getDailyDetails( config );
 				});
 			}
@@ -144,27 +112,12 @@ angular.module( 'myApp.services.dataProvider', [] ).
 
 				return getDailyDetails( config );
 			}
-
-		},
-
-		getHourlyData = function ( routeParams ) {
-			// replace local params
-			var params = metadataService.validate ( routeParams );
-			params.params.interval = 'hours';
-			params.params.start = params.params.date;
-			params.params.duration = '1day';
-			// replace hardcoded url
-			return $http.get( metadataService.apiUrl + 'houses/0/views/chart/', params ).then( function ( result ) {
-
-				return result.data;
-			});
 		};
 
 		return {
 			getYearlyData : getYearlyData,
 			getMonthlyData : getMonthlyData,
-			getDailyData : getDailyData,
-			getHourlyData : getHourlyData
+			getDailyData : getDailyData
 		};
 
 	}]);
