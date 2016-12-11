@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 		clean: {
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
-			min: ['app/<%= pkg.name %>.min.js']
+			post: ['app/<%= pkg.name %>.min.js', '<%= dest %>static/index.html']
 		},
 		copy: {
 			prod: {
@@ -167,7 +167,7 @@ module.exports = function(grunt) {
 		'uglify',
 		'copy:prod',
 		'preprocess:prod',
-		'clean:min'
+		'clean:post'
 	]);
 
 	grunt.registerTask('test',
@@ -175,14 +175,14 @@ module.exports = function(grunt) {
 		'uglify',
 		'copy:test',
 		'preprocess:test',
-		'clean:min'
+		'clean:post'
 	]);
 
 	grunt.registerTask('dev',
 	[   'clean:dev',
 		'copy:dev',
 		'preprocess:dev',
-		'clean:min'
+		'clean:post'
 	]);
 
 };
