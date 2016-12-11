@@ -27,7 +27,7 @@ config(['$routeProvider', function($routeProvider) {
 				return 'static/yearly/' + params.view + '.html';
 			},
 			controller: 'YearlyCtrl'
-		}).		
+		}).
 		when ( '/months/:view', {
 			templateUrl: function ( params ) {
 				return 'static/monthly/' + params.view + '.html';
@@ -64,5 +64,23 @@ config(['$routeProvider', function($routeProvider) {
 			},
 			controller: 'HourlyCtrl'
 		}).
+		// accept old requests until they can be converted
+		when ( '/monthly/summary/', {
+			templateUrl: function ( params ) {
+				params.view = 'summary';
+				params.interval = 'months';
+				return 'static/monthly/' + params.view + '.html';
+			},
+			controller: 'MonthlyCtrl'
+		}).
+		when ( '/daily/net/', {
+			templateUrl: function ( params ) {
+				params.view = 'summary';
+				params.interval = 'days';
+				return 'static/daily/' + params.view + '.html';
+			},
+			controller: 'DailyCtrl'
+		}).
+
 		otherwise( { redirectTo: '/years/summary' } );
 }]);

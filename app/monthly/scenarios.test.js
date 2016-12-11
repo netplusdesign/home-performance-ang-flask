@@ -30,6 +30,25 @@ describe('my app', function() {
 			});
 		});
 
+		describe('summary view', function() {
+
+			beforeEach(function() {
+				browser.get('#/monthly/summary/?house=0&date=2015-01-01');
+			});
+
+			it('should render summary when user navigates to /monthly/summary', function() {
+				expect(element(by.id('summary')).isPresent()).toBe(true);
+			});
+
+			it('should select summary when user navigates to /summary', function() {
+				expect(element(by.model('viewSelection.view')).getAttribute('value')).toMatch(/summary/);
+			});
+
+			it('should display 2015 when year option = 2015', function() {
+				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2015/);
+			});
+		});
+
 		describe('summary year 2013', function() {
 
 			beforeEach(function() {

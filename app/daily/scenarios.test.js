@@ -42,6 +42,22 @@ describe('my app', function() {
 
 		});
 
+		describe('daily/net view', function() {
+
+			beforeEach(function() {
+				browser.get('#/daily/net/?house=0&date=2015-07');
+			});
+
+			it('should be redirected to days/summary', function() {
+				// days
+				expect(element(by.model('viewSelection.view')).getAttribute('value')).toMatch(/summary/);
+				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2015/);
+				var month = element.all(by.binding('data.items[0].date')).first();
+				expect((month).getText()).toMatch(/Jul/);
+			});
+
+		});
+
 		describe('generation', function() {
 
 			beforeEach(function() {
