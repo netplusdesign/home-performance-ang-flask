@@ -9,9 +9,9 @@
 /* jshint unused : true */
 /* jshint globalstrict : true */
 
-angular.module('myApp.controllers.daily', []).
+angular.module('myApp.controllers.hourly', []).
 
-	controller( 'DailyCtrl', [
+	controller( 'HourlyCtrl', [
 		'$scope',
 		'$routeParams',
 		'dataProvider',
@@ -34,7 +34,7 @@ angular.module('myApp.controllers.daily', []).
 					$scope.warning = true;
 				} else {
 
-					$scope.data = dataService.insertAverage (data, ['used'], ['ahu']);
+					$scope.data = data;
 				}
 			},
 
@@ -48,9 +48,7 @@ angular.module('myApp.controllers.daily', []).
 
 					data.max_solar_hour.date = moment( data.max_solar_hour.date ).toDate();
 
-					$scope.data = dataService.insertDiff(data, 'actual', 'estimated');
-
-					$scope.data = dataService.insertAverage (data, ['actual'], ['adg']);
+					$scope.data = data;
 				}
 			},
 
@@ -81,7 +79,7 @@ angular.module('myApp.controllers.daily', []).
 						}
 						else {
 
-							$scope.data = data;
+							$scope.data = dataService.insertDiff ( data, 'budget', 'actual' );
 
 							$routeParams.view = 'circuit';
 						}
@@ -120,7 +118,7 @@ angular.module('myApp.controllers.daily', []).
 			},
 
 			showTemperature = function ( data ) {
-
+				// fix max_solar_hour time by parsing text into a date
 				if ( typeof data.items === 'undefined' ) {
 
 					$scope.warning = true;
@@ -171,7 +169,7 @@ angular.module('myApp.controllers.daily', []).
 					}
 					else {
 
-						options.interval = 'days';
+						options.interval = 'hours';
 					}
 					if ( params.base !== undefined ) {
 
@@ -202,7 +200,7 @@ angular.module('myApp.controllers.daily', []).
 
 			$scope.warning = false;
 
-			$routeParams.path = 'days';
+			$routeParams.path = 'hours';
 
 			$scope.options = setOptionsIfBasetemp ( $routeParams );
 

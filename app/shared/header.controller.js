@@ -3,8 +3,6 @@
 /* Controllers */
 
 /* global angular */
-/* global moment */
-/* global chroma */
 /* jshint strict : true */
 /* jshint undef : true */
 /* jshint unused : true */

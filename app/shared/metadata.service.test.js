@@ -41,7 +41,7 @@ describe('service', function() {
 
 			beforeEach ( inject ( function ( _metadataService_) {
 				metadataService = _metadataService_;
-				var params = { house: '0', date: '2013-12-30', view: 'summary', path: 'monthly' };
+				var params = { house: '0', date: '2013-12-30', view: 'summary', path: 'months' };
 				metadataService.validate( params );
 			}));
 
@@ -52,7 +52,7 @@ describe('service', function() {
 				expect( metadataService.data.chartDate ).toEqual('2013-12-30');
 			});
 			it('current.view should be summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('current.year should be 2013', function() {
 				expect( metadataService.current.year ).toEqual('2013');
@@ -84,7 +84,7 @@ describe('service', function() {
 				expect( metadataService.current.year ).toEqual('2013');
 			});
 			it('current.view should be summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('data.asofDate should still be false', function() {
 				expect( metadataService.data.asofDate ).toBe( false );
@@ -109,7 +109,7 @@ describe('service', function() {
 				expect( metadataService.data.chartDate ).toEqual('2012-12-30');
 			});
 			it('current.view should remain summary', function() {
-				expect( metadataService.current.view ).toEqual('monthly/summary');
+				expect( metadataService.current.view ).toEqual('summary');
 			});
 			it('data.asofDate should still be false', function() {
 				expect( metadataService.data.asofDate ).toBe( false );
@@ -142,8 +142,8 @@ describe('service', function() {
 			it('data.asofDate should be 2013-12-31', function() {
 				expect( metadataService.data.asofDate ).toEqual('2013-12-31');
 			});
-			it('data.years.length should be 2', function() {
-				expect( metadataService.data.years.length ).toBe(2);
+			it('data.years.length should be 3 including all', function() {
+				expect( metadataService.data.years.length ).toBe(3);
 			});
 			it('data.houseName should be Up Hill House', function() {
 				expect( metadataService.data.houseName ).toEqual('Up Hill House');

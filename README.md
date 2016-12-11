@@ -1,6 +1,8 @@
-# charting-performance-ang-flask
+# home-performance-ang-flask
 
-Converted [home-performance-ang](https://github.com/netplusdesign/home-performance-ang) to use a new REST API built with [Flask](http://flask.pocoo.org).
+v 2.0 provides a yearly comparison and consistent drill-down from years to months, days and hours.
+
+home-performance-ang-flask is an AngularJS frontend to view home energy, temperature and water data.
 
 See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
@@ -18,7 +20,6 @@ Working version of `gh-pages` branch at: http://netplusdesign.github.io/home-per
 * AngularJS
 * Momentjs
 * Highcharts
-* Chroma
 * Bootstrap
 
 First get Node, Grunt and Bower.
@@ -34,9 +35,11 @@ Edit grunt file (devDest) path, then run:
 
 ## Test
 
+### Unit tests
+
 * `npm test`
-* `npm run protractor` or `protractor test/protractor.conf.js` if you followed the directions at [Protractor](https://angular.github.io/protractor/#/)
 
-## What's next
+### End to end
 
-* Refactor!
+* `webdriver-manager start`
+* `npm run protractor` or `protractor test/protractor.conf.js`

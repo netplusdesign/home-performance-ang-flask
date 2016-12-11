@@ -3,7 +3,7 @@
 <div class="table-responsive">
 	<table id="summary" class="table table-condensed text-right">
 		<tr>
-			<th class="text-right"></th>
+			<th><a ng-href="#/years/summary?house={{house}}" >ALL</a> &gt; {{data.items[0].date | date:"yyyy"}}</th>
 			<th class="text-right">Used</th>
 			<th class="text-right">Solar</th>
 			<th class="text-right">Net</th>
@@ -11,20 +11,20 @@
 			<th class="text-right"><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
 		</tr>
 		<tr>
-			<th><abbr title="Year to date">YTD</abbr></th>
-			<th class="text-right">{{data.totals.used | number:0}}</th>
-			<th class="text-right">{{data.totals.solar | number:0}}</th>
+			<th>Totals</th>
+			<th class="text-right"><a ng-href="#/months/usage?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.totals.used | number:0}}</a></th>
+			<th class="text-right"><a ng-href="#/months/generation?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.totals.solar | number:0}}</a></th>
 			<th class="text-right">{{data.totals.net | number:0}}</th>
 			<th class="text-right">{{data.totals.adu | number:1}}</th>
-			<th class="text-right">{{data.totals.hdd | number:0}}</th>
+			<th class="text-right"><a ng-href="#/months/temperature?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.totals.hdd | number:0}}</a></th>
 		</tr>
 		<tr ng-repeat="month in data.items">
-			<td class="text-left"><a ng-href="#/daily/net?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
-			<td>{{month.used | number:0}}</td>
-			<td>{{month.solar | number:0}}</td>
+			<td class="text-left"><a ng-href="#/days/summary?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+			<td><a ng-href="#/days/usage?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.used | number:0}}</a></td>
+			<td><a ng-href="#/days/generation?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.solar | number:0}}</a></td>
 			<td>{{month.net | number:0}}</td>
 			<td>{{month.adu | number:1}}</td>
-			<td>{{month.hdd | number:0}}</td>
+			<td><a ng-href="#/days/temperature?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.hdd | number:0}}</a></td>
 		</tr>
 	</table>
 </div>

@@ -3,8 +3,6 @@
 /* Controllers */
 
 /* global angular */
-/* global moment */
-/* global chroma */
 /* jshint strict : true */
 /* jshint undef : true */
 /* jshint unused : true */
@@ -15,5 +13,6 @@ angular.module('myApp.controllers', [
 	'myApp.controllers.header',
 	'myApp.controllers.yearly',
 	'myApp.controllers.monthly',
-	'myApp.controllers.daily'
+	'myApp.controllers.daily',
+	'myApp.controllers.hourly'
 ]);

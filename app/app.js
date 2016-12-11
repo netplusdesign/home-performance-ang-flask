@@ -16,35 +16,71 @@ angular.module('myApp', [
 ]).
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
-		when ( '/yearly/:view', {
+		when ( '/years/:view', {
 			templateUrl: function ( params ) {
 				return 'static/yearly/' + params.view + '.html';
 			},
 			controller: 'YearlyCtrl'
 		}).
-		when ( '/monthly/:view', {
+		when ( '/years/:view/:filter', {
+			templateUrl: function ( params ) {
+				return 'static/yearly/' + params.view + '.html';
+			},
+			controller: 'YearlyCtrl'
+		}).
+		when ( '/months/:view', {
 			templateUrl: function ( params ) {
 				return 'static/monthly/' + params.view + '.html';
 			},
 			controller: 'MonthlyCtrl'
 		}).
-		when ( '/monthly/:view/:circuit', {
+		when ( '/months/:view/:filter', {
 			templateUrl: function ( params ) {
 				return 'static/monthly/' + params.view + '.html';
 			},
 			controller: 'MonthlyCtrl'
 		}).
-		when ( '/daily/:view', {
-			templateUrl: function () {
-				return 'static/daily/daily.html';
+		when ( '/days/:view', {
+			templateUrl: function ( params ) {
+				return 'static/daily/' + params.view + '.html';
 			},
 			controller: 'DailyCtrl'
 		}).
-		when ( '/daily/:view/:circuit', {
-			templateUrl: function () {
-				return 'static/daily/daily.html';
+		when ( '/days/:view/:filter', {
+			templateUrl: function ( params ) {
+				return 'static/daily/' + params.view + '.html';
 			},
 			controller: 'DailyCtrl'
 		}).
-		otherwise( { redirectTo: '/yearly/summary' } );
+		when ( '/hours/:view/', {
+			templateUrl: function ( params ) {
+				return 'static/hourly/' + params.view + '.html';
+			},
+			controller: 'HourlyCtrl'
+		}).
+		when ( '/hours/:view/:filter', {
+			templateUrl: function ( params ) {
+				return 'static/hourly/' + params.view + '.html';
+			},
+			controller: 'HourlyCtrl'
+		}).
+		// accept old requests until they can be converted
+		when ( '/monthly/summary/', {
+			templateUrl: function ( params ) {
+				params.view = 'summary';
+				params.interval = 'months';
+				return 'static/monthly/' + params.view + '.html';
+			},
+			controller: 'MonthlyCtrl'
+		}).
+		when ( '/daily/net/', {
+			templateUrl: function ( params ) {
+				params.view = 'summary';
+				params.interval = 'days';
+				return 'static/daily/' + params.view + '.html';
+			},
+			controller: 'DailyCtrl'
+		}).
+
+		otherwise( { redirectTo: '/years/summary' } );
 }]);

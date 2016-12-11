@@ -4,7 +4,6 @@
 
 /* global angular */
 /* global moment */
-/* global chroma */
 /* global Highcharts */
 /* jshint strict : true */
 /* jshint undef : true */
@@ -13,7 +12,7 @@
 
 angular.module( 'myApp.services.chart', [] ).
 
-	factory('chartService', [ '$window', 'metadataService', function ( $window, metadataService ) {
+	factory('chartService', [ '$window', function ( $window ) {
 
 		Highcharts.setOptions({
 			colors: ['#336699', '#669933', '#CC9933', '#CC3333', '#663366', '#999999', '#336699', '#669966']
@@ -81,31 +80,56 @@ angular.module( 'myApp.services.chart', [] ).
 			//series : []
 		},
 
+		intervalTitles = {
+			"year":"Years",
+			"month":"Months",
+			"day":"Days",
+			"hour":"Hours",
+		},
+		intervalFormats = {
+			"year":"YYYY",
+			"month":"MMM",
+			"day":"D",
+			"hour":"H",
+		},
+
 		putSeriesData = function ( options, data ) {
 
-			var i, j;
+			var i, j, k;
 
-			if ((!data.items) && (data.years.length > 0)) {
+			for ( i = 0; i < data.items.length; i++ ) {
 
-				for ( i = 0; i < data.years.length; i++ ) {
+				options.xAxis.categories.push( moment( data.items[ i ].date ).format( intervalFormats[ data.interval ] ) );
 
-					options.xAxis.categories.push( moment( data.years[ i ].date ).format( 'YYYY' ) );
+				for ( j = 0; j < options.series.length; j++ ) {
 
-					for ( j = 0; j < options.series.length; j++ ) {
+					var v, vFinal;
 
-						options.series[ j ].data.push( Math.round( data.years[ i ][ options.series[ j ].name.toLowerCase() ] ) );
+					for ( k = 0; k < options.series[ j ].id.length; k++ ) {
+
+						v = data.items[ i ][ options.series[ j ].id[ k ] ];
+
+						if ( typeof v === 'string' ) {
+							// some numbers such as net come back as strings. Investigate changing.
+							v = parseFloat( v );
+						}
+						if ( v !== v ) {
+							// v is NaN
+							v = '';
+						}
+						if ( options.series[ j ].id.length > 1 ) {
+							// build array
+							if ( typeof vFinal !== 'object' ) {
+								vFinal = [];
+							}
+							vFinal.push( v );
+						}
+						else {
+							vFinal = v;
+						}
 					}
-				}
+					options.series[ j ].data.push( vFinal );
 
-			} else {
-				for ( i = 0; i < data.items.length; i++ ) {
-
-					options.xAxis.categories.push( moment( data.items[ i ].date ).format( 'MMM' ) );
-
-					for ( j = 0; j < options.series.length; j++ ) {
-
-						options.series[ j ].data.push( Math.round( data.items[ i ][ options.series[ j ].name.toLowerCase() ] ) );
-					}
 				}
 			}
 			return options;
@@ -120,6 +144,7 @@ angular.module( 'myApp.services.chart', [] ).
 				return colors[ category ];
 			}
 		},
+
 		showUsageVsGen = function ( data ) {
 
 			var i, colors = { 'Used' : '#336699', 'Solar' : '#669933', 'danger' : '#DF0101' },
@@ -145,16 +170,17 @@ angular.module( 'myApp.services.chart', [] ).
 
 			var options = angular.copy( chartTemplate );
 			options.chart.renderTo = 'view2';
+			options.title.text = intervalTitles[ data.interval ];
 			options.yAxis.push( angular.copy( options.yAxis[0] ) );
 			options.yAxis[1].title.text = 'HDD';
 			options.yAxis[1].title.rotation = 90;
 			options.yAxis[1].opposite = true;
 			options.yAxis[1].min = 0;
 			options.series = [
-				{ name : 'Used', type: 'column', data : [] },
-				{ name : 'Solar', type: 'column', data : [] },
-				{ name : 'Net', type: 'column', data : [] },
-				{ name : 'HDD', type: 'line', data : [], yAxis : 1 }
+				{ name : 'Used', id: ['used'], type: 'column', data : [] },
+				{ name : 'Solar', id: ['solar'], type: 'column', data : [] },
+				{ name : 'Net', id: ['net'], type: 'column', data : [] },
+				{ name : 'HDD', id: ['hdd'], type: 'line', data : [], yAxis : 1 }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
@@ -163,10 +189,11 @@ angular.module( 'myApp.services.chart', [] ).
 		showGenerationYTD = function ( data ) {
 
 			var options = angular.copy ( chartTemplate );
+			options.title.text = intervalTitles[ data.interval ];
 			options.series = [
-				{ name : 'Actual', type: 'column', data : [] },
-				{ name : 'Estimated', type: 'column', data : [] },
-				{ name : 'Net', type: 'column', data : [] }
+				{ name : 'Actual', id: ['actual'], type: 'column', data : [] },
+				{ name : 'Estimated', id: ['estimated'], type: 'column', data : [] },
+				{ name : 'Net', id: ['net'], type: 'column', data : [] }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
@@ -214,51 +241,67 @@ angular.module( 'myApp.services.chart', [] ).
 			var options = angular.copy ( chartTemplate );
 			options.title.text = data.circuit.name;
 			options.series = [
-				{ name : 'Actual', type: 'column', data : [] }
+				{ name : 'Actual', id: ['actual'], type: 'column', data : [] }
 			];
 
 			switch ( data.circuit.circuit_id ) {
 				case 'ashp' :
-					options.series.push( { name : 'Projected', type: 'column', data : [] } );
-					options.series.push( { name : 'Net', type: 'column', data : [] } );
+					options.series.push( { name : 'Projected', id: ['projected'], type: 'column', data : [] } );
+					options.series.push( { name : 'Net', id: ['net'], type: 'column', data : [] } );
 					break;
 				case 'all' :
-					options.series.push( { name : 'Budget', type: 'column', data : [] } );
-					options.series.push( { name : 'Net', type: 'column', data : [] } );
+					options.series.push( { name : 'Budget', id: ['budget'], type: 'column', data : [] } );
+					options.series.push( { name : 'Net', id: ['net'], type: 'column', data : [] } );
 			}
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
 		},
 
-		showHddYTD = function ( data ) {
+		showTemperatureYTD = function ( data ) {
 
-			var options = angular.copy ( chartTemplate );
-			options.yAxis[0].title.text = 'HDD';
+			var options = angular.copy ( chartTemplate ),
+			hddRanges = { 'year': 8000, 'month': 1500, 'day': 80, 'hour': 3 },
+			barWidths = { 'year': 30, 'month': 20, 'day': 10, 'hour': 10 };
+			options.chart.alignTicks = false;
+			options.title.text = intervalTitles[ data.interval ];
+			options.yAxis[0].title.text = 'Temperature';
+			options.yAxis[0].max = 100;
+			options.yAxis.push( angular.copy( options.yAxis[0] ) );
+			options.yAxis[1].title.text = 'HDD';
+			options.yAxis[1].title.rotation = 90;
+			options.yAxis[1].opposite = true;
+			options.yAxis[1].min = 0;
+			options.yAxis[1].max = hddRanges[ data.interval ];
+			options.yAxis[1].gridLineWidth = 0;
 			options.series = [
-				{ name : 'Actual', type: 'column', data : [] },
-				{ name : 'Estimated', type: 'column', data : [] },
-				{ name : 'Net', type: 'column', data : [] }
+				{ name : 'Average Temperature', id: ['avg_temperature'], type: 'line', data : [], zIndex: 2 },
+				{ name : 'High-Low Temperature', id: ['x'], type: 'column', data : [], color: 'rgba(51, 102, 153, .5)' },
+				{ name : 'High-Low Temperature', id: ['max_temperature', 'min_temperature'], type: 'errorbar', data : [], stemWidth: barWidths[ data.interval ], stemColor: 'rgba(51, 102, 153, .5)', whiskerLength: 0, zIndex: 1 },
+				{ name : 'HDD', id: ['sum_hdd'], type: 'line', data : [], yAxis : 1, zIndex: 3 },
+				{ name : 'High-Low Humidity', id: ['xx'], type: 'column', data : [], color: 'rgba(204, 153, 51, .5)' },
+				{ name : 'High-Low Humidity', id: ['max_humidity', 'min_humidity'], type: 'errorbar', data : [], stemWidth: barWidths[ data.interval ], stemColor: 'rgba(204, 153, 51, .5)', whiskerLength: 0, zIndex: 0 }
 			];
-
+			if ( data.location_name != 'outdoor' ) {
+				options.series[3].visible = false;
+			}
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
 		},
 
 		showWaterYTD = function ( data ) {
 
 			var options = angular.copy ( chartTemplate );
-			options.title.text = 'Monthly Breakdown';
+			options.title.text = intervalTitles[ data.interval ];
 			options.yAxis.push( angular.copy( options.yAxis[0] ) );
 			options.yAxis[0].title.text = 'Gallons';
 			options.yAxis[0].labels = { format : '{value:,.0f}' };
-			options.yAxis[0].max = 4000;
 			options.yAxis[1].title.text = 'Wh/gal';
 			options.yAxis[1].title.rotation = 90;
 			options.yAxis[1].opposite = true;
 			options.yAxis[1].min = 0;
 			options.series = [
-				{ name : 'Cold', type: 'column', data : [] },
-				{ name : 'Hot', type: 'column', color : '#CC3333', data : [] },
-				{ name : 'Water_heater', type : 'line', color : '#CC3333', data : [], yAxis : 1 }
+				{ name : 'Cold', id: ['cold'], type: 'column', data : [] },
+				{ name : 'Hot', id: ['hot'], type: 'column', color : '#CC3333', data : [] },
+				{ name : 'Water heater', id: ['water_heater'], type : 'line', color : '#CC3333', data : [], yAxis : 1 }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
@@ -268,12 +311,11 @@ angular.module( 'myApp.services.chart', [] ).
 
 			var options = angular.copy ( chartTemplate );
 			options.chart.renderTo = 'view2';
-			options.title.text = 'Monthly Total Usage';
+			options.title.text = intervalTitles[ data.interval ] + ' Total Usage';
 			options.yAxis[0].title.text = 'Gallons';
 			options.yAxis[0].labels = { format : '{value:,.0f}' };
-			options.yAxis[0].max = 4000;
 			options.series = [
-				{ name : 'Main', type: 'area', data : [] }
+				{ name : 'Main', id: ['main'], type: 'area', data : [] }
 			];
 
 			return new Highcharts.Chart ( putSeriesData( options, data ) );
@@ -332,6 +374,7 @@ angular.module( 'myApp.services.chart', [] ).
 				if ( data.interval === 'hour' ) { dt = d.format( 'MMM D, YYYY h a' ); }
 				if ( data.interval === 'day' ) { dt = d.format( 'MMM D, YYYY' ); }
 				if ( data.interval === 'month' ) { dt = d.format( 'MMM, YYYY' ); }
+				if ( data.interval === 'year' ) { dt = d.format( 'YYYY' ); }
 
 				options.series[0].data.push({
 					date  : dt,
@@ -350,87 +393,6 @@ angular.module( 'myApp.services.chart', [] ).
 			options.series[1].data.push( [ start_x, start_y ], [ end_x, end_y ] );
 
 			return new Highcharts.Chart ( options );
-		},
-
-		showDaily = function ( data ) {
-
-			var i, j, chart,
-			options = angular.copy ( chartTemplate );
-			options.chart.renderTo = 'view1';
-			options.chart.height = 400;
-			options.plotOptions.series.marker = { enabled : false };
-			options.title.text = moment( data.hours[0].date ).format( 'MMMM D, YYYY' );
-			options.xAxis.title.text = 'Hour of day';
-			options.yAxis.push( angular.copy( options.yAxis[0] ) ); // 1
-			options.yAxis.push( angular.copy( options.yAxis[0] ) ); // 2
-			options.yAxis[0].title.text = 'kWh';
-			options.yAxis[0].min = metadataService.limits.kwh_min;
-			options.yAxis[0].max = metadataService.limits.kwh_max;
-			//options.yAxis[0].labels = { format : '{value:,.0f}' };
-			//options.yAxis[0].max = 4000; // set from metadataService.limits
-			options.yAxis[1].title.text = 'Temperature F';
-			options.yAxis[1].min = metadataService.limits.deg_min;
-			options.yAxis[1].max = metadataService.limits.deg_max;
-
-			options.yAxis[2].title.text = 'HDD';
-			options.yAxis[2].min = metadataService.limits.hdd_min;
-			options.yAxis[2].max = metadataService.limits.hdd_max;
-			options.yAxis[2].title.rotation = 90;
-			options.yAxis[2].opposite = true;
-
-			options.series = [
-				{ id : 'net', name : 'Net Usage', type: 'line', color : '#CC9933', data : [], yAxis : 0, zIndex : 3, lineWidth : 5 },
-				{ id : 'solar', name : 'Generation', type: 'area', color : '#669933', data : [], yAxis : 0, lineWidth : 0 },
-				{ id : 'used', name : 'Usage', type : 'area', color : '#336699', data : [], yAxis : 0, lineWidth : 0 },
-				{ id : 'first_floor_temp', name : 'First floor temp', type : 'line', data : [], yAxis : 1 },
-				{ id : 'second_floor_temp', name : 'Second floor temp', type : 'line', data : [], yAxis : 1 },
-				{ id : 'basement_temp', name : 'Basement temp', type : 'line', data : [], yAxis : 1 },
-				{ id : 'outdoor_temp', name : 'Outdoor temp', type : 'line', data : [], yAxis : 1 },
-				{ id : 'hdd', name : 'HDD', type : 'line', data : [], yAxis : 2 },
-				{ id : 'water_heater', name : 'Water heater', type : 'line', data : [], yAxis : 0 },
-				{ id : 'ashp', name : 'ASHP', type : 'line', data : [], yAxis : 0 },
-				{ id : 'water_pump', name : 'Water pump', type : 'line', data : [], yAxis : 0 },
-				{ id : 'dryer', name : 'Dryer', type : 'line', data : [], yAxis : 0 },
-				{ id : 'washer', name : 'Washer', type : 'line', data : [], yAxis : 0 },
-				{ id : 'dishwasher', name : 'Dishwasher', type : 'line', data : [], yAxis : 0 },
-				{ id : 'stove', name : 'Range', type : 'line', data : [], yAxis : 0 },
-				{ id : 'refrigerator', name : 'Refrigerator', type : 'line', data : [], yAxis : 0 },
-				{ id : 'living_room', name : 'Living room', type : 'line', data : [], yAxis : 0 },
-				{ id : 'aux_heat_bedrooms', name : 'Electric base heat bedrooms', type : 'line', data : [], yAxis : 0 },
-				{ id : 'aux_heat_living', name : 'Electric base heat living room', type : 'line', data : [], yAxis : 0 },
-				{ id : 'study', name : 'Study', type : 'line', data : [], yAxis : 0 },
-				{ id : 'barn', name : 'Barn', type : 'line', data : [], yAxis : 0 },
-				{ id : 'basement_west', name : 'Basement receptials (West)', type : 'line', data : [], yAxis : 0 },
-				{ id : 'basement_east', name : 'Basement receptials (East)', type : 'line', data : [], yAxis : 0 },
-				{ id : 'ventilation', name : 'Ventilation', type : 'line', data : [], yAxis : 0 },
-				{ id : 'ventilation_preheat', name : 'Ventilation pre-heat', type : 'line', data : [], yAxis : 0 },
-				{ id : 'kitchen_recept_rt', name : 'Kitchen receptical', type : 'line', data : [], yAxis : 0 },
-				{ id : 'all_other', name : 'All other', type : 'line', data : [], yAxis : 0 }
-			];
-			// set additional options
-
-			// parse data
-			for ( i = 0; i < data.hours.length; i++ ) {
-
-				options.xAxis.categories.push( moment( data.hours[ i ].date ).format( 'H' ) );
-
-				for ( j = 0; j < options.series.length; j++ ) {
-					options.series[ j ].data.push( parseFloat( data.hours[ i ][ options.series[ j ].id ] ) );
-				}
-			}
-
-			chart = new Highcharts.Chart ( options );
-
-			// add/remove plotline as needed
-			if (typeof data.time !== 'undefined')
-			{
-				chart.xAxis[0].addPlotLine({ color : '#FF0000', width : 2, value : data.time, id : 'p1' });
-			}
-			// turn off temps and circuits
-			for ( i = 3; i < options.series.length; i++ ) { chart.series[ i ].hide();}
-			chart.series[ 7 ].show();
-
-			return chart;
 		},
 
 		setData = function ( view, data ) {
@@ -453,8 +415,8 @@ angular.module( 'myApp.services.chart', [] ).
 				case "circuit":
 					charts.push( showUsageYTD ( data ) );
 					break;
-				case "hdd":
-					charts.push( showHddYTD ( data ) );
+				case "temperature":
+					charts.push( showTemperatureYTD ( data ) );
 					break;
 				case "water":
 					charts.push( showWaterYTD ( data ) );
@@ -463,8 +425,6 @@ angular.module( 'myApp.services.chart', [] ).
 				case "basetemp":
 					charts.push( showBaseTemp ( data ) );
 					break;
-				case "daily":
-					charts.push( showDaily ( data ) );
 			}
 		};
 

@@ -4,7 +4,6 @@
 
 /* global angular */
 /* global moment */
-/* global chroma */
 /* jshint strict : true */
 /* jshint undef : true */
 /* jshint unused : true */
@@ -36,7 +35,7 @@ angular.module('myApp.controllers.monthly', []).
 			}
 			else {
 
-				$scope.data = dataService.insertADU (data, ['used'], ['adu']);
+				$scope.data = dataService.insertAverage (data, ['used'], ['adu']);
 			}
 		},
 
@@ -50,9 +49,9 @@ angular.module('myApp.controllers.monthly', []).
 
 				data.max_solar_hour.date = moment( data.max_solar_hour.date ).toDate();
 
-				$scope.data = dataService.insertADG(data);
-
 				$scope.data = dataService.insertDiff(data, 'actual', 'estimated');
+
+				$scope.data = dataService.insertAverage (data, ['actual'], ['adg']);
 			}
 		},
 
@@ -68,6 +67,8 @@ angular.module('myApp.controllers.monthly', []).
 					}
 					else {
 
+						if (data.circuits[0].circuit_id == 'used') { data.circuits[0].circuit_id = 'all'; } // shim
+
 						$scope.data = dataService.insertPercent ( data, 'circuits', 'actual' );
 					}
 
@@ -82,6 +83,8 @@ angular.module('myApp.controllers.monthly', []).
 					else {
 
 						$scope.data = dataService.insertDiff ( data, 'budget', 'actual' );
+
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
 
 						$routeParams.view = 'circuit';
 					}
@@ -100,6 +103,8 @@ angular.module('myApp.controllers.monthly', []).
 
 						$scope.data = dataService.insertDiff ( data, 'projected', 'actual' );
 
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
+
 						$routeParams.view = 'circuit';
 					}
 
@@ -113,7 +118,7 @@ angular.module('myApp.controllers.monthly', []).
 					}
 					else {
 
-						$scope.data = data;
+						$scope.data = dataService.insertAverage (data, ['actual'], ['adu']);
 
 						$routeParams.view = 'circuit';
 					}
@@ -121,19 +126,17 @@ angular.module('myApp.controllers.monthly', []).
 
 		},
 
-		showHdd = function ( data ) {
-			// fix max_solar_hour time by parsing text into a date
+		showTemperature = function ( data ) {
+
 			if ( typeof data.items === 'undefined' ) {
 
 				$scope.warning = true;
 			}
 			else {
 
-				data.coldest_hour.date = moment ( data.coldest_hour.date ).toDate();
+				data.location_name = metadataService.locations[ data.location ];
 
-				$scope.data = dataService.insertHeatEfficiency ( data );
-
-				$scope.data = dataService.insertDiff ( data, 'actual', 'estimated' );
+				$scope.data = data;
 			}
 		},
 
@@ -147,7 +150,7 @@ angular.module('myApp.controllers.monthly', []).
 
 				$scope.data = dataService.insertEfficiency ( data );
 
-				$scope.data = dataService.insertADU (data, ['cold', 'hot', 'main'], ['cold_avg', 'hot_avg', 'main_avg']);
+				$scope.data = dataService.insertAverage (data, ['cold', 'hot', 'main'], ['cold_avg', 'hot_avg', 'main_avg']);
 			}
 		},
 
@@ -197,16 +200,16 @@ angular.module('myApp.controllers.monthly', []).
 
 				$routeParams.base = $scope.options.base;
 			}
-			if ( (params.view == 'usage') && (params.circuit == 'ashp') ) {
+			if ( (params.view == 'usage') && (params.filter == 'ashp') ) {
 
-				$routeParams.base = '50';
+				$routeParams.base = metadataService.basetemp.base;
 			}
 			return $routeParams;
 		};
 
 		$scope.warning = false;
 
-		$routeParams.path = 'monthly';
+		$routeParams.path = 'months';
 
 		$scope.options = setOptionsIfBasetemp ( $routeParams );
 
@@ -224,7 +227,7 @@ angular.module('myApp.controllers.monthly', []).
 
 					case 'usage' : showUsage ( data ); break;
 
-					case 'hdd' : showHdd ( data ); break;
+					case 'temperature' : showTemperature ( data ); break;
 
 					case 'water' : showWater ( data ); break;
 
@@ -233,7 +236,7 @@ angular.module('myApp.controllers.monthly', []).
 				// show warnings if no data returned
 				if ( $scope.warning ) {
 
-					$scope.message = "Oops, you've asked for a house or year that I can't find.";
+					$scope.message = "Oops, you've asked for a house, year or interval that is not supported.";
 				}
 				else {
 					// this is the only place metadataService is used in this controller, can get this from data?

@@ -13,14 +13,14 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js', 'bower_components/chroma-js/chroma.js']
+					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js']
 				}
 			}
 		},
 		clean: {
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
-			min: ['app/<%= pkg.name %>.min.js']
+			post: ['app/<%= pkg.name %>.min.js', '<%= dest %>static/index.html']
 		},
 		copy: {
 			prod: {
@@ -66,6 +66,10 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
+					src: 'bower_components/highcharts/highcharts-more.src.js',
+					dest: '<%= dest %>static/shared/highcharts-more.js'
+				},
+				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
@@ -100,12 +104,12 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
-					src: 'bower_components/moment/moment.js',
-					dest: '<%= dest %>static/shared/moment.js'
+					src: 'bower_components/highcharts/highcharts-more.src.js',
+					dest: '<%= dest %>static/shared/highcharts-more.js'
 				},
 				{
-					src: 'bower_components/chroma-js/chroma.js',
-					dest: '<%= dest %>static/shared/chroma.js'
+					src: 'bower_components/moment/moment.js',
+					dest: '<%= dest %>static/shared/moment.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
@@ -163,7 +167,7 @@ module.exports = function(grunt) {
 		'uglify',
 		'copy:prod',
 		'preprocess:prod',
-		'clean:min'
+		'clean:post'
 	]);
 
 	grunt.registerTask('test',
@@ -171,14 +175,14 @@ module.exports = function(grunt) {
 		'uglify',
 		'copy:test',
 		'preprocess:test',
-		'clean:min'
+		'clean:post'
 	]);
 
 	grunt.registerTask('dev',
 	[   'clean:dev',
 		'copy:dev',
 		'preprocess:dev',
-		'clean:min'
+		'clean:post'
 	]);
 
 };

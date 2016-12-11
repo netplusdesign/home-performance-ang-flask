@@ -4,21 +4,21 @@ describe('my app', function() {
 
 	describe('monthly', function() {
 
-		describe('monthly summary view', function() {
+		describe('summary view', function() {
 
 			beforeEach(function() {
 				browser.get('');
 			});
 
 			it('should automatically redirect to /yearly/summary when location hash/fragment is empty', function() {
-				expect(browser.getLocationAbsUrl()).toBe('/yearly/summary');
+				expect(browser.getLocationAbsUrl()).toBe('/years/summary');
 			});
 		});
 
-		describe('monthly summary view', function() {
+		describe('summary view', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/summary');
+				browser.get('#/months/summary');
 			});
 
 			it('should render summary when user navigates to /summary', function() {
@@ -30,10 +30,29 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly summary year 2013', function() {
+		describe('summary view', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/summary?date=2013-12-31');
+				browser.get('#/monthly/summary/?house=0&date=2015-01-01');
+			});
+
+			it('should render summary when user navigates to /monthly/summary', function() {
+				expect(element(by.id('summary')).isPresent()).toBe(true);
+			});
+
+			it('should select summary when user navigates to /summary', function() {
+				expect(element(by.model('viewSelection.view')).getAttribute('value')).toMatch(/summary/);
+			});
+
+			it('should display 2015 when year option = 2015', function() {
+				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2015/);
+			});
+		});
+
+		describe('summary year 2013', function() {
+
+			beforeEach(function() {
+				browser.get('#/months/summary?date=2013-12-31');
 			});
 
 			it('should select 2013 when year option = 2013', function() {
@@ -41,10 +60,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly summary year 2012', function() {
+		describe('summary year 2012', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/summary?date=2012-12-31');
+				browser.get('#/months/summary?date=2012-12-31');
 			});
 
 			it('should select 2012 when year option = 2012', function() {
@@ -52,22 +71,22 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly summary date missing', function() {
+		describe('summary date missing', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/summary');
+				browser.get('#/months/summary');
 			});
 
 			it('should display last available year = 2015', function() {
 				// change to 2013 if using 2013 test dev db
-				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2015/);
+				expect(element(by.model('yearFilter.year')).getAttribute('value')).toMatch(/2016/);
 			});
 		});
 
-		describe('monthly summary date in future', function() {
+		describe('summary date in future', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/summary?date=2016-01-01');
+				browser.get('#/months/summary?date=2017-01-01');
 			});
 
 			it('should display ?', function() {
@@ -75,14 +94,14 @@ describe('my app', function() {
 			});
 
 			it('should show expected warning message', function() {
-				expect(element(by.binding('message')).getText()).toBe("Oops, you've asked for a house or year that I can't find.");
+				expect(element(by.binding('message')).getText()).toBe("Oops, you've asked for a house, year or interval that is not supported.");
 			});
 		});
 
-		describe('monthly generation view', function() {
+		describe('generation view', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/generation');
+				browser.get('#/months/generation');
 			});
 
 			it('should render generation when user navigates to /generation', function() {
@@ -94,10 +113,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly usage happy path', function() {
+		describe('usage happy path', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage?date=2012-12-31');
+				browser.get('#/months/usage?date=2012-12-31');
 			});
 
 			it('should render summary when user navigates to /summary', function() {
@@ -116,10 +135,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly usage date missing', function() {
+		describe('usage date missing', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage');
+				browser.get('#/months/usage');
 			});
 
 			it('should not render warning message when date not present', function() {
@@ -128,10 +147,10 @@ describe('my app', function() {
 			// should default to latest year test here...
 		});
 
-		describe('monthly usage/ashp date missing', function() {
+		describe('usage/ashp date missing', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage/ashp');
+				browser.get('#/months/usage/ashp');
 			});
 
 			it('should render usage when user navigates to /usage/ashp', function() {
@@ -143,10 +162,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly usage/ashp circuit view 2013', function() {
+		describe('usage/ashp circuit view 2013', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage/ashp?date=2013-12-31');
+				browser.get('#/months/usage/ashp?date=2013-12-31');
 			});
 
 			it('should render 12 months of data when viewing 2013 data', function() {
@@ -156,15 +175,15 @@ describe('my app', function() {
 			it('should NOT display note 1', function() {
 				element.all(by.css('.list-unstyled')).then(function(notes) {
 					expect(notes.length).toBe(1);
-					expect(notes[0].getText()).toBe('2. Projected kWh = 0.2261 x HDD base 50°F \+ 0.7565');
+					expect(notes[0].getText()).toBe('2. Projected kWh = 0.4809 x HDD base 60°F \+ 1.237');
 				});
 			});
 		});
 
-		describe('monthly usage/ashp circuit view 2012', function() {
+		describe('usage/ashp circuit view 2012', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage/ashp?date=2012-12-31');
+				browser.get('#/months/usage/ashp?date=2012-12-31');
 			});
 
 			it('should render 10 months of data when viewing 2012 data', function() {
@@ -175,16 +194,16 @@ describe('my app', function() {
 				element.all(by.css('.list-unstyled li')).then(function(notes) {
 					expect(notes.length).toBe(2);
 					expect(notes[0].getText()).toBe('1. Circuit level data starts March 16, 2012');
-					expect(notes[1].getText()).toBe('2. Projected kWh = 0.2261 x HDD base 50°F \+ 0.7565');
+					expect(notes[1].getText()).toBe('2. Projected kWh = 0.4809 x HDD base 60°F \+ 1.237');
 				});
 			});
 
 		});
 
-		describe('monthly usage circuit view', function() {
+		describe('usage circuit view', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/usage/ashp?date=2013-12-31');
+				browser.get('#/months/usage/ashp?date=2013-12-31');
 				// select year 2012
 				element(by.cssContainingText('option', '2012')).click();
 			});
@@ -193,7 +212,7 @@ describe('my app', function() {
 				browser.getLocationAbsUrl().then(function(url) {
 					var path = url.split('?');
 					var search = path[1].split('date=');
-					expect(path[0]).toBe('/monthly/usage/ashp');
+					expect(path[0]).toBe('/months/usage/ashp');
 					expect(search[1]).toBe('2012-12-31');
 				});
 			});
@@ -206,56 +225,15 @@ describe('my app', function() {
 				element.all(by.css('.list-unstyled li')).then(function(notes) {
 					expect(notes.length).toBe(2);
 					expect(notes[0].getText()).toBe('1. Circuit level data starts March 16, 2012');
-					expect(notes[1].getText()).toBe('2. Projected kWh = 0.2261 x HDD base 50°F \+ 0.7565');
+					expect(notes[1].getText()).toBe('2. Projected kWh = 0.4809 x HDD base 60°F \+ 1.237');
 				});
 			});
 		});
 
-		describe('monthly HDD 2012', function() {
+		describe('Water 2012', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/hdd?date=2012-12-31');
-			});
-
-			it('should render hdd when user navigates to /hdd', function() {
-				expect(element(by.id('hdd')).isPresent()).toBe(true);
-			});
-
-			it('should display <span> for note 2', function() {
-				element.all(by.css('.small li')).then(function(notes) {
-					expect(notes.length).toBe(3);
-					expect(notes[0].getText()).toBe('Square footage = 1727.25, interior gross area (incl. basement)');
-					expect(notes[1].getText()).toBe('Excludes May-Sept values. Year 2012 also excludes Jan 1 - Mar 15 to match start of circuit data for ASHP.');
-					expect(notes[2].getText()).toBe('Conversion from kWh');
-				});
-			});
-		});
-
-		describe('monthly HDD 2013', function() {
-
-			beforeEach(function() {
-				browser.get('#/monthly/hdd?date=2013-12-31');
-			});
-
-			it('should render hdd when user navigates to /hdd', function() {
-				expect(element(by.id('hdd')).isPresent()).toBe(true);
-			});
-
-			it('should NOT display <span> for note 2', function() {
-				// expect(element('p.notes').text()).not().toMatch(/Year 2012 also excludes Jan 1 - Mar 15 to match start of circuit data for ASHP./);
-				element.all(by.css('.small li')).then(function(notes) {
-					expect(notes.length).toBe(3);
-					expect(notes[0].getText()).toBe('Square footage = 1727.25, interior gross area (incl. basement)');
-					expect(notes[1].getText()).toBe('Excludes May-Sept values');
-					expect(notes[2].getText()).toBe('Conversion from kWh');
-				});
-			});
-		});
-
-		describe('monthly Water 2012', function() {
-
-			beforeEach(function() {
-				browser.get('#/monthly/water?date=2012-12-31');
+				browser.get('#/months/water?date=2012-12-31');
 			});
 
 			it('should render water when user navigates to /water', function() {
@@ -270,10 +248,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly Water 2013', function() {
+		describe('Water 2013', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/water?date=2013-12-31');
+				browser.get('#/months/water?date=2013-12-31');
 			});
 
 			it('should render water when user navigates to /water', function() {
@@ -287,10 +265,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly Basetemp 2013 no params', function() {
+		describe('Basetemp 2013 no params', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/basetemp');
+				browser.get('#/months/basetemp');
 			});
 
 			it('should show /months/ selected', function() {
@@ -302,10 +280,10 @@ describe('my app', function() {
 			});
 		});
 
-		describe('monthly Basetemp 2013 with params', function() {
+		describe('Basetemp 2013 with params', function() {
 
 			beforeEach(function() {
-				browser.get('#/monthly/basetemp?date=2013-12-31&base=55&interval=days');
+				browser.get('#/months/basetemp?date=2013-12-31&base=55&interval=days');
 			});
 
 			it('should show /days/ selected', function() {

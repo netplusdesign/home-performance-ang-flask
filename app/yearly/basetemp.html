@@ -16,6 +16,12 @@
 		<ul class="list-inline">
 			<li class="radio">
 			  <label>
+			    <input name="interval" type="radio" ng-model="options.interval" value="years" />
+			    Years
+			  </label>
+			</li>
+			<li class="radio">
+			  <label>
 			    <input name="interval" type="radio" ng-model="options.interval" value="months" />
 			    Months
 			  </label>
@@ -24,12 +30,6 @@
 			  <label>
 			    <input name="interval" type="radio" ng-model="options.interval" value="days" />
 			    Days
-			  </label>
-			</li>
-			<li class="radio">
-			  <label>
-			    <input name="interval" type="radio" ng-model="options.interval" value="hours" />
-			    Hours
 			  </label>
 			</li>
 		</ul>
@@ -48,7 +48,7 @@
 <div class="table-responsive">
 	<table id="basetemp" class="table table-condensed text-right">
 		<tr>
-			<th><a ng-href="#/years/basetemp?house={{house}}" >ALL</a> &gt; {{data.points[0].date | date:"yyyy"}} <span ng-if="year == 2012">&sup2;</span></th>
+			<th>ALL</th>
 			<th class="text-right">ASHP</th>
 			<th class="text-right">Solar</th>
 			<th class="text-right"><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
@@ -56,18 +56,24 @@
 		</tr>
 		<tr ng-repeat="point in data.points">
 			<td class="text-left">
-				<a ng-if="data.interval == 'month'" ng-href="#/days/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM' }}" >{{ point.date | date:"MMM" }}</a>
-				<a ng-if="data.interval == 'day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"MMM d" }}</a>
-				<span ng-if="data.interval == 'hour'" >{{ point.date | date:"MMM d H" }}hr</span>
+				<a ng-if="data.interval=='year'" ng-href="#/months/basetemp?house={{house}}&date={{ point.date | date:'yyyy' }}" >{{ point.date | date:"yyyy" }}</a>
+				<a ng-if="data.interval=='month'" ng-href="#/days/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM' }}" >{{ point.date | date:"MMM" }}</a>
+				<a ng-if="data.interval=='day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"MMM-d" }}</a>
 			</td>
 			<td>
-				{{ point.ashp | number:0 }}
+				<span ng-if="data.interval=='year'">{{ point.ashp | number:0 }}</span>
+				<span ng-if="data.interval=='month'">{{ point.ashp | number:0 }}</span>
+				<span ng-if="data.interval=='day'">{{ point.ashp | number:3 }}</span>
 			</td>
 			<td>
-				{{ point.solar | number:0 }}
+				<span ng-if="data.interval=='year'">{{ point.solar | number:0 }}</span>
+				<span ng-if="data.interval=='month'">{{ point.solar | number:0 }}</span>
+				<span ng-if="data.interval=='day'">{{ point.solar | number:3 }}</span>
 			</td>
 			<td>
-				{{ point.hdd | number:0 }}
+				<span ng-if="data.interval=='year'">{{ point.hdd | number:0 }}</span>
+				<span ng-if="data.interval=='month'">{{ point.hdd | number:0 }}</span>
+				<span ng-if="data.interval=='day'">{{ point.hdd | number:3 }}</span>
 			</td>
 			<td>
 				{{ point.temperature | number:1 }}
@@ -75,10 +81,10 @@
 		</tr>
 	</table>
 </div>
+<p class="text-center"><img id="spinner" src="static/yearly/loading.gif" ng-show="loading" /></p>
 <p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
 <ol class="small">
 	<li>Base {{ data.base }}&deg;F</li>
-	<li ng-if="year == 2012">Circuit level data starts March 16, 2012</li>
 </ol>
 
 <hr />

@@ -8,8 +8,7 @@ module.exports = function(config){
       'bower_components/angular-mocks/angular-mocks.js',
       'app/*.js',
       'app/**/*.js',
-      'bower_components/moment/moment.js',
-      'bower_components/chroma-js/chroma.js'
+      'bower_components/moment/moment.js'
     ],
 
     exclude : [
@@ -28,7 +27,6 @@ module.exports = function(config){
     plugins : [
             'karma-junit-reporter',
             'karma-chrome-launcher',
-            'karma-firefox-launcher',
             'karma-jasmine'
             ],
 
