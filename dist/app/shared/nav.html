@@ -1,0 +1,46 @@
+<div class="form-inline">
+	<select class="form-control input-sm" id="view" ng-model="viewSelection.view" ng-change="changeView()">
+		<option value="summary">Summary</option>
+		<option value="generation">Generation</option>
+		<option value="usage">Usage</option>
+		<option value="temperature">Temperature</option>
+		<option value="basetemp"> - Base Temperature Analysis</option>
+		<option value="water">Water</option>
+	</select>
+	<select class="form-control input-sm" id="year" ng-model="yearFilter.year" ng-change="changeYear()" ng_options="year for year in data.years track by year">
+	</select>
+	<select class="form-control input-sm" id="filterc" ng-model="filter.filter.circuit" ng-change="changeCircuitFilter()" ng-show="viewSelection.view=='usage'">
+		<option value="summary">Summary</option>
+		<optgroup label="by circuit">
+			<option value="all">ALL</option>
+			<option value="ashp">ASHP</option>
+			<option value="water_heater">Water Heater</option>
+			<option value="stove">Range</option>
+			<option value="dryer">Dryer</option>
+			<option value="dishwasher">Dish Washer</option>
+			<option value="water_pump">Water Pump</option>
+			<option value="washer">Washer</option>
+			<option value="refrigerator">Refrigerator</option>
+			<option value="living_room">Living room</option>
+			<option value="aux_heat_bedrooms">Electric base heat bedrooms</option>
+			<option value="aux_heat_living">Electric base heat living room</option>
+			<option value="study">Study</option>
+			<option value="barn">Barn</option>
+			<option value="basement_west">Basement receptials (West)</option>
+			<option value="basement_east">Basement receptials (East)</option>
+			<option value="ventilation">Ventilation</option>
+			<option value="ventilation_preheat">Ventilation pre-heat</option>
+			<option value="kitchen_recept_rt">Kitchen receptical</option>
+			<option value="all_other">All other</option>
+		</optgroup>
+	</select>
+	<select class="form-control input-sm" id="filterl" ng-model="filter.filter.location" ng-change="changeLocationFilter()" ng-show="viewSelection.view=='temperature'">
+		<optgroup label="by location">
+			<option value="outdoor">Outdoor</option>
+			<option value="basement">Basement</option>
+			<option value="firstfloor">First floor</option>
+			<option value="secondfloor">Second floor</option>
+		</optgroup>
+	</select>
+	<p class="text-right"><small id="asof">As of: {{data.asofDate}}</small></p>
+</div>

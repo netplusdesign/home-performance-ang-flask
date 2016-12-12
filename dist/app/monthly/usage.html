@@ -1,0 +1,68 @@
+<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+
+<!-- conditional, if summary -->
+<div ng-if="data.view == 'usage.summary'">
+	<div class="table-responsive">
+		<p>View: Circuits | <a href="#/months/usage/all?house={{house}}&date={{data.circuit.startdate | date:'yyyy-MM'}}">Time series</a></p>
+
+		<table id="usage" class="table table-condensed text-right">
+			<tr>
+				<th class="text-left"><a ng-href="#/years/usage/{{ data.circuit.circuit_id }}?house={{house}}&date={{data.circuit.startdate | date:'yyyy-MM'}}" >ALL</a> &gt; {{ data.circuit.startdate | date:"yyyy" }}</th>
+				<th class="text-right">Total<span ng-if="year == 2012">&sup1;</span></th>
+				<th class="text-right">% of total</th>
+			</tr>
+			<tr ng-repeat="circuit in data.circuits">
+				<td class="text-left"><a ng-href="#/months/usage/{{ circuit.circuit_id }}?house={{house}}&date={{ date | date:'yyyy-MM-dd' }}" >{{ circuit.name }}</a></td>
+				<td>{{circuit.actual | number:0}}</td>
+				<td>{{circuit.perc | number:0}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<!-- conditional, if circuit -->
+<div ng-if="data.view != 'usage.summary'">
+	<p>View: <a href="#/months/usage/summary?house={{house}}&date={{ date | date:'yyyy-MM-dd' }}">Circuits</a> | Time series</p>
+
+	<div class="table-responsive">
+		<table id="{{ data.view }}" class="table table-condensed text-right">
+			<tr>
+				<th><a ng-href="#/years/usage/{{ data.circuit.circuit_id }}?house={{ house }}" >ALL</a> &gt; {{ data.items[0].date | date:"yyyy" }}</th>
+				<th class="text-right">Actual</th>
+				<!-- conditional, if summary -->
+				<th ng-if="data.circuit.circuit_id == 'all'" class="text-right">Budget</th>
+				<!-- conditional, if ashp -->
+				<th ng-if="data.circuit.circuit_id == 'ashp'" class="text-right">Projected&sup2;</th>
+				<th ng-if="data.circuit.circuit_id == 'all' || data.circuit.circuit_id == 'ashp'" class="text-right">Diff(%)</th>
+				<th class="text-right"><abbr title="Average daily usage">ADU</abbr></th>
+			</tr>
+			<tr>
+				<th>Totals<span ng-if="year == 2012">&sup1;</span></th>
+				<th class="text-right">{{ data.totals.actual | number:0 }}</th>
+				<!-- conditional, if summary -->
+				<th ng-if="data.circuit.circuit_id == 'all'" class="text-right">{{ data.totals.budget | number:0 }}</th>
+				<!-- conditional, if ashp-->
+				<th ng-if="data.circuit.circuit_id == 'ashp'" title="HDD base 50&deg;F = {{data.totals.hdd | number:0}}" class="text-right">{{ data.totals.projected | number:0 }}</th>
+				<th ng-if="data.circuit.circuit_id == 'all' || data.circuit.circuit_id == 'ashp'" ng-class="{'text-danger': data.totals.diff<0, 'text-success': data.totals.diff>=0}" class="text-right">{{ data.totals.diff | number:1 }}</th>
+				<th class="text-right">{{ data.totals.adu | number:1 }}</th>
+			</tr>
+			<tr ng-repeat="month in data.items">
+				<td class="text-left"><a ng-href="#/days/usage/{{ data.circuit.circuit_id }}?house={{house}}&date={{ month.date | date:'yyyy-MM' }}" >{{month.date | date:"MMM"}}</a></td>
+				<td>{{ month.actual | number:0 }}</td>
+				<!-- conditional, if summary -->
+				<td ng-if="data.circuit.circuit_id == 'all'">{{ month.budget | number:0 }}</td>
+				<!-- conditional, if ashp -->
+				<td ng-if="data.circuit.circuit_id == 'ashp'" title="HDD base 50&deg;F = {{month.hdd | number:0}}">{{ month.projected | number:0 }}</td>
+				<td ng-if="data.circuit.circuit_id == 'all' || data.circuit.circuit_id == 'ashp'" ng-class="{'text-danger': month.diff<0, 'text-success': month.diff>=0}">{{ month.diff | number:1 }}</td>
+				<td>{{ month.adu | number:1 }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+<!-- need conditional statement for this -->
+<ul class="list-unstyled small" >
+	<li ng-if="year == 2012">1. Circuit level data starts March 16, 2012</li>
+	<li ng-if="data.circuit.circuit_id == 'ashp'">2. Projected kWh = {{ data.slope }} x <abbr title="Heating degree days">HDD</abbr> base {{ data.base }}&deg;F + {{ data.intercept }}</li>
+</ul>

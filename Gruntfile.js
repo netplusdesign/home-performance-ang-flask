@@ -163,7 +163,8 @@ module.exports = function(grunt) {
 
 	// Defined tasks
 	grunt.registerTask('prod',
-	[   'clean:prod',
+	[
+		'clean:prod',
 		'uglify',
 		'copy:prod',
 		'preprocess:prod',
@@ -171,7 +172,8 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('test',
-	[   'clean:dev',
+	[
+		'clean:dev',
 		'uglify',
 		'copy:test',
 		'preprocess:test',
@@ -179,7 +181,8 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('dev',
-	[   'clean:dev',
+	[
+		'clean:dev',
 		'copy:dev',
 		'preprocess:dev',
 		'clean:post'
