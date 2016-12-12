@@ -39,3 +39,11 @@ Edit grunt file (devDest) path, then run:
 
 * `webdriver-manager start`
 * `npm run protractor` or `protractor test/protractor.conf.js`
+
+## Standalone UI
+
+To create a version of this app that is not served by Flask...
+
+* Remove all references of 'static/' from index.html and app.js files.
+* Flask also uses the {{}} notation for templates. So change the H1 tag content in index.html, from `{{ '{{data.houseName}}' }}` to `{{ data.houseName }}`.
+* Place the index.html file in the app folder.
