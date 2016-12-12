@@ -6,14 +6,10 @@ home-performance-ang-flask is an AngularJS frontend to view home energy, tempera
 
 See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
-There are 2 branches.
-
 * `master` - works within the Flask framework alongside the api on the same server.
-* `gh-pages` - is a standalone angular frontend that can live on any server. Used mainly for testing.
+* There was a `gh-pages` branch, a standalone configuration for demo purposes, but Github's mandatory enforcement of HTTPS makes this complicated and expensive.
 
 Working version of master branch at: http://netplusdesign.com/
-
-Working version of `gh-pages` branch at: http://netplusdesign.github.io/home-performance-ang-flask/dist/app/
 
 ## Requires
 
