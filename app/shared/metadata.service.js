@@ -32,7 +32,8 @@ angular.module( 'myApp.services.metadata', [] ).
 
 		//var apiUrl = 'http://127.0.0.1:5000/api/';
 		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
-		var apiUrl = 'http://netplusdesign.com/api/';
+		//var apiUrl = 'http://netplusdesign.com/api/';
+		var apiUrl = 'https://api.netplusdesign.net/api/';
 
 		var current = {};
 		current.filter = {};
@@ -186,7 +187,7 @@ angular.module( 'myApp.services.metadata', [] ).
 			options.method = 'GET';
 			return options;
 		},
-		// 3 methods used by navCtrl
+		// 2 methods used by navCtrl
 		setParamYear = function ( yr ) {
 			if (yr != 'ALL') {
 
@@ -203,15 +204,16 @@ angular.module( 'myApp.services.metadata', [] ).
 				data.filter.location = filter;
 			}
 		},
+		// gets called after validate
 		setMetadata = function ( d ) {
-			// gets called after validate
+
+			data.houseName = d.house.name;
+
 			data.asofDate = moment(d.asof, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
 			data.years = d.years;
 
 			data.years.unshift('ALL');
-
-			data.houseName = d.house.name;
 
 			if ( !data.chartDate ) {
 				data.chartDate = data.asofDate;

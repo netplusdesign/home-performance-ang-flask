@@ -51,7 +51,7 @@ angular.module( 'myApp.services.dataProvider', [] ).
 				if (config.params.start == 'Invalid date') {
 					config.params.start = metadataService.setStart ( metadataService.data.chartDate, config.params.interval );
 				}
-				config.params.date = metadataService.data.chartDate;
+				//config.params.date = metadataService.data.chartDate;
 			});
 		},
 		getMonthlyDetails = function ( config ) {

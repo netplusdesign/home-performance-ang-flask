@@ -239,11 +239,9 @@ angular.module('myApp.controllers.monthly', []).
 					$scope.message = "Oops, you've asked for a house, year or interval that is not supported.";
 				}
 				else {
-					// this is the only place metadataService is used in this controller, can get this from data?
 					$scope.year = metadataService.current.year;
 					$scope.house = metadataService.data.houseId;
-					$scope.date = metadataService.data.chartDate; // used for usage screens only
-					// send data to chartService
+					$scope.date = metadataService.data.chartDate;
 					chartService.setData ( $routeParams.view, data );
 				}
 			}, function ( reason ) {
