@@ -28,7 +28,7 @@ module.exports = function(grunt) {
 				{
 					expand: true,
 					cwd: 'app/',
-					src: ['<%= pkg.name %>.min.js', '**/*.html', '**/*.css'],
+					src: ['<%= pkg.name %>.min.js', '**/*.html', '**/*.css', '**/*.gif'],
 					dest: '<%= dest %>static/'
 				},
 				{
