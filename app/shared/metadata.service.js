@@ -32,7 +32,8 @@ angular.module( 'myApp.services.metadata', [] ).
 
 		//var apiUrl = 'http://127.0.0.1:5000/api/';
 		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
-		var apiUrl = 'http://netplusdesign.com/api/';
+		//var apiUrl = 'http://netplusdesign.com/api/';
+		var apiUrl = 'https://api.netplusdesign.net/api/';
 
 		var current = {};
 		current.filter = {};
