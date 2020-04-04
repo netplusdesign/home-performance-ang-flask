@@ -30,10 +30,12 @@ angular.module( 'myApp.services.metadata', [] ).
 		data.location = 0; // default for temperature view
 		data.filter = {};
 
-		//var apiUrl = 'http://127.0.0.1:5000/api/';
-		//var apiUrl = 'http://lburks.pythonanywhere.com/api/';
-		//var apiUrl = 'http://netplusdesign.com/api/';
-		var apiUrl = 'https://api.netplusdesign.net/api/';
+		/* @ifdef DEV **
+		var apiUrl = 'http://127.0.0.1:5000/api/';
+		/* @endif */
+		/* @ifdef PROD **
+		var apiUrl = 'http://netplusdesign.com/api/';
+		/* @endif */
 
 		var current = {};
 		current.filter = {};

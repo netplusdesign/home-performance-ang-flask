@@ -5,7 +5,7 @@
 module.exports = function(grunt) {
 
 	grunt.initConfig({
-		dest: '../home-performance-site/chartingperformance/',
+		dest: process.env.HOMEPERFORMANCE_PUBLISH,
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
@@ -18,9 +18,9 @@ module.exports = function(grunt) {
 			}
 		},
 		clean: {
-			prod:['<%= dest %>static/', '<%= dest %>templates/'],
-			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
-			post: ['app/<%= pkg.name %>.min.js', '<%= dest %>static/index.html']
+			prod:['<%= dest %>'],
+			dev: ['<%= dest %>'],
+			post: ['app/<%= pkg.name %>.min.js']
 		},
 		copy: {
 			prod: {
@@ -29,11 +29,11 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src: ['<%= pkg.name %>.min.js', '**/*.html', '**/*.css', '**/*.gif'],
-					dest: '<%= dest %>static/'
+					dest: '<%= dest %>'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/shared/bootstrap.min.css'
+					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -43,35 +43,35 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src: ['**/**'],
-					dest: '<%= dest %>static/'
+					dest: '<%= dest %>'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= dest %>static/'
+					dest: '<%= dest %>'
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= dest %>static/lib/angular/angular.js'
+					dest: '<%= dest %>lib/angular/angular.js'
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= dest %>static/lib/angular/angular-route.js'
+					dest: '<%= dest %>lib/angular/angular-route.js'
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= dest %>static/lib/angular/angular-resource.js'
+					dest: '<%= dest %>lib/angular/angular-resource.js'
 				},
 				{
 					src: 'bower_components/highcharts/highcharts.src.js',
-					dest: '<%= dest %>static/shared/highcharts.js'
+					dest: '<%= dest %>shared/highcharts.js'
 				},
 				{
 					src: 'bower_components/highcharts/highcharts-more.src.js',
-					dest: '<%= dest %>static/shared/highcharts-more.js'
+					dest: '<%= dest %>shared/highcharts-more.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/shared/bootstrap.min.css'
+					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -81,39 +81,39 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src:  ['**/**'],
-					dest: '<%= dest %>static/'
+					dest: '<%= dest %>'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= dest %>static/'
+					dest: '<%= dest %>'
 				},
 				{
 					src: 'bower_components/angular/angular.js',
-					dest: '<%= dest %>static/lib/angular/angular.js'
+					dest: '<%= dest %>lib/angular/angular.js'
 				},
 				{
 					src: 'bower_components/angular-route/angular-route.js',
-					dest: '<%= dest %>static/lib/angular/angular-route.js'
+					dest: '<%= dest %>lib/angular/angular-route.js'
 				},
 				{
 					src: 'bower_components/angular-resource/angular-resource.js',
-					dest: '<%= dest %>static/lib/angular/angular-resource.js'
+					dest: '<%= dest %>lib/angular/angular-resource.js'
 				},
 				{
 					src: 'bower_components/highcharts/highcharts.src.js',
-					dest: '<%= dest %>static/shared/highcharts.js'
+					dest: '<%= dest %>shared/highcharts.js'
 				},
 				{
 					src: 'bower_components/highcharts/highcharts-more.src.js',
-					dest: '<%= dest %>static/shared/highcharts-more.js'
+					dest: '<%= dest %>shared/highcharts-more.js'
 				},
 				{
 					src: 'bower_components/moment/moment.js',
-					dest: '<%= dest %>static/shared/moment.js'
+					dest: '<%= dest %>shared/moment.js'
 				},
 				{
 					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>static/shared/bootstrap.min.css'
+					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]
 			}
@@ -121,7 +121,8 @@ module.exports = function(grunt) {
 		preprocess: {
 			prod : {
 				files: {
-					'<%= dest %>templates/index.html' : 'app/index.html'
+					'<%= dest %>index.html' : 'app/index.html',
+					'<%= dest %>shared/metadata.service.js' : 'app/shared/metadata.service.js'
 				},
 				options: {
 					context: {
@@ -131,7 +132,7 @@ module.exports = function(grunt) {
 			},
 			test : {
 				files: {
-					'<%= dest %>templates/index.html' : 'app/index.html'
+					'<%= dest %>index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
@@ -141,7 +142,8 @@ module.exports = function(grunt) {
 			},
 			dev : {
 				files: {
-					'<%= dest %>templates/index.html' : 'app/index.html'
+					'<%= dest %>index.html' : 'app/index.html',
+					'<%= dest %>shared/metadata.service.js' : 'app/shared/metadata.service.js'
 				},
 				options: {
 					context: {
@@ -187,5 +189,7 @@ module.exports = function(grunt) {
 		'preprocess:dev',
 		'clean:post'
 	]);
+
+	grunt.registerTask('printenv', function () { console.log(process.env.HOMEPERFORMANCE_PUBLISH); });
 
 };

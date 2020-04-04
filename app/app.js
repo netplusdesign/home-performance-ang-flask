@@ -18,49 +18,49 @@ config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when ( '/years/:view', {
 			templateUrl: function ( params ) {
-				return 'static/yearly/' + params.view + '.html';
+				return 'yearly/' + params.view + '.html';
 			},
 			controller: 'YearlyCtrl'
 		}).
 		when ( '/years/:view/:filter', {
 			templateUrl: function ( params ) {
-				return 'static/yearly/' + params.view + '.html';
+				return 'yearly/' + params.view + '.html';
 			},
 			controller: 'YearlyCtrl'
 		}).
 		when ( '/months/:view', {
 			templateUrl: function ( params ) {
-				return 'static/monthly/' + params.view + '.html';
+				return 'monthly/' + params.view + '.html';
 			},
 			controller: 'MonthlyCtrl'
 		}).
 		when ( '/months/:view/:filter', {
 			templateUrl: function ( params ) {
-				return 'static/monthly/' + params.view + '.html';
+				return 'monthly/' + params.view + '.html';
 			},
 			controller: 'MonthlyCtrl'
 		}).
 		when ( '/days/:view', {
 			templateUrl: function ( params ) {
-				return 'static/daily/' + params.view + '.html';
+				return 'daily/' + params.view + '.html';
 			},
 			controller: 'DailyCtrl'
 		}).
 		when ( '/days/:view/:filter', {
 			templateUrl: function ( params ) {
-				return 'static/daily/' + params.view + '.html';
+				return 'daily/' + params.view + '.html';
 			},
 			controller: 'DailyCtrl'
 		}).
 		when ( '/hours/:view/', {
 			templateUrl: function ( params ) {
-				return 'static/hourly/' + params.view + '.html';
+				return 'hourly/' + params.view + '.html';
 			},
 			controller: 'HourlyCtrl'
 		}).
 		when ( '/hours/:view/:filter', {
 			templateUrl: function ( params ) {
-				return 'static/hourly/' + params.view + '.html';
+				return 'hourly/' + params.view + '.html';
 			},
 			controller: 'HourlyCtrl'
 		}).
@@ -69,7 +69,7 @@ config(['$routeProvider', function($routeProvider) {
 			templateUrl: function ( params ) {
 				params.view = 'summary';
 				params.interval = 'months';
-				return 'static/monthly/' + params.view + '.html';
+				return 'monthly/' + params.view + '.html';
 			},
 			controller: 'MonthlyCtrl'
 		}).
@@ -77,7 +77,7 @@ config(['$routeProvider', function($routeProvider) {
 			templateUrl: function ( params ) {
 				params.view = 'summary';
 				params.interval = 'days';
-				return 'static/daily/' + params.view + '.html';
+				return 'daily/' + params.view + '.html';
 			},
 			controller: 'DailyCtrl'
 		}).
