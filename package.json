@@ -10,7 +10,7 @@
     "angular": "1.5.9",
     "angular-resource": "1.5.9",
     "bootstrap": "3.3.7",
-    "highcharts": "5.0.5"
+    "highcharts": "8.0.4"
   },
   "devDependencies": {
     "grunt": "~1.0.1",
