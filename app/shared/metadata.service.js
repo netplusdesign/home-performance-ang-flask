@@ -30,6 +30,8 @@ angular.module( 'myApp.services.metadata', [] ).
 		data.location = 0; // default for temperature view
 		data.filter = {};
 
+		//default for testing
+		var apiUrl = 'http://127.0.0.1:5000/api/';
 		/* @ifdef DEV **
 		var apiUrl = 'http://127.0.0.1:5000/api/';
 		/* @endif */

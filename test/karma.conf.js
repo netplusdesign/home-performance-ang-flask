@@ -3,12 +3,12 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-      'node_packages/angular/angular.js',
-      'node_packages/angular-resource/angular-resource.js',
-      'node_packages/angular-mocks/angular-mocks.js',
+      'node_modules/angular/angular.js',
+      'node_modules/angular-resource/angular-resource.js',
+      'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/moment/moment.js',
       'app/*.js',
-      'app/**/*.js',
-      'node_packages/moment/moment.js'
+      'app/**/*.js'
     ],
 
     exclude : [
@@ -22,11 +22,12 @@ module.exports = function(config){
 
     frameworks: ['jasmine'],
 
-    browsers : ['Chrome'],
+    browsers : ['Chrome','Firefox'],
 
     plugins : [
             'karma-junit-reporter',
             'karma-chrome-launcher',
+            'karma-firefox-launcher',
             'karma-jasmine'
             ],
 
