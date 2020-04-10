@@ -6,7 +6,7 @@
   "repository": "https://github.com/netplusdesign/home-performance-ang-flask",
   "dependencies": {
     "angular-route": "1.5.9",
-    "moment": "2.17.1",
+    "moment": "2.24.0",
     "angular": "1.5.9",
     "angular-resource": "1.5.9",
     "bootstrap": "3.3.7",
