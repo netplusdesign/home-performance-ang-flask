@@ -3,12 +3,12 @@ module.exports = function(config){
     basePath : '../',
 
     files : [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-resource/angular-resource.js',
-      'bower_components/angular-mocks/angular-mocks.js',
+      'node_packages/angular/angular.js',
+      'node_packages/angular-resource/angular-resource.js',
+      'node_packages/angular-mocks/angular-mocks.js',
       'app/*.js',
       'app/**/*.js',
-      'bower_components/moment/moment.js'
+      'node_packages/moment/moment.js'
     ],
 
     exclude : [

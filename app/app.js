@@ -14,6 +14,9 @@ angular.module('myApp', [
 	'myApp.directives',
 	'myApp.controllers'
 ]).
+config(['$locationProvider', function($locationProvider) {
+  $locationProvider.hashPrefix('');
+}]).
 config(['$routeProvider', function($routeProvider) {
 	$routeProvider.
 		when ( '/years/:view', {
