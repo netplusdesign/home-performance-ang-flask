@@ -32,7 +32,7 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>'
 				},
 				{
-					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]
@@ -50,27 +50,27 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>'
 				},
 				{
-					src: 'bower_components/angular/angular.js',
+					src: 'node_modules/angular/angular.js',
 					dest: '<%= dest %>lib/angular/angular.js'
 				},
 				{
-					src: 'bower_components/angular-route/angular-route.js',
+					src: 'node_modules/angular-route/angular-route.js',
 					dest: '<%= dest %>lib/angular/angular-route.js'
 				},
 				{
-					src: 'bower_components/angular-resource/angular-resource.js',
+					src: 'node_modules/angular-resource/angular-resource.js',
 					dest: '<%= dest %>lib/angular/angular-resource.js'
 				},
 				{
-					src: 'bower_components/highcharts/highcharts.src.js',
+					src: 'node_modules/highcharts/highcharts.src.js',
 					dest: '<%= dest %>shared/highcharts.js'
 				},
 				{
-					src: 'bower_components/highcharts/highcharts-more.src.js',
+					src: 'node_modules/highcharts/highcharts-more.src.js',
 					dest: '<%= dest %>shared/highcharts-more.js'
 				},
 				{
-					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]
@@ -88,31 +88,31 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>'
 				},
 				{
-					src: 'bower_components/angular/angular.js',
+					src: 'node_modules/angular/angular.js',
 					dest: '<%= dest %>lib/angular/angular.js'
 				},
 				{
-					src: 'bower_components/angular-route/angular-route.js',
+					src: 'node_modules/angular-route/angular-route.js',
 					dest: '<%= dest %>lib/angular/angular-route.js'
 				},
 				{
-					src: 'bower_components/angular-resource/angular-resource.js',
+					src: 'node_modules/angular-resource/angular-resource.js',
 					dest: '<%= dest %>lib/angular/angular-resource.js'
 				},
 				{
-					src: 'bower_components/highcharts/highcharts.src.js',
+					src: 'node_modules/highcharts/highcharts.src.js',
 					dest: '<%= dest %>shared/highcharts.js'
 				},
 				{
-					src: 'bower_components/highcharts/highcharts-more.src.js',
+					src: 'node_modules/highcharts/highcharts-more.src.js',
 					dest: '<%= dest %>shared/highcharts-more.js'
 				},
 				{
-					src: 'bower_components/moment/moment.js',
+					src: 'node_modules/moment/moment.js',
 					dest: '<%= dest %>shared/moment.js'
 				},
 				{
-					src: 'bower_components/bootstrap/dist/css/bootstrap.min.css',
+					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>shared/bootstrap.min.css'
 				}
 				]

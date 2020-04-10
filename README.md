@@ -6,8 +6,7 @@ home-performance-ang-flask is an AngularJS frontend to view home energy, tempera
 
 See [home-performance-flask-api](https://github.com/netplusdesign/home-performance-flask-api)
 
-* `master` - works within the Flask framework alongside the api on the same server.
-* There was a `gh-pages` branch, a standalone configuration for demo purposes, but Github's mandatory enforcement of HTTPS makes this complicated and expensive.
+This is now simply a standalone version of the frontend. It can not be served from the Flash development server. Use your web server of choice to serve this app.
 
 Working version of master branch at: http://netplusdesign.com/
 
@@ -18,16 +17,21 @@ Working version of master branch at: http://netplusdesign.com/
 * Highcharts
 * Bootstrap
 
-First get Node, Grunt and Bower.
+First get Node and Grunt.
 
 Then clone this repo and run:
 
 * `npm install`
-* `bower install`
 
-Edit grunt file (devDest) path, then run:
+Edit grunt file (devDest) path, or set en environmental variable.
+
+* `export HOMEPERFORMANCE_PUBLISH=/vagrant/html/`
+
+Then run:
 
 * `grunt dev`
+
+Don't forget `--force` if deploying outside the parent folder.
 
 ## Test
 
@@ -39,11 +43,3 @@ Edit grunt file (devDest) path, then run:
 
 * `webdriver-manager start`
 * `npm run protractor` or `protractor test/protractor.conf.js`
-
-## Standalone UI
-
-To create a version of this app that is not served by Flask...
-
-* Remove all references of 'static/' from index.html and app.js files.
-* Flask also uses the {{}} notation for templates. So change the H1 tag content in index.html, from `{{ '{{data.houseName}}' }}` to `{{ data.houseName }}`.
-* Place the index.html file in the app folder.
