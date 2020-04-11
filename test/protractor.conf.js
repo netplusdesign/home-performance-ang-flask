@@ -1,5 +1,7 @@
 exports.config = {
   allScriptsTimeout: 45000,
+  
+  directConnect: true,
 
   specs: [
     '../app/yearly/scenarios.test.js',
@@ -9,12 +11,10 @@ exports.config = {
   ],
 
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'firefox'
   },
 
-  chromeOnly: true,
-
-  baseUrl: 'http://127.0.0.1:5000',
+  baseUrl: 'http://127.0.0.1',
 
   framework: 'jasmine',
 

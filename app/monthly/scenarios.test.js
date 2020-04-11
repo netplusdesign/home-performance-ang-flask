@@ -11,7 +11,7 @@ describe('my app', function() {
 			});
 
 			it('should automatically redirect to /yearly/summary when location hash/fragment is empty', function() {
-				expect(browser.getLocationAbsUrl()).toBe('/years/summary');
+				expect(browser.getCurrentUrl()).toBe('http://127.0.0.1/#/years/summary');
 			});
 		});
 
@@ -209,10 +209,10 @@ describe('my app', function() {
 			});
 
 			it('should stay on ashp circuit page when year selector changed to 2012', function() {
-				browser.getLocationAbsUrl().then(function(url) {
+				browser.getCurrentUrl().then(function(url) {
 					var path = url.split('?');
 					var search = path[1].split('date=');
-					expect(path[0]).toBe('/months/usage/ashp');
+					expect(path[0]).toBe('http://127.0.0.1/#/months/usage/ashp');
 					expect(search[1]).toBe('2012-12-31');
 				});
 			});
