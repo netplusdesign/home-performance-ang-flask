@@ -10,6 +10,8 @@ This is now simply a standalone version of the frontend. It can not be served fr
 
 Working version of master branch at: http://netplusdesign.com/
 
+I'm running this via Vagrant on Ubuntu 18.04.
+
 ## Requires
 
 * AngularJS
