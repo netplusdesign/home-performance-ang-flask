@@ -59,6 +59,7 @@ describe('MonthlyCtrl', function() {
 		expect(mockDataService.insertAverage).toHaveBeenCalled();
 	});
 	it('should show error when view == summary and returned month object == null', function() {
+		routeParams = { view : 'summary' };
 		mockData = {"totals":{"used":null,"solar":null,"net":null,"hdd":null},"items":[]};
 		var controller = createController();
 		scope.$apply();
