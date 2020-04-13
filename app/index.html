@@ -4,18 +4,18 @@
   <meta charset="utf-8">
   <title>Home Performance Charting</title>
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
-  <link href="shared/bootstrap.min.css" rel="stylesheet">
+  <link href="static/shared/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 ng-controller="HeaderCtrl">{{ data.houseName }}</h1>
+				<h1 ng-controller="HeaderCtrl">{{ '{{data.houseName}}' }}</h1>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4" ng-controller="NavigationCtrl">
-				<ng-include src="'shared/nav.html'"></ng-include>
+				<ng-include src="'static/shared/nav.html'"></ng-include>
 				<div ng-view></div>
 			</div>
 			<div class="col-md-8" id="chart">
@@ -35,38 +35,38 @@
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.9/angular-resource.min.js"></script>
 	<script src="//code.highcharts.com/highcharts.js"></script>
   <script src="//code.highcharts.com/highcharts-more.js"></script>
-	<script src="home-performance-ang-flask.min.js"></script>
+	<script src="static/home-performance-ang-flask.min.js"></script>
 	<!-- @endif -->
 	<!-- @ifdef TEST -->
-	<script src="lib/angular/angular.js"></script>
-	<script src="lib/angular/angular-route.js"></script>
-	<script src="lib/angular/angular-resource.js"></script>
-	<script src="shared/highcharts.js"></script>
-  <script src="shared/highcharts-more.js"></script>
-	<script src="home-performance-ang-flask.min.js"></script>
+	<script src="static/lib/angular/angular.js"></script>
+	<script src="static/lib/angular/angular-route.js"></script>
+	<script src="static/lib/angular/angular-resource.js"></script>
+	<script src="static/shared/highcharts.js"></script>
+  <script src="static/shared/highcharts-more.js"></script>
+	<script src="static/home-performance-ang-flask.min.js"></script>
 	<!-- @endif -->
 	<!-- @ifdef DEV -->
-	<script src="lib/angular/angular.js"></script>
-	<script src="lib/angular/angular-route.js"></script>
-	<script src="lib/angular/angular-resource.js"></script>
-	<script src="shared/highcharts.js"></script>
-  <script src="shared/highcharts-more.js"></script>
-	<script src="app.js"></script>
-	<script src="services.js"></script>
-  <script src="shared/metadata.service.js"></script>
-  <script src="shared/dataprovider.service.js"></script>
-  <script src="shared/chart.service.js"></script>
-  <script src="shared/data.service.js"></script>
-  <script src="controllers.js"></script>
-  <script src="shared/nav.controller.js"></script>
-  <script src="yearly/yearly.controller.js"></script>
-  <script src="monthly/monthly.controller.js"></script>
-  <script src="daily/daily.controller.js"></script>
-  <script src="hourly/hourly.controller.js"></script>
-  <script src="shared/header.controller.js"></script>
-	<script src="filters.js"></script>
-	<script src="directives.js"></script>
-	<script src="shared/moment.js"></script>
+	<script src="static/lib/angular/angular.js"></script>
+	<script src="static/lib/angular/angular-route.js"></script>
+	<script src="static/lib/angular/angular-resource.js"></script>
+	<script src="static/shared/highcharts.js"></script>
+  <script src="static/shared/highcharts-more.js"></script>
+	<script src="static/app.js"></script>
+	<script src="static/services.js"></script>
+  <script src="static/shared/metadata.service.js"></script>
+  <script src="static/shared/dataprovider.service.js"></script>
+  <script src="static/shared/chart.service.js"></script>
+  <script src="static/shared/data.service.js"></script>
+  <script src="static/controllers.js"></script>
+  <script src="static/shared/nav.controller.js"></script>
+  <script src="static/yearly/yearly.controller.js"></script>
+  <script src="static/monthly/monthly.controller.js"></script>
+  <script src="static/daily/daily.controller.js"></script>
+  <script src="static/hourly/hourly.controller.js"></script>
+  <script src="static/shared/header.controller.js"></script>
+	<script src="static/filters.js"></script>
+	<script src="static/directives.js"></script>
+	<script src="static/shared/moment.js"></script>
 	<!-- @endif -->
 </body>
 </html>

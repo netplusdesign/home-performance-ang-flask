@@ -31,10 +31,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		data.filter = {};
 
 		//default for testing
-		var apiUrl = 'http://127.0.0.1:5000/api/';
-		/* @ifdef DEV **
-		var apiUrl = 'http://127.0.0.1:5000/api/';
-		/* @endif */
+		var apiUrl = 'http://127.0.0.1:8080/api/';
 		/* @ifdef PROD **
 		var apiUrl = 'http://netplusdesign.com/api/';
 		/* @endif */

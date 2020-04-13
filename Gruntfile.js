@@ -5,7 +5,7 @@
 module.exports = function(grunt) {
 
 	grunt.initConfig({
-		dest: process.env.HOMEPERFORMANCE_PUBLISH,
+		dest: 'site/',
 		pkg: grunt.file.readJSON('package.json'),
 		uglify: {
 			options: {
@@ -13,14 +13,14 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'bower_components/moment/moment.js']
+					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'node_modules/moment/moment.js']
 				}
 			}
 		},
 		clean: {
-			prod:['<%= dest %>'],
-			dev: ['<%= dest %>'],
-			post: ['app/<%= pkg.name %>.min.js']
+			prod:['<%= dest %>static/', '<%= dest %>templates/'],
+			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
+			post: ['app/<%= pkg.name %>.min.js', '<%= dest %>static/index.html']
 		},
 		copy: {
 			prod: {
@@ -29,11 +29,11 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src: ['<%= pkg.name %>.min.js', '**/*.html', '**/*.css', '**/*.gif'],
-					dest: '<%= dest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>shared/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -43,35 +43,35 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src: ['**/**'],
-					dest: '<%= dest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= dest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'node_modules/angular/angular.js',
-					dest: '<%= dest %>lib/angular/angular.js'
+					dest: '<%= dest %>static/lib/angular/angular.js'
 				},
 				{
 					src: 'node_modules/angular-route/angular-route.js',
-					dest: '<%= dest %>lib/angular/angular-route.js'
+					dest: '<%= dest %>static/lib/angular/angular-route.js'
 				},
 				{
 					src: 'node_modules/angular-resource/angular-resource.js',
-					dest: '<%= dest %>lib/angular/angular-resource.js'
+					dest: '<%= dest %>static/lib/angular/angular-resource.js'
 				},
 				{
 					src: 'node_modules/highcharts/highcharts.src.js',
-					dest: '<%= dest %>shared/highcharts.js'
+					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
 					src: 'node_modules/highcharts/highcharts-more.src.js',
-					dest: '<%= dest %>shared/highcharts-more.js'
+					dest: '<%= dest %>static/shared/highcharts-more.js'
 				},
 				{
 					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>shared/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			},
@@ -81,39 +81,39 @@ module.exports = function(grunt) {
 					expand: true,
 					cwd: 'app/',
 					src:  ['**/**'],
-					dest: '<%= dest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'test/**',
-					dest: '<%= dest %>'
+					dest: '<%= dest %>static/'
 				},
 				{
 					src: 'node_modules/angular/angular.js',
-					dest: '<%= dest %>lib/angular/angular.js'
+					dest: '<%= dest %>static/lib/angular/angular.js'
 				},
 				{
 					src: 'node_modules/angular-route/angular-route.js',
-					dest: '<%= dest %>lib/angular/angular-route.js'
+					dest: '<%= dest %>static/lib/angular/angular-route.js'
 				},
 				{
 					src: 'node_modules/angular-resource/angular-resource.js',
-					dest: '<%= dest %>lib/angular/angular-resource.js'
+					dest: '<%= dest %>static/lib/angular/angular-resource.js'
 				},
 				{
 					src: 'node_modules/highcharts/highcharts.src.js',
-					dest: '<%= dest %>shared/highcharts.js'
+					dest: '<%= dest %>static/shared/highcharts.js'
 				},
 				{
 					src: 'node_modules/highcharts/highcharts-more.src.js',
-					dest: '<%= dest %>shared/highcharts-more.js'
+					dest: '<%= dest %>static/shared/highcharts-more.js'
 				},
 				{
 					src: 'node_modules/moment/moment.js',
-					dest: '<%= dest %>shared/moment.js'
+					dest: '<%= dest %>static/shared/moment.js'
 				},
 				{
 					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
-					dest: '<%= dest %>shared/bootstrap.min.css'
+					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
 			}
@@ -121,8 +121,8 @@ module.exports = function(grunt) {
 		preprocess: {
 			prod : {
 				files: {
-					'<%= dest %>index.html' : 'app/index.html',
-					'<%= dest %>shared/metadata.service.js' : 'app/shared/metadata.service.js'
+					'<%= dest %>templates/index.html' : 'app/index.html',
+					'<%= dest %>static/shared/metadata.service.js' : 'app/shared/metadata.service.js'
 				},
 				options: {
 					context: {
@@ -132,7 +132,7 @@ module.exports = function(grunt) {
 			},
 			test : {
 				files: {
-					'<%= dest %>index.html' : 'app/index.html'
+					'<%= dest %>templates/index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
@@ -142,8 +142,8 @@ module.exports = function(grunt) {
 			},
 			dev : {
 				files: {
-					'<%= dest %>index.html' : 'app/index.html',
-					'<%= dest %>shared/metadata.service.js' : 'app/shared/metadata.service.js'
+					'<%= dest %>templates/index.html' : 'app/index.html',
+					'<%= dest %>static/shared/metadata.service.js' : 'app/shared/metadata.service.js'
 				},
 				options: {
 					context: {
