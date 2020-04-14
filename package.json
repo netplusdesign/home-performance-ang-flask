@@ -33,8 +33,7 @@
     "tmp": "0.0.31"
   },
   "scripts": {
-    "test": "xvfb-run node_modules/karma/bin/karma start test/karma.conf.js",
-    "test-single-run": "xvfb-run node_modules/karma/bin/karma start test/karma.conf.js  --single-run",
-    "protractor": "xvfb-run protractor test/protractor.conf.js"
+    "test": "xvfb-run node_modules/karma/bin/karma start test/karma.conf.js --single-run",
+    "test-e2e": "xvfb-run protractor test/protractor.conf.js"
   }
 }

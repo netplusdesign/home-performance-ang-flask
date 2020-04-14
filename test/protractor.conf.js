@@ -1,7 +1,5 @@
 exports.config = {
-  allScriptsTimeout: 45000,
-  
-  directConnect: true,
+  allScriptsTimeout: 60000,
 
   specs: [
     '../app/yearly/scenarios.test.js',
@@ -18,9 +16,10 @@ exports.config = {
 
   framework: 'jasmine',
 
-  seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
+  directConnect: true,
+  //seleniumAddress: 'http://127.0.0.1:4444/wd/hub',
 
   jasmineNodeOpts: {
-    defaultTimeoutInterval: 30000
+    defaultTimeoutInterval: 60000
   }
 };

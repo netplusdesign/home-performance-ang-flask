@@ -30,8 +30,13 @@ angular.module( 'myApp.services.metadata', [] ).
 		data.location = 0; // default for temperature view
 		data.filter = {};
 
-		//default for testing
+		//default for dev
 		var apiUrl = 'http://127.0.0.1:8080/api/';
+
+		/* @ifdef TEST **
+		var apiUrl = 'http://127.0.0.1/api/';
+		/* @endif */
+
 		/* @ifdef PROD **
 		var apiUrl = 'http://netplusdesign.com/api/';
 		/* @endif */

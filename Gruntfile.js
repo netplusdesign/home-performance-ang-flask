@@ -13,14 +13,15 @@ module.exports = function(grunt) {
 			},
 			my_target: {
 				files: {
-					'app/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', '!app/**/*.test.js', 'node_modules/moment/moment.js']
+					'<%= dest %>static/<%= pkg.name %>.min.js': ['app/**.js', 'app/hourly/*.js', 'app/daily/*.js', 'app/monthly/*.js', 'app/yearly/*.js', 'app/shared/*.js', 'node_modules/moment/moment.js', '!app/**/*.test.js']
 				}
 			}
 		},
 		clean: {
 			prod:['<%= dest %>static/', '<%= dest %>templates/'],
 			dev: ['<%= dest %>static/', '<%= dest %>templates/'],
-			post: ['app/<%= pkg.name %>.min.js', '<%= dest %>static/index.html']
+			temp: ['app/shared/metadata.service.js'],
+			post: ['<%= dest %>static/index.html', 'app/shared/metadata.service.js.javascript']
 		},
 		copy: {
 			prod: {
@@ -34,6 +35,10 @@ module.exports = function(grunt) {
 				{
 					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>static/shared/bootstrap.min.css'
+				},
+				{
+					src: 'app/shared/metadata.service.js',
+					dest: 'app/shared/metadata.service.js.javascript'
 				}
 				]
 			},
@@ -72,6 +77,10 @@ module.exports = function(grunt) {
 				{
 					src: 'node_modules/bootstrap/dist/css/bootstrap.min.css',
 					dest: '<%= dest %>static/shared/bootstrap.min.css'
+				},
+				{
+					src: 'app/shared/metadata.service.js',
+					dest: 'app/shared/metadata.service.js.javascript'
 				}
 				]
 			},
@@ -116,13 +125,21 @@ module.exports = function(grunt) {
 					dest: '<%= dest %>static/shared/bootstrap.min.css'
 				}
 				]
+			},
+			post: {
+				files: [
+				{
+					src: 'app/shared/metadata.service.js.javascript',
+					dest: 'app/shared/metadata.service.js'
+				}
+				]
 			}
 		},
 		preprocess: {
 			prod : {
 				files: {
 					'<%= dest %>templates/index.html' : 'app/index.html',
-					'<%= dest %>static/shared/metadata.service.js' : 'app/shared/metadata.service.js'
+					'app/shared/metadata.service.js' : 'app/shared/metadata.service.js.javascript'
 				},
 				options: {
 					context: {
@@ -132,7 +149,8 @@ module.exports = function(grunt) {
 			},
 			test : {
 				files: {
-					'<%= dest %>templates/index.html' : 'app/index.html'
+					'<%= dest %>templates/index.html' : 'app/index.html',
+					'app/shared/metadata.service.js' : 'app/shared/metadata.service.js.javascript'
 				},
 				options: {
 					context: {
@@ -142,8 +160,7 @@ module.exports = function(grunt) {
 			},
 			dev : {
 				files: {
-					'<%= dest %>templates/index.html' : 'app/index.html',
-					'<%= dest %>static/shared/metadata.service.js' : 'app/shared/metadata.service.js'
+					'<%= dest %>templates/index.html' : 'app/index.html'
 				},
 				options: {
 					context: {
@@ -167,18 +184,22 @@ module.exports = function(grunt) {
 	grunt.registerTask('prod',
 	[
 		'clean:prod',
-		'uglify',
 		'copy:prod',
+		'clean:temp',
 		'preprocess:prod',
+		'uglify',
+		'copy:post',
 		'clean:post'
 	]);
 
 	grunt.registerTask('test',
 	[
 		'clean:dev',
-		'uglify',
 		'copy:test',
+		'clean:temp',
 		'preprocess:test',
+		'uglify',
+		'copy:post',
 		'clean:post'
 	]);
 
