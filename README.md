@@ -33,5 +33,7 @@ I'm running this via a Vagrant box, so all tests run in a headless browser via x
 
 ### End to end
 
+Make sure the backend is up before running these tests.
+
 * `webdriver-manager start`
 * `npm run test-e2e` or `protractor test/protractor.conf.js`
