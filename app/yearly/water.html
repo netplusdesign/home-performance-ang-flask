@@ -1,35 +1,35 @@
-<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+<p class="mb-1" ng-class="{'alert alert-danger': warning}">{{message}}</p>
 
 <div class="table-responsive">
-	<table id="water" class="table table-condensed text-right">
+	<table id="water" class="table table-sm text-right">
 		<tr>
 			<th></th>
 			<th colspan="3" class="text-center">Gallons</th>
 			<th colspan="2" class="text-center">Watt hrs<span ng-if="year == 2012">&sup1;</span>/gal</th>
 		</tr>
 		<tr>
-			<th>ALL</th>
-			<th class="text-right">Cold</th>
-			<th class="text-right">Hot</th>
-			<th class="text-right">Total</th>
-			<th class="text-right">Hot<br/>water</th>
-			<th class="text-right">Water<br/>pump</th>
+			<th class="text-left">ALL</th>
+			<th>Cold</th>
+			<th>Hot</th>
+			<th>Total</th>
+			<th>Hot<br/>water</th>
+			<th>Water<br/>pump</th>
 		</tr>
 		<tr>
-			<th>Daily Avg.</th>
-			<th class="text-right">{{data.totals.cold_avg | number:1}}</th>
-			<th class="text-right">{{data.totals.hot_avg | number:1}}</th>
-			<th class="text-right">{{data.totals.main_avg | number:1}}</th>
-			<th class="text-right">NA</th>
-			<th class="text-right">NA</th>
+			<th class="text-left">Daily Avg.</th>
+			<th>{{data.totals.cold_avg | number:1}}</th>
+			<th>{{data.totals.hot_avg | number:1}}</th>
+			<th>{{data.totals.main_avg | number:1}}</th>
+			<th>NA</th>
+			<th>NA</th>
 		</tr>
 		<tr>
-			<th>Totals</th>
-			<th class="text-right">{{data.totals.cold | number:0}}</th>
-			<th class="text-right">{{data.totals.hot | number:0}}</th>
-			<th class="text-right">{{data.totals.main | number:0}}</th>
-			<th class="text-right">{{data.totals.water_heater_efficiency | number:1}}</th>
-			<th class="text-right">{{data.totals.water_pump_efficiency | number:3}}</th>
+			<th class="text-left">Totals</th>
+			<th>{{data.totals.cold | number:0}}</th>
+			<th>{{data.totals.hot | number:0}}</th>
+			<th>{{data.totals.main | number:0}}</th>
+			<th>{{data.totals.water_heater_efficiency | number:1}}</th>
+			<th>{{data.totals.water_pump_efficiency | number:3}}</th>
 		</tr>
 		<tr ng-repeat="year in data.items">
 			<td class="text-left"><a ng-href="#/months/water?house={{house}}&date={{year.date | date:'yyyy-MM'}}" >{{year.date | date:"yyyy"}}</a></td>

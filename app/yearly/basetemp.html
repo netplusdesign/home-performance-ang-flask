@@ -1,4 +1,4 @@
-<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+<p class="mb-1" ng-class="{'alert alert-danger': warning}">{{message}}</p>
 
 <p>
 	<a href="" ng-click="moreinfo = !moreinfo" ng-init="moreinfo = false">What is this?</a>
@@ -46,13 +46,13 @@
 </p>
 
 <div class="table-responsive">
-	<table id="basetemp" class="table table-condensed text-right">
+	<table id="basetemp" class="table table-sm text-right">
 		<tr>
-			<th>ALL</th>
-			<th class="text-right">ASHP</th>
-			<th class="text-right">Solar</th>
-			<th class="text-right"><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
-			<th class="text-right">Avg. Temp.</th>
+			<th class="text-left">ALL</th>
+			<th>ASHP</th>
+			<th>Solar</th>
+			<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+			<th>Avg. Temp.</th>
 		</tr>
 		<tr ng-repeat="point in data.points">
 			<td class="text-left">
@@ -92,7 +92,7 @@
 <p><strong>Regression Line</strong></p>
 
 <div class="table-responsive">
-	<table id="regression" class="table table-condensed text-right">
+	<table id="regression" class="table table-sm text-right">
 		<tr>
 			<td class="text-left">
 				Slope

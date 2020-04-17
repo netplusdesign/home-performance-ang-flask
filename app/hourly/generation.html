@@ -1,17 +1,17 @@
-<p ng-class="{'alert alert-danger': warning}">{{message}}</p>
+<p class="mb-1" ng-class="{'alert alert-danger': warning}">{{message}}</p>
 
 <dl class="dl-horizontal">
 	<dt>Max Wh</dt><dd>{{data.max_solar_hour.solar | number:1}}, Date: <a ng-href="#/hours/generation?date={{data.max_solar_hour.date | date:'yyyy-MM-dd'}}&time={{data.max_solar_hour.date | date:'HH'}}">{{data.max_solar_hour.date | date:"M/d/yyyy h a"}}</a></dd>
 </dl>
 <div class="table-responsive">
-	<table id="generation" class="table table-condensed text-right">
+	<table id="generation" class="table table-sm text-right">
 		<tr>
 			<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
-			<th class="text-right">Actual</th>
+			<th>Actual</th>
 		</tr>
 		<tr>
-			<th>Totals</th>
-			<th class="text-right">{{data.totals.actual | number:3}}</a></th>
+			<th class="text-left">Totals</th>
+			<th>{{data.totals.actual | number:3}}</a></th>
 		</tr>
 		<tr ng-repeat="hour in data.items">
 			<td class="text-left">{{hour.date | date:"H"}}</td>

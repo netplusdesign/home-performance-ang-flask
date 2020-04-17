@@ -1,5 +1,5 @@
 <div class="form-inline">
-	<select class="form-control input-sm" id="view" ng-model="viewSelection.view" ng-change="changeView()">
+	<select class="form-control form-control-sm mr-1" id="view" ng-model="viewSelection.view" ng-change="changeView()">
 		<option value="summary">Summary</option>
 		<option value="generation">Generation</option>
 		<option value="usage">Usage</option>
@@ -7,9 +7,9 @@
 		<option value="basetemp"> - Base Temperature Analysis</option>
 		<option value="water">Water</option>
 	</select>
-	<select class="form-control input-sm" id="year" ng-model="yearFilter.year" ng-change="changeYear()" ng_options="year for year in data.years track by year">
+	<select class="form-control form-control-sm mr-1" id="year" ng-model="yearFilter.year" ng-change="changeYear()" ng_options="year for year in data.years track by year">
 	</select>
-	<select class="form-control input-sm" id="filterc" ng-model="filter.filter.circuit" ng-change="changeCircuitFilter()" ng-show="viewSelection.view=='usage'">
+	<select class="form-control form-control-sm mr-1 mt-1" id="filterc" ng-model="filter.filter.circuit" ng-change="changeCircuitFilter()" ng-show="viewSelection.view=='usage'">
 		<option value="summary">Summary</option>
 		<optgroup label="by circuit">
 			<option value="all">ALL</option>
@@ -34,7 +34,7 @@
 			<option value="all_other">All other</option>
 		</optgroup>
 	</select>
-	<select class="form-control input-sm" id="filterl" ng-model="filter.filter.location" ng-change="changeLocationFilter()" ng-show="viewSelection.view=='temperature'">
+	<select class="form-control form-control-sm" id="filterl" ng-model="filter.filter.location" ng-change="changeLocationFilter()" ng-show="viewSelection.view=='temperature'">
 		<optgroup label="by location">
 			<option value="outdoor">Outdoor</option>
 			<option value="basement">Basement</option>
@@ -42,5 +42,5 @@
 			<option value="secondfloor">Second floor</option>
 		</optgroup>
 	</select>
-	<p class="text-right"><small id="asof">As of: {{data.asofDate}}</small></p>
 </div>
+<p class="text-sm-right mb-1"><small id="asof">As of: {{data.asofDate}}</small></p>
