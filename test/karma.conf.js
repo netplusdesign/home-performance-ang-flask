@@ -20,19 +20,31 @@ module.exports = function(config){
 
     autoWatch : true,
 
-    frameworks: ['jasmine'],
+    frameworks : ['jasmine'],
 
     browsers : ['Firefox'],
 
     plugins : [
             'karma-junit-reporter',
             'karma-firefox-launcher',
-            'karma-jasmine'
+            'karma-jasmine',
+            'karma-coverage'
             ],
 
     junitReporter : {
-      outputFile: 'test_out/unit.xml',
-      suite: 'unit'
+      outputFile : 'test_out/unit.xml',
+      suite : 'unit'
+    },
+
+    reporters : ['progress', 'coverage'],
+
+    preprocessors : {
+      'app/**/*.js' : ['coverage']
+    },
+
+    coverageReporter: {
+      type : 'lcov',
+      dir : 'coverage/'
     }
 
 })}
