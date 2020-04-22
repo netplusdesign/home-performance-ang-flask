@@ -31,14 +31,14 @@ angular.module( 'myApp.services.metadata', [] ).
 		data.filter = {};
 
 		//default for dev
-		var apiUrl = 'http://127.0.0.1:8080/api/';
+		var apiUrl = 'http://127.0.0.1:8080/homeperformance/api/';
 
 		/* @ifdef TEST **
-		var apiUrl = 'http://127.0.0.1/api/';
+		var apiUrl = 'http://127.0.0.1/homeperformance/api/';
 		/* @endif */
 
 		/* @ifdef PROD **
-		var apiUrl = 'http://netplusdesign.com/api/';
+		var apiUrl = 'http://netplusdesign.com/homeperformance/api/';
 		/* @endif */
 
 		var current = {};
