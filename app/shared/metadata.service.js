@@ -38,7 +38,7 @@ angular.module( 'myApp.services.metadata', [] ).
 		/* @endif */
 
 		/* @ifdef PROD **
-		var apiUrl = 'http://netplusdesign.com/homeperformance/api/';
+		var apiUrl = 'https://netplusdesign.com/homeperformance/api/';
 		/* @endif */
 
 		var current = {};
