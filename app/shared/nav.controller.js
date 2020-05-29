@@ -10,7 +10,7 @@
 
 angular.module('myApp.controllers.nav', []).
 
-	controller('NavigationCtrl', ['$scope', '$window', 'metadataService', function ( $scope, $window, metadataService ) {
+	controller('NavigationCtrl', ['$scope', '$window', '$location', 'metadataService', function ( $scope, $window, $location, metadataService ) {
 
 		$scope.data = metadataService.data;
 
@@ -102,5 +102,9 @@ angular.module('myApp.controllers.nav', []).
 
 			$window.location = location;
 		};
+
+		$scope.$on('$viewContentLoaded', function(event) {
+			$window.ga('send', 'pageview', { page: $location.url() });
+		});
 
 	}]);
