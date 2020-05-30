@@ -2,27 +2,34 @@
 
 <div class="table-responsive">
 	<table id="temperature" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/temperature/{{ data.location_name }}?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
-			<th>Temperature</th>
-			<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
-			<th>Humidity</th>
-		</tr>
-		<tr>
-			<th class="text-left">Totals</th>
-			<th>{{data.totals.avg_temperature  | number:1}}</th>
-			<th><span ng-if="data.location == 0">{{data.totals.sum_hdd | number:1}}</span><span ng-if="data.location > 0">--</span></th>
-			<th>{{data.totals.max_humidity | number:1}}</th>
-		</tr>
-		<tr ng-repeat="hour in data.items">
-			<td class="text-left">{{hour.date | date:"H"}}</td>
-			<td width="14%">{{hour.avg_temperature | number:1}}</td>
-			<td width="14%"><span ng-if="data.location == 0">{{hour.sum_hdd | number:1}}</span><span ng-if="data.location > 0">--</span></td>
-			<td width="14%">{{hour.max_humidity | number:1}}</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+			<ol class="small">
+				<li>Base 65&deg;F</li>
+				<li ng-if="year == 2012 && data.location > 1">Temperature data for this location starts December 26, 2012</li>
+			</ol>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/temperature/{{ data.location_name }}?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
+				<th>Temperature</th>
+				<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+				<th>Humidity</th>
+			</tr>
+			<tr>
+				<th class="text-left">Totals</th>
+				<th>{{data.totals.avg_temperature  | number:1}}</th>
+				<th><span ng-if="data.location == 0">{{data.totals.sum_hdd | number:1}}</span><span ng-if="data.location > 0">--</span></th>
+				<th>{{data.totals.max_humidity | number:1}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="hour in data.items">
+				<td class="text-left">{{hour.date | date:"H"}}</td>
+				<td width="14%">{{hour.avg_temperature | number:1}}</td>
+				<td width="14%"><span ng-if="data.location == 0">{{hour.sum_hdd | number:1}}</span><span ng-if="data.location > 0">--</span></td>
+				<td width="14%">{{hour.max_humidity | number:1}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base 65&deg;F</li>
-</ol>

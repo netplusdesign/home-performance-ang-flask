@@ -2,33 +2,39 @@
 
 <div class="table-responsive">
 	<table id="summary" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">{{data.items[0].date | date:"MMM"}} <a ng-href="#/months/summary?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.items[0].date | date:"yyyy"}}</a></th>
-			<th>Used</th>
-			<th>Solar</th>
-			<th>Net</th>
-			<th><abbr title="Average hourly usage">AHU</abbr></th>
-			<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
-		</tr>
-		<tr>
-			<th class="text-left">Totals</th>
-			<th><a ng-href="#/days/usage?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.used | number:0}}</a></th>
-			<th><a ng-href="#/days/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.solar | number:0}}</a></th>
-			<th>{{data.totals.net | number:0}}</th>
-			<th>{{data.totals.ahu | number:1}}</th>
-			<th><a ng-href="#/days/temperature?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.hdd | number:0}}</a></th>
-		</tr>
-		<tr ng-repeat="day in data.items">
-			<td class="text-left"><a ng-href="#/hours/summary?house={{house}}&date={{day.date | date:'yyyy-MM-dd'}}" >{{day.date | date:"d"}}</a></td>
-			<td><a ng-href="#/hours/usage?house={{house}}&date={{day.date | date:'yyyy-MM'}}" >{{day.used | number:0}}</a></td>
-			<td><a ng-href="#/hours/generation?house={{house}}&date={{day.date | date:'yyyy-MM'}}" >{{day.solar | number:0}}</a></td>
-			<td>{{day.net | number:0}}</td>
-			<td>{{day.ahu | number:1}}</td>
-			<td><a ng-href="#/hours/temperature?house={{house}}&date={{day.date | date:'yyyy-MM-dd'}}" >{{day.hdd | number:0}}</a></td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+			<ol class="small">
+				<li>Base 65&deg;F</li>
+			<ol>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">{{data.items[0].date | date:"MMM"}} <a ng-href="#/months/summary?house={{house}}&date={{data.items[0].date | date:'yyyy'}}" >{{data.items[0].date | date:"yyyy"}}</a></th>
+				<th>Used</th>
+				<th>Solar</th>
+				<th>Net</th>
+				<th><abbr title="Average hourly usage">AHU</abbr></th>
+				<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+			</tr>
+			<tr>
+				<th class="text-left">Totals</th>
+				<th><a ng-href="#/days/usage?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.used | number:0}}</a></th>
+				<th><a ng-href="#/days/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.solar | number:0}}</a></th>
+				<th>{{data.totals.net | number:0}}</th>
+				<th>{{data.totals.ahu | number:1}}</th>
+				<th><a ng-href="#/days/temperature?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.totals.hdd | number:0}}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="day in data.items">
+				<td class="text-left"><a ng-href="#/hours/summary?house={{house}}&date={{day.date | date:'yyyy-MM-dd'}}" >{{day.date | date:"d"}}</a></td>
+				<td><a ng-href="#/hours/usage?house={{house}}&date={{day.date | date:'yyyy-MM'}}" >{{day.used | number:0}}</a></td>
+				<td><a ng-href="#/hours/generation?house={{house}}&date={{day.date | date:'yyyy-MM'}}" >{{day.solar | number:0}}</a></td>
+				<td>{{day.net | number:0}}</td>
+				<td>{{day.ahu | number:1}}</td>
+				<td><a ng-href="#/hours/temperature?house={{house}}&date={{day.date | date:'yyyy-MM-dd'}}" >{{day.hdd | number:0}}</a></td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base 65&deg;F</li>
-<ol>

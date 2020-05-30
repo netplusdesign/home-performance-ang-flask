@@ -47,40 +47,44 @@
 
 <div class="table-responsive">
 	<table id="basetemp" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">{{data.points[0].date | date:"MMM"}} <a ng-href="#/months/basetemp?house={{house}}&date={{ data.points[0].date | date:'yyyy' }}" >{{data.points[0].date | date:"yyyy"}}</a> <span ng-if="year == 2012">&sup2;</span></th>
-			<th>ASHP</th>
-			<th>Solar</th>
-			<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
-			<th>Avg. Temp.</th>
-		</tr>
-		<tr ng-repeat="point in data.points">
-			<td class="text-left">
-				<a ng-if="data.interval == 'day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"d" }}</a>
-				<span ng-if="data.interval == 'hour'" >{{ point.date | date:"MMM d H" }}hr</span>
-			</td>
-			<td>
-				{{ point.ashp | number:3 }}
-			</td>
-			<td>
-				{{ point.solar | number:3 }}
-			</td>
-			<td>
-				{{ point.hdd | number:3 }}
-			</td>
-			<td>
-				{{ point.temperature | number:1 }}
-			</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+			<ol class="small">
+				<li>Base {{ data.base }}&deg;F</li>
+				<li ng-if="year == 2012">Circuit level data starts March 16, 2012</li>
+			</ol>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">{{data.points[0].date | date:"MMM"}} <a ng-href="#/months/basetemp?house={{house}}&date={{ data.points[0].date | date:'yyyy' }}" >{{data.points[0].date | date:"yyyy"}}</a> <span ng-if="year == 2012">&sup2;</span></th>
+				<th>ASHP</th>
+				<th>Solar</th>
+				<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+				<th>Avg. Temp.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="point in data.points">
+				<td class="text-left">
+					<a ng-if="data.interval == 'day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"d" }}</a>
+					<span ng-if="data.interval == 'hour'" >{{ point.date | date:"MMM d H" }}hr</span>
+				</td>
+				<td>
+					{{ point.ashp | number:3 }}
+				</td>
+				<td>
+					{{ point.solar | number:3 }}
+				</td>
+				<td>
+					{{ point.hdd | number:3 }}
+				</td>
+				<td>
+					{{ point.temperature | number:1 }}
+				</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base {{ data.base }}&deg;F</li>
-	<li ng-if="year == 2012">Circuit level data starts March 16, 2012</li>
-</ol>
-
-<hr />
 
 <p><strong>Regression Line</strong></p>
 

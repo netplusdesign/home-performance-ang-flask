@@ -6,31 +6,33 @@
 </dl>
 <div class="table-responsive">
 	<table id="generation" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">ALL</th>
-			<th>Actual</th>
-			<th>Estimated</th>
-			<th>Diff %</th>
-			<th><abbr title="Average daily generation">ADG</abbr></th>
-		</tr>
-		<tr>
-			<th class="text-left">Totals</th>
-			<th>{{data.totals.actual | number:0}}</a></th>
-			<th>{{data.totals.estimated | number:0}}</a></th>
-			<th>{{data.totals.diff | number:1}}</th>
-			<th>{{data.totals.adg | number:1}}</th>
-		</tr>
-		<tr ng-repeat="year in data.items">
-			<td class="text-left"><a ng-href="#/months/generation?house={{house}}&date={{year.date | date:'yyyy-MM'}}" >{{year.date | date:"yyyy"}}</a></td>
-			<td>{{year.actual | number:0}}</td>
-			<td>{{year.estimated | number:0}}</td>
-			<td>{{year.diff | number:1}}</td>
-			<td>{{year.adg | number:1}}</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">ALL</th>
+				<th>Actual</th>
+				<th>Estimated</th>
+				<th>Diff %</th>
+				<th><abbr title="Average daily generation">ADG</abbr></th>
+			</tr>
+			<tr>
+				<th class="text-left">Totals</th>
+				<th>{{data.totals.actual | number:0}}</a></th>
+				<th>{{data.totals.estimated | number:0}}</a></th>
+				<th>{{data.totals.diff | number:1}}</th>
+				<th>{{data.totals.adg | number:1}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="year in data.items">
+				<td class="text-left"><a ng-href="#/months/generation?house={{house}}&date={{year.date | date:'yyyy-MM'}}" >{{year.date | date:"yyyy"}}</a></td>
+				<td>{{year.actual | number:0}}</td>
+				<td>{{year.estimated | number:0}}</td>
+				<td>{{year.diff | number:1}}</td>
+				<td>{{year.adg | number:1}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base 65&deg;F</li>
-<ol>

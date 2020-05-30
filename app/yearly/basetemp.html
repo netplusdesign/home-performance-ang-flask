@@ -47,47 +47,51 @@
 
 <div class="table-responsive">
 	<table id="basetemp" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">ALL</th>
-			<th>ASHP</th>
-			<th>Solar</th>
-			<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
-			<th>Avg. Temp.</th>
-		</tr>
-		<tr ng-repeat="point in data.points">
-			<td class="text-left">
-				<a ng-if="data.interval=='year'" ng-href="#/months/basetemp?house={{house}}&date={{ point.date | date:'yyyy' }}" >{{ point.date | date:"yyyy" }}</a>
-				<a ng-if="data.interval=='month'" ng-href="#/days/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM' }}" >{{ point.date | date:"MMM" }}</a>
-				<a ng-if="data.interval=='day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"MMM-d" }}</a>
-			</td>
-			<td>
-				<span ng-if="data.interval=='year'">{{ point.ashp | number:0 }}</span>
-				<span ng-if="data.interval=='month'">{{ point.ashp | number:0 }}</span>
-				<span ng-if="data.interval=='day'">{{ point.ashp | number:3 }}</span>
-			</td>
-			<td>
-				<span ng-if="data.interval=='year'">{{ point.solar | number:0 }}</span>
-				<span ng-if="data.interval=='month'">{{ point.solar | number:0 }}</span>
-				<span ng-if="data.interval=='day'">{{ point.solar | number:3 }}</span>
-			</td>
-			<td>
-				<span ng-if="data.interval=='year'">{{ point.hdd | number:0 }}</span>
-				<span ng-if="data.interval=='month'">{{ point.hdd | number:0 }}</span>
-				<span ng-if="data.interval=='day'">{{ point.hdd | number:3 }}</span>
-			</td>
-			<td>
-				{{ point.temperature | number:1 }}
-			</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+			<ol class="small">
+				<li>Base {{ data.base }}&deg;F</li>
+			</ol>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">ALL</th>
+				<th>ASHP</th>
+				<th>Solar</th>
+				<th><abbr title="Heating Degree Days">HDD</abbr>&sup1;</th>
+				<th>Avg. Temp.</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="point in data.points">
+				<td class="text-left">
+					<a ng-if="data.interval=='year'" ng-href="#/months/basetemp?house={{house}}&date={{ point.date | date:'yyyy' }}" >{{ point.date | date:"yyyy" }}</a>
+					<a ng-if="data.interval=='month'" ng-href="#/days/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM' }}" >{{ point.date | date:"MMM" }}</a>
+					<a ng-if="data.interval=='day'" ng-href="#/hours/basetemp?house={{house}}&date={{ point.date | date:'yyyy-MM-dd' }}" >{{ point.date | date:"MMM-d" }}</a>
+				</td>
+				<td>
+					<span ng-if="data.interval=='year'">{{ point.ashp | number:0 }}</span>
+					<span ng-if="data.interval=='month'">{{ point.ashp | number:0 }}</span>
+					<span ng-if="data.interval=='day'">{{ point.ashp | number:3 }}</span>
+				</td>
+				<td>
+					<span ng-if="data.interval=='year'">{{ point.solar | number:0 }}</span>
+					<span ng-if="data.interval=='month'">{{ point.solar | number:0 }}</span>
+					<span ng-if="data.interval=='day'">{{ point.solar | number:3 }}</span>
+				</td>
+				<td>
+					<span ng-if="data.interval=='year'">{{ point.hdd | number:0 }}</span>
+					<span ng-if="data.interval=='month'">{{ point.hdd | number:0 }}</span>
+					<span ng-if="data.interval=='day'">{{ point.hdd | number:3 }}</span>
+				</td>
+				<td>
+					{{ point.temperature | number:1 }}
+				</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
 <p class="text-center"><img id="spinner" src="static/yearly/loading.gif" ng-show="loading" /></p>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base {{ data.base }}&deg;F</li>
-</ol>
-
-<hr />
 
 <p><strong>Regression Line</strong></p>
 

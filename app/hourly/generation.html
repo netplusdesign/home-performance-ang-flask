@@ -5,21 +5,24 @@
 </dl>
 <div class="table-responsive">
 	<table id="generation" class="table table-sm text-right">
-		<tr>
-			<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
-			<th>Actual</th>
-		</tr>
-		<tr>
-			<th class="text-left">Totals</th>
-			<th>{{data.totals.actual | number:3}}</a></th>
-		</tr>
-		<tr ng-repeat="hour in data.items">
-			<td class="text-left">{{hour.date | date:"H"}}</td>
-			<td>{{hour.actual | number:3}}</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left">{{data.items[0].date | date:"d"}} <a ng-href="#/days/generation?house={{house}}&date={{data.items[0].date | date:'yyyy-MM'}}" >{{data.items[0].date | date:"MMM yyyy"}}</a></th>
+				<th>Actual</th>
+			</tr>
+			<tr>
+				<th class="text-left">Totals</th>
+				<th>{{data.totals.actual | number:3}}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="hour in data.items">
+				<td class="text-left">{{hour.date | date:"H"}}</td>
+				<td>{{hour.actual | number:3}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
-<ol class="small">
-	<li>Base 65&deg;F</li>
-<ol>

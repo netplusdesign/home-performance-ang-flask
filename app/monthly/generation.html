@@ -6,27 +6,33 @@
 </dl>
 <div class="table-responsive">
 	<table id="generation" class="table table-sm text-right">
-		<tr>
-			<th class="text-left"><a ng-href="#/years/generation?house={{house}}" >ALL</a> &gt; {{data.items[0].date | date:"yyyy"}}</th>
-			<th>Actual</th>
-			<th>Estimated</th>
-			<th>Diff(%)</th>
-			<th><abbr title="Average daily generation">ADG</abbr></th>
-		</tr>
-		<tr>
-			<th class="text-left">Totals</th>
-			<th>{{data.totals.actual | number:0}}</th>
-			<th>{{data.totals.estimated | number:0}}</th>
-			<th ng-class="{'text-danger': data.totals.estimated<0, 'text-success': data.totals.estimated>=0}">{{data.totals.diff | number:1}}</th>
-			<th>{{data.totals.adg | number:1}}</th>
-		</tr>
-		<tr ng-repeat="month in data.items">
-			<td class="text-left"><a ng-href="#/days/generation?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
-			<td>{{month.actual | number:0}}</td>
-			<td>{{month.estimated | number:0}}</td>
-			<td ng-class="{'text-danger': month.diff<0, 'text-success': month.diff>=0}">{{month.diff | number:1}}</td>
-			<td>{{month.adg | number:1}}</td>
-		</tr>
+		<caption>
+			<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
+		</caption>
+		<thead>
+			<tr>
+				<th class="text-left"><a ng-href="#/years/generation?house={{house}}" >ALL</a> &gt; {{data.items[0].date | date:"yyyy"}}</th>
+				<th>Actual</th>
+				<th>Estimated</th>
+				<th>Diff(%)</th>
+				<th><abbr title="Average daily generation">ADG</abbr></th>
+			</tr>
+			<tr>
+				<th class="text-left">Totals</th>
+				<th>{{data.totals.actual | number:0}}</th>
+				<th>{{data.totals.estimated | number:0}}</th>
+				<th ng-class="{'text-danger': data.totals.estimated<0, 'text-success': data.totals.estimated>=0}">{{data.totals.diff | number:1}}</th>
+				<th>{{data.totals.adg | number:1}}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="month in data.items">
+				<td class="text-left"><a ng-href="#/days/generation?house={{house}}&date={{month.date | date:'yyyy-MM'}}" >{{month.date | date:"MMM"}}</a></td>
+				<td>{{month.actual | number:0}}</td>
+				<td>{{month.estimated | number:0}}</td>
+				<td ng-class="{'text-danger': month.diff<0, 'text-success': month.diff>=0}">{{month.diff | number:1}}</td>
+				<td>{{month.adg | number:1}}</td>
+			</tr>
+		</tbody>
 	</table>
 </div>
-<p class="small">All power values in <abbr title="Kilowatt hours">kWh</abbr></p>
