@@ -78,9 +78,13 @@ angular.module( 'myApp.services.data', [] ).
 
 			// diff for each row
 			for ( i = 0; i < data.items.length; i++ ) {
-
 				net = data.items[i][col1] - data.items[i][col2];
-				diff = (net / data.items[i][col2]) * 100.0;
+				if (parseInt(data.items[i][col2]) == 0) {
+					diff = 0; // don't divide by zero
+				}
+				else {					
+					diff = (net / data.items[i][col2]) * 100.0;	
+				}
 				data.items[i].net = net.toFixed(0);
 				data.items[i].diff = diff.toFixed(1);
 			}
