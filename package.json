@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": "https://github.com/netplusdesign/home-performance-ang-flask",
   "dependencies": {
-    "angular": "1.7.9",
+    "angular": "1.8.0",
     "angular-resource": "1.7.9",
     "angular-route": "1.7.9",
     "bootstrap": "4.4.1",
