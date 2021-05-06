@@ -9,7 +9,7 @@
     "angular-resource": "1.7.9",
     "angular-route": "1.7.9",
     "bootstrap": "4.4.1",
-    "highcharts": "8.0.4",
+    "highcharts": "9.0.0",
     "moment": "2.24.0"
   },
   "devDependencies": {
