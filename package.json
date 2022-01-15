@@ -30,7 +30,7 @@
     "karma-junit-reporter": "^2.0.1",
     "popper.js": "^1.16.1",
     "protractor": "^5.4.3",
-    "shelljs": "^0.7.5",
+    "shelljs": "^0.8.5",
     "tmp": "0.0.31"
   },
   "scripts": {
